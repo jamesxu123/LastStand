@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.Screens.BattleScreen;
@@ -19,15 +20,18 @@ public class LastStand extends Game {
 	public BattleScreen battleScreen;
 	public OptionScreen optionScreen;
 
+
 	private static Skin createSkin() {
 		AssetManager manager = new AssetManager();
-		manager.load("neon/skin/neon-ui.json", Skin.class);
+		manager.load("freezing/skin/freezing-ui.json", Skin.class);
 		manager.finishLoading();
-		return manager.get("neon/skin/neon-ui.json");
+		return manager.get("freezing/skin/freezing-ui.json");
 	}
 
 	@Override
 	public void create () {
+		Texture texture = new Texture(Gdx.files.internal("abject-failure.png"));
+		texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 		style = createSkin();
 		batch = new SpriteBatch();
 		menuScreen = new MenuScreen(this);
