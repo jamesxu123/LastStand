@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.LastStand;
 
@@ -14,7 +12,7 @@ public class BattleScreen implements Screen, InputProcessor {
     private Stage ui;
     private Stage entities;
     private InputMultiplexer inputs;
-    private TiledMap map = new TmxMapLoader().load("ltmap1.tmx");
+    //private TiledMap map = new TmxMapLoader().load("ltmap1.tmx");
 
 
     public BattleScreen(LastStand game) {
