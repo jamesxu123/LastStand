@@ -36,7 +36,7 @@ public class Projectile extends Actor {
     @Override
     public void act(float delta) {
         pos.x += speed * Math.cos(heading);
-        pos.y -= speed * Math.sin(heading);
+        pos.y += speed * Math.sin(heading);
         super.act(delta);
     }
 }
