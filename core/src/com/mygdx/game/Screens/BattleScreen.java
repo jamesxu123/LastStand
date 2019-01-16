@@ -5,11 +5,13 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.LastStand;
 
 import static com.mygdx.game.LastStand.screenH;
@@ -20,25 +22,26 @@ public class BattleScreen implements Screen, InputProcessor {
     private Stage ui;
     private Stage entities;
     private InputMultiplexer inputs;
-    private FitViewport viewport;
     private OrthographicCamera camera;
-    private TiledMap map = new TmxMapLoader().load("map1.tmx");
+    private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
+    private MapObjects collisionObjs;
 
 
     public BattleScreen(LastStand game) {
-
+        map=new TmxMapLoader().load("map1.tmx");
         camera = new OrthographicCamera(screenW, screenH);
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1, game.batch);
         camera.setToOrtho(false);
         mapRenderer.setView(camera);
         //map.getLayers().get(2).getObjects()
 
-
+        collisionObjs= map.getLayers().get("Object Layer 1").getObjects();
         inputs = new InputMultiplexer();
         ui = new Stage();
         entities = new Stage();
         this.game = game;
+        inputs.addProcessor(this);
         inputs.addProcessor(ui);
         inputs.addProcessor(entities);
 
@@ -98,18 +101,36 @@ public class BattleScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        for (RectangleMapObject rectangleObject : collisionObjs.getByType(RectangleMapObject.class)) {
+
+
+            Rectangle rectangle = rectangleObject.getRectangle();
+            System.out.println(rectangle);
+            if (rectangle.contains(screenX,screenH-screenY)) {
+                System.out.println(true);
+                return true;
+
+            }
+        }
+        System.out.println(false);
+
+
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         return false;
+
     }
+
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+
         return false;
     }
+
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
