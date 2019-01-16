@@ -23,9 +23,9 @@ public class LastStand extends Game {
 
 	private static Skin createSkin() {
 		AssetManager manager = new AssetManager();
-		manager.load("freezing/skin/freezing-ui.json", Skin.class);
+		manager.load("orange/skin/uiskin.json", Skin.class);
 		manager.finishLoading();
-		return manager.get("freezing/skin/freezing-ui.json");
+		return manager.get("orange/skin/uiskin.json");
 	}
 
 	@Override

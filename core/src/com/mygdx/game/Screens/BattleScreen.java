@@ -4,18 +4,37 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.LastStand;
+
+import static com.mygdx.game.LastStand.screenH;
+import static com.mygdx.game.LastStand.screenW;
 
 public class BattleScreen implements Screen, InputProcessor {
     private LastStand game;
     private Stage ui;
     private Stage entities;
     private InputMultiplexer inputs;
-    //private TiledMap map = new TmxMapLoader().load("ltmap1.tmx");
+    private FitViewport viewport;
+    private OrthographicCamera camera;
+    private TiledMap map = new TmxMapLoader().load("map1.tmx");
+    private OrthogonalTiledMapRenderer mapRenderer;
 
 
     public BattleScreen(LastStand game) {
+
+        camera = new OrthographicCamera(screenW, screenH);
+        mapRenderer = new OrthogonalTiledMapRenderer(map, 1, game.batch);
+        camera.setToOrtho(false);
+        mapRenderer.setView(camera);
+        //map.getLayers().get(2).getObjects()
+
+
         inputs = new InputMultiplexer();
         ui = new Stage();
         entities = new Stage();
@@ -34,6 +53,7 @@ public class BattleScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
+        mapRenderer.render();
 
     }
 
