@@ -42,7 +42,6 @@ public class BattleScreen implements Screen, InputProcessor {
         inputs.addProcessor(ui);
         inputs.addProcessor(entities);
 
-
     }
 
     @Override
