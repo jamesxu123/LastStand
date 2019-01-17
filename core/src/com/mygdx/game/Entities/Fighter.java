@@ -16,6 +16,17 @@ public class Fighter extends Actor {
     private States state;
     private Directions direction;
 
+    private int health;
+
+    public void damage(int amount) {
+        if (health - amount >= 0) {
+            health -= amount;
+        } else {
+            this.remove();
+        }
+    }
+
+
     public Fighter() {
         state = States.WALK;
         direction = Directions.RIGHT;
