@@ -1,9 +1,11 @@
 package com.mygdx.game.Entities;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.Abstractions.EntityMap;
+import com.mygdx.game.Utilities;
 
 import java.awt.*;
 
@@ -40,6 +42,10 @@ public class Projectile extends Actor {
 
     @Override
     public void act(float delta) {
+        if (Utilities.inScreen(this)) {
+            this.remove();
+            return;
+        }
         this.entityMap.map[pos.x / 10][pos.y / 10].remove(this);
         pos.x += speed * Math.cos(heading);
         pos.y += speed * Math.sin(heading);
