@@ -8,8 +8,8 @@ import static com.mygdx.game.LastStand.screenW;
 //the current size doesnt affect the bounds; the screen coords are relative to what it starts with
 public class Utilities {
     public static boolean inScreen(Actor actor) {
-        if (!(0 <= actor.getX()) || !(actor.getX() <= screenW)) {
-            return !(0 <= actor.getY()) || !(actor.getY() <= screenH);
+        if ((0 <= actor.getX()) || (actor.getX() <= screenW)) {
+            return (0 <= actor.getY()) || (actor.getY() <= screenH);
         }
         return false;
     }

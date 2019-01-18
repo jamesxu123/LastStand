@@ -33,7 +33,7 @@ public class Fighter extends Actor {
             States state = States.valueOf(f.getName());
             //lambda to filter out .ds_store files on mac
             File[] dirFiles = f.listFiles((dir, name) -> !name.equals(".DS_Store"));
-            sprites.put(state, new HashMap<Directions, Animation<Texture>>());
+            sprites.put(state, new HashMap<>());
             for (File d : dirFiles) {
 
                 //System.out.println(d.getName());
@@ -51,7 +51,7 @@ public class Fighter extends Actor {
                 for (int i = 0; i < picList.size(); i++) {
                     frames[i] = new Texture(picList.get(i));
                 }
-                sprites.get(state).put(direction, new Animation<Texture>(0.2f, frames));
+                sprites.get(state).put(direction, new Animation<>(0.04f, frames));
             }
         }
         this.state = States.WALK;

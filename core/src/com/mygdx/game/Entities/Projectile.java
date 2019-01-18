@@ -3,6 +3,7 @@ package com.mygdx.game.Entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.Abstractions.EntityMap;
 import com.mygdx.game.Utilities;
@@ -11,45 +12,48 @@ import java.awt.*;
 
 public class Projectile extends Actor {
     public final float damage;
-    public final float heading;
     private float speed;
     public final Point dest;
-    public final Texture sprite;
+    public final Sprite sprite;
     public final float width, height;
     public final float damageRadius;
-    public Point pos;
     private final EntityMap entityMap;
 
     public Projectile(float damage, float damageRadius, float heading, float speed, Point dest, Texture sprite, EntityMap entityMap) {
         this.damage = damage;
         this.damageRadius = damageRadius;
-        this.heading = heading;
+        setRotation((float)Math.toRadians(heading));
         this.speed = speed;
         this.dest = dest;
-        this.sprite = sprite;
+        this.sprite = new Sprite(sprite);
         this.width = sprite.getWidth();
         this.height = sprite.getHeight();
         this.entityMap = entityMap;
+        setPosition(200, 200);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        float x = (float) pos.x;
-        float y = (float) pos.y;
-        batch.draw(sprite, x, y);
+//        batch.draw(sprite, getX(), getY());
+        sprite.setRotation((float)Math.toDegrees(getRotation()));
+        sprite.draw(batch);
         super.draw(batch, parentAlpha);
     }
 
     @Override
     public void act(float delta) {
-        if (Utilities.inScreen(this)) {
+        if (!Utilities.inScreen(this)) {
             this.remove();
             return;
         }
-        this.entityMap.map[pos.x / 10][pos.y / 10].remove(this);
-        pos.x += speed * Math.cos(heading);
-        pos.y += speed * Math.sin(heading);
-        this.entityMap.map[pos.x / 10][pos.y / 10].add(this);
+        sprite.setPosition(getX(), getY());
+//        System.out.printf("(%f, %f)\n", getX(), getY());
+
+//        if (!Utilities.inScreen(this)) {
+//            this.remove();
+//            return;
+//        }
+        setPosition((float)(getX() + speed * Math.cos(getRotation())), (float)(getY() + speed * Math.sin(getRotation())));
         super.act(delta);
     }
 
