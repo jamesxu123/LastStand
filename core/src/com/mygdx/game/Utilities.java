@@ -1,15 +1,20 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import static com.mygdx.game.LastStand.screenH;
+import static com.mygdx.game.LastStand.screenW;
+
+//the current size doesnt affect the bounds; the screen coords are relative to what it starts with
 public class Utilities {
     public static boolean inScreen(Actor actor) {
-        if (!(0 <= actor.getX()) || !(actor.getX() <= Gdx.graphics.getWidth())) {
-            if (!(0 <= actor.getY()) || !(actor.getY() <= Gdx.graphics.getHeight())) {
-                return true;
-            }
+        if (!(0 <= actor.getX()) || !(actor.getX() <= screenW)) {
+            return !(0 <= actor.getY()) || !(actor.getY() <= screenH);
         }
         return false;
+    }
+
+    public static int convertMouseY(int y) {
+        return screenH - y;
     }
 }

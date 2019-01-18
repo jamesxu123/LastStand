@@ -13,7 +13,7 @@ public class EntityMap extends Actor {
     private ExecutorService executorService = Executors.newFixedThreadPool(16);
 
     public EntityMap() {
-        this.map = new ArrayList[10][10];
+        map = new ArrayList[32][25];
     }
 
     @Override

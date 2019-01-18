@@ -4,12 +4,13 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.Screens.BattleScreen;
 import com.mygdx.game.Screens.MenuScreen;
 import com.mygdx.game.Screens.OptionScreen;
+
+import java.util.ArrayList;
 
 public class LastStand extends Game {
 	public static final int screenW = 1000;
@@ -19,6 +20,7 @@ public class LastStand extends Game {
 	public MenuScreen menuScreen;
 	public BattleScreen battleScreen;
 	public OptionScreen optionScreen;
+	public ArrayList<String> enemies = new ArrayList<>();
 
 
 	private static Skin createSkin() {
@@ -30,9 +32,10 @@ public class LastStand extends Game {
 
 	@Override
 	public void create () {
-		Texture texture = new Texture(Gdx.files.internal("abject-failure.png"));
-		texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 		style = createSkin();
+
+		enemies.add("sprites/FIGHTER/SHAMAN");
+		enemies.add("sprites/FIGHTER/KNIGHT");
 		batch = new SpriteBatch();
 		menuScreen = new MenuScreen(this);
 		battleScreen = new BattleScreen(this);
@@ -48,7 +51,7 @@ public class LastStand extends Game {
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		super.render();
 	}

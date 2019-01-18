@@ -12,10 +12,12 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.LastStand;
 
 import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
+import static com.mygdx.game.Utilities.convertMouseY;
 
 public class BattleScreen implements Screen, InputProcessor {
     private LastStand game;
@@ -50,13 +52,18 @@ public class BattleScreen implements Screen, InputProcessor {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputs);
+        entities.addActor(new Fighter(game.enemies.get(0), 200, 100));
+        entities.addActor(new Fighter(game.enemies.get(1), 200, 200));
+
 
     }
 
     @Override
     public void render(float delta) {
         mapRenderer.render();
-
+        ui.draw();
+        entities.act(delta);
+        entities.draw();
     }
 
     @Override
@@ -106,7 +113,7 @@ public class BattleScreen implements Screen, InputProcessor {
 
             Rectangle rectangle = rectangleObject.getRectangle();
             System.out.println(rectangle);
-            if (rectangle.contains(screenX,screenH-screenY)) {
+            if (rectangle.contains(screenX, convertMouseY(screenY))) {
                 System.out.println(true);
                 return true;
 
