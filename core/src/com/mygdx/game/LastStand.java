@@ -6,11 +6,10 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.mygdx.game.Abstractions.EntityGroup;
 import com.mygdx.game.Screens.BattleScreen;
 import com.mygdx.game.Screens.MenuScreen;
 import com.mygdx.game.Screens.OptionScreen;
-
-import java.util.ArrayList;
 
 public class LastStand extends Game {
 	public static final int screenW = 1000;
@@ -20,7 +19,7 @@ public class LastStand extends Game {
 	public MenuScreen menuScreen;
 	public BattleScreen battleScreen;
 	public OptionScreen optionScreen;
-	public ArrayList<String> enemies = new ArrayList<>();
+    public EntityGroup enemies = new EntityGroup();
 
 
 	private static Skin createSkin() {
@@ -34,9 +33,7 @@ public class LastStand extends Game {
 	public void create () {
 		style = createSkin();
 
-		enemies.add("sprites/FIGHTER/SHAMAN");
-		enemies.add("sprites/FIGHTER/KNIGHT");
-		batch = new SpriteBatch();
+        batch = new SpriteBatch();
 		menuScreen = new MenuScreen(this);
 		battleScreen = new BattleScreen(this);
 		optionScreen = new OptionScreen(this);
