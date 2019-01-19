@@ -48,11 +48,15 @@ public class Spawner {
     public void run(float delta) {
         if (spawning) {
             totalTime += delta;
-
-
         }
+    }
 
+    public float getTotalTime() {
+        return totalTime;
+    }
 
+    public void setTotalTime(float totalTime) {
+        this.totalTime = totalTime;
     }
 
     public boolean getSpawning() {

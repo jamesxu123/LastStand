@@ -8,20 +8,41 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class EntityMap extends Actor {
-    public ArrayList<Actor>[][] map;
+public class EntityMap {
+    public static final int mapArrW = 25;
+    public static final int mapArrH = 32;
+    public ArrayList<ArrayList<ArrayList<Actor>>> map;
     private ExecutorService executorService = Executors.newFixedThreadPool(16);
 
     public EntityMap() {
-        map = new ArrayList[32][25];
+        map = new ArrayList<>();
+        for (int row = 0; row < mapArrH; row++) {
+            map.add(new ArrayList<>());
+            for (int col = 0; col < mapArrW; col++) {
+                map.get(row).add(new ArrayList<>());
+            }
+        }
     }
 
-    @Override
-    public void act(float delta) {
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                if (map[i][j].size() > 0) {
-                    final ArrayList<Actor> actors = map[i][j];
+    public void constructMap(ArrayList<Actor> actors) {
+        for (ArrayList<ArrayList<Actor>> row : map) {
+            for (ArrayList<Actor> col : row) {
+                col.clear();
+            }
+        }
+        for (Actor a : actors) {
+            map.get((int) a.getY() / mapArrH).get((int) a.getX() / mapArrW).add(a);
+        }
+
+
+    }
+
+
+    public void update(float delta) {
+        for (int row = 0; row < map.size(); row++) {
+            for (int col = 0; col < map.get(0).size(); col++) {
+                if (map.get(row).get(col).size() > 0) {
+                    final ArrayList<Actor> actors = map.get(row).get(col);
                     executorService.submit(() -> {
                         ArrayList<Fighter> f = new ArrayList<>();
                         ArrayList<Projectile> p = new ArrayList<>();
@@ -47,6 +68,7 @@ public class EntityMap extends Actor {
                                     minDist = distance < minDist ? minDist : distance;
                                     minDistFighter = distance < minDist ? fighter : null;
                                 }
+                                //not good oop stuff
                                 minDistFighter.damage((int) projectile.damage);
                             }
                         }
@@ -54,6 +76,5 @@ public class EntityMap extends Actor {
                 }
             }
         }
-        super.act(delta);
     }
 }

@@ -54,8 +54,12 @@ public class FighterSpawner extends Spawner {
     @Override
     public void run(float delta) {
         if (getSpawning()) {
+            if (getTotalTime() > 1) {
+                spawn(200, 200);
+                setTotalTime(0);
+            }
             super.run(delta);
-            spawn(200, 200);
+
 
         }
 
