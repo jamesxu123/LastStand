@@ -45,6 +45,10 @@ public class Spawner {
         this.group = group;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
     public void run(float delta) {
         if (spawning) {
             totalTime += delta;

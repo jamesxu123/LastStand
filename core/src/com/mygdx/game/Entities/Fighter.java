@@ -34,6 +34,11 @@ public class Fighter extends Actor {
 
     }
 
+    public void setDirection(Directions d) {
+        direction = d;
+
+    }
+
     public void damage(int amount) {
         if (health - amount >= 0) {
             health -= amount;
@@ -62,11 +67,28 @@ public class Fighter extends Actor {
     public void act(float delta) {
         aniTime += delta;
         super.act(delta);
-        moveBy(1, 0);
+        switch (direction) {
+            case RIGHT:
+                moveBy(1, 0);
+                break;
+            case LEFT:
+                moveBy(-1, 0);
+                break;
+            case UP:
+                moveBy(0, 1);
+                break;
+
+            case DOWN:
+                moveBy(0, -1);
+                break;
+
+        }
+
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+
         batch.draw(sprites.get(state).get(direction).getKeyFrame(aniTime, true), getX(), getY());
     }
 

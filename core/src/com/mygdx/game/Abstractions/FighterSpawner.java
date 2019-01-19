@@ -3,6 +3,7 @@ package com.mygdx.game.Abstractions;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.Directions;
+import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.States;
 
 import java.io.File;
@@ -11,10 +12,18 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class FighterSpawner extends Spawner {
-    public FighterSpawner(String spritesPath, Class actorClass) {
+    private int spawnX;
+    private int spawnY;
+    private Directions spawnDir;
+
+    public FighterSpawner(String spritesPath, Class actorClass, int x, int y, String dir) {
+
         super(actorClass);
+        spawnX = x;
+        spawnY = y;
+        spawnDir = Directions.valueOf(dir);
         ArrayList<HashMap<States, HashMap<Directions, Animation<Texture>>>> spriteAnimations = new ArrayList<>();
-        for (File p : new File(spritesPath).listFiles((dir, name) -> !name.equals(".DS_Store"))) {
+        for (File p : new File(spritesPath).listFiles((d, name) -> !name.equals(".DS_Store"))) {
             spriteAnimations.add(getAnimations(p));
         }
         setAnimations(spriteAnimations);
@@ -55,7 +64,9 @@ public class FighterSpawner extends Spawner {
     public void run(float delta) {
         if (getSpawning()) {
             if (getTotalTime() > 1) {
-                spawn(200, 200);
+                spawn(spawnX, spawnY);
+                Fighter f = (Fighter) getGroup().getChildren().get(getGroup().getChildren().size - 1);
+                f.setDirection(spawnDir);
                 setTotalTime(0);
             }
             super.run(delta);

@@ -11,8 +11,10 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.Abstractions.EntityGroup;
+import com.mygdx.game.Abstractions.EntityMap;
 import com.mygdx.game.Abstractions.FighterSpawner;
 import com.mygdx.game.Abstractions.Spawner;
 import com.mygdx.game.Entities.Fighter;
@@ -20,13 +22,14 @@ import com.mygdx.game.Entities.Projectile;
 import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.LastStand;
 
+import java.util.ArrayList;
+
 import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 import static com.mygdx.game.Utilities.convertMouseY;
 
 public class BattleScreen implements Screen, InputProcessor {
     private LastStand game;
-    private Stage ui;
     private Stage entities;
     private InputMultiplexer inputs;
     private OrthographicCamera camera;
@@ -36,28 +39,45 @@ public class BattleScreen implements Screen, InputProcessor {
     private EntityGroup enemies;
     private EntityGroup projectiles;
     private EntityGroup towers;
-
-
+    private EntityMap entityMap;
     public BattleScreen(LastStand game) {
 
-        enemies = new EntityGroup(new FighterSpawner("sprites/FIGHTER", Fighter.class));
+        entityMap = new EntityMap();
+        map = new TmxMapLoader().load("map1.tmx");
+        RectangleMapObject spawnPoint = map.getLayers().get("Start").getObjects().getByType(RectangleMapObject.class).get(0);
+
+        enemies = new EntityGroup(new FighterSpawner("sprites/FIGHTER", Fighter.class,
+                (int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString()));
         projectiles = new EntityGroup(new Spawner(Projectile.class));
         towers = new EntityGroup(new Spawner(Tower.class));
-        map=new TmxMapLoader().load("map1.tmx");
+
         camera = new OrthographicCamera(screenW, screenH);
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1, game.batch);
         camera.setToOrtho(false);
         mapRenderer.setView(camera);
         //map.getLayers().get(2).getObjects()
 
-        collisionObjs= map.getLayers().get("Object Layer 1").getObjects();
+        collisionObjs = map.getLayers().get("Tower Placement").getObjects();
+
         inputs = new InputMultiplexer();
-        ui = new Stage();
         entities = new Stage();
         this.game = game;
         inputs.addProcessor(this);
-        inputs.addProcessor(ui);
         inputs.addProcessor(entities);
+
+    }
+
+    public void update() {
+        ArrayList<Actor> movingEntities = new ArrayList<>();
+        for (Actor a : enemies.getChildren()) {
+            movingEntities.add(a);
+        }
+        for (Actor a : projectiles.getChildren()) {
+            movingEntities.add(a);
+
+        }
+        entityMap.constructMap(movingEntities);
+        entityMap.update(Gdx.graphics.getDeltaTime());
 
     }
 
@@ -75,10 +95,14 @@ public class BattleScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
+        //update();
         mapRenderer.render();
-        ui.draw();
         entities.act(delta);
         entities.draw();
+    }
+
+    enum Current {
+        PLAYING
     }
 
     @Override
