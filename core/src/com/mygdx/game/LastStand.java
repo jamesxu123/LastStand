@@ -6,7 +6,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.mygdx.game.Abstractions.EntityGroup;
 import com.mygdx.game.Screens.BattleScreen;
 import com.mygdx.game.Screens.MenuScreen;
 import com.mygdx.game.Screens.OptionScreen;
@@ -19,7 +18,6 @@ public class LastStand extends Game {
 	public MenuScreen menuScreen;
 	public BattleScreen battleScreen;
 	public OptionScreen optionScreen;
-    public EntityGroup enemies = new EntityGroup();
 
 
 	private static Skin createSkin() {

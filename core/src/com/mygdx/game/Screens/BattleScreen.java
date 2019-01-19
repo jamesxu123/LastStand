@@ -13,6 +13,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.Abstractions.EntityGroup;
+import com.mygdx.game.Abstractions.FighterSpawner;
+import com.mygdx.game.Abstractions.Spawner;
+import com.mygdx.game.Entities.Fighter;
+import com.mygdx.game.Entities.Projectile;
+import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.LastStand;
 
 import static com.mygdx.game.LastStand.screenH;
@@ -28,15 +33,16 @@ public class BattleScreen implements Screen, InputProcessor {
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
     private MapObjects collisionObjs;
-    private EntityGroup fighters;
+    private EntityGroup enemies;
     private EntityGroup projectiles;
     private EntityGroup towers;
 
 
     public BattleScreen(LastStand game) {
-        fighters = new EntityGroup();
-        projectiles = new EntityGroup();
-        towers = new EntityGroup();
+
+        enemies = new EntityGroup(new FighterSpawner("sprites/FIGHTER", Fighter.class));
+        projectiles = new EntityGroup(new Spawner(Projectile.class));
+        towers = new EntityGroup(new Spawner(Tower.class));
         map=new TmxMapLoader().load("map1.tmx");
         camera = new OrthographicCamera(screenW, screenH);
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1, game.batch);
@@ -60,8 +66,11 @@ public class BattleScreen implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(inputs);
         //projectiles.addActor(new Projectile(0, 0, 45, 2, new Point(0,0), new Texture("sprites/knight.png"), new EntityMap()));
         entities.addActor(projectiles);
-        entities.addActor(fighters);
+        entities.addActor(enemies);
         entities.addActor(towers);
+        //when game wave starts spawning is set to true
+        //when wave is over it is set to false
+        enemies.getSpawner().setSpawning(true);
     }
 
     @Override
@@ -89,6 +98,7 @@ public class BattleScreen implements Screen, InputProcessor {
 
     @Override
     public void hide() {
+
 
     }
 

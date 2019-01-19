@@ -22,9 +22,9 @@ public class Fighter extends Actor {
     private int health;
 
 
-    public Fighter(String path, int x, int y) {
+    public Fighter(HashMap animations, int x, int y) {
         setPosition(x, y);
-        sprites = new HashMap<>();
+        sprites = animations;
 
 
 
