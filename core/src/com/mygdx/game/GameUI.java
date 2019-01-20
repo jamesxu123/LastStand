@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.Abstractions.EntityGroup;
 
 import static com.mygdx.game.LastStand.screenH;
+import static com.mygdx.game.LastStand.screenW;
 
 public class GameUI {
     private Stage stage;
@@ -47,6 +48,7 @@ public class GameUI {
             }
         });
         pane.add(playButton);
+        pane.setPosition(screenW, 0);
         stage = new Stage();
         stage.addActor(table);
         stage.addActor(pane);

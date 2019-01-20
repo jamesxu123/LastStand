@@ -24,6 +24,7 @@ import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.GameUI;
 import com.mygdx.game.LastStand;
 import com.mygdx.game.Player;
+import com.mygdx.game.TowerPlaceUI;
 
 import java.util.ArrayList;
 
@@ -45,6 +46,7 @@ public class BattleScreen extends InputAdapter implements Screen {
     private EntityMap entityMap;
     private Array<RectangleMapObject> pathNodes;
     private GameUI gameUI;
+    private TowerPlaceUI towerPlaceUI;
     private Player player;
 
     public BattleScreen(LastStand game) {
@@ -123,6 +125,9 @@ public class BattleScreen extends InputAdapter implements Screen {
         entities.act(delta);
         entities.draw();
         gameUI.draw();
+        if (towerPlaceUI != null) {
+            towerPlaceUI.draw();
+        }
     }
 
     enum Current {
@@ -166,8 +171,10 @@ public class BattleScreen extends InputAdapter implements Screen {
             Rectangle rectangle = rectangleObject.getRectangle();
             System.out.println(rectangle);
             if (rectangle.contains(screenX, convertMouseY(screenY))) {
-                System.out.println(true);
-                return true;
+                //just change rectangle to coordinates later
+                towerPlaceUI = new TowerPlaceUI(rectangle, game.style);
+
+
 
             }
         }
