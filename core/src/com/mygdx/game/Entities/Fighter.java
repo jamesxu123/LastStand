@@ -39,6 +39,12 @@ public class Fighter extends Actor {
 
     }
 
+    public void setDirection(String d) {
+        direction = Directions.valueOf(d);
+
+    }
+
+
     public void damage(int amount) {
         if (health - amount >= 0) {
             health -= amount;

@@ -1,12 +1,18 @@
 package com.mygdx.game.Abstractions;
 
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.Entities.Projectile;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static com.mygdx.game.LastStand.screenH;
+import static com.mygdx.game.LastStand.screenW;
 
 public class EntityMap {
     public static final int mapArrW = 25;
@@ -31,9 +37,33 @@ public class EntityMap {
             }
         }
         for (Actor a : actors) {
-            map.get((int) a.getY() / mapArrH).get((int) a.getX() / mapArrW).add(a);
+            System.out.println();
+            map.get((int) a.getY() / (screenH / mapArrH)).get((int) a.getX() / (screenW / mapArrW)).add(a);
         }
+        //System.out.println(map);
+        //System.out.println(true);
 
+    }
+
+    public void switchDirection(Array<RectangleMapObject> nodes) {
+        for (RectangleMapObject rectangleMapObject : nodes) {
+            Rectangle r = rectangleMapObject.getRectangle();
+
+            for (int row = 0; row < r.height / mapArrH; row++) {
+
+                for (int col = 0; col < r.width / mapArrW; col++) {
+                    for (Actor a : map.get((int) r.y / (screenH / mapArrH) + row).get((int) r.x / (screenW / mapArrW) + col)) {
+
+                        if (a.getClass() == Fighter.class) {
+                            Fighter f = (Fighter) a;
+                            f.setDirection(rectangleMapObject.getProperties().get("Direction").toString());
+                        }
+
+                    }
+                }
+            }
+
+        }
 
     }
 

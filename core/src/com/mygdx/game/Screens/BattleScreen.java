@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Abstractions.EntityGroup;
 import com.mygdx.game.Abstractions.EntityMap;
 import com.mygdx.game.Abstractions.FighterSpawner;
@@ -40,11 +41,14 @@ public class BattleScreen implements Screen, InputProcessor {
     private EntityGroup projectiles;
     private EntityGroup towers;
     private EntityMap entityMap;
+    private Array<RectangleMapObject> pathNodes;
     public BattleScreen(LastStand game) {
 
         entityMap = new EntityMap();
         map = new TmxMapLoader().load("map1.tmx");
         RectangleMapObject spawnPoint = map.getLayers().get("Start").getObjects().getByType(RectangleMapObject.class).get(0);
+        pathNodes = map.getLayers().get("Path Nodes").getObjects().getByType(RectangleMapObject.class);
+
 
         enemies = new EntityGroup(new FighterSpawner("sprites/FIGHTER", Fighter.class,
                 (int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString()));
@@ -76,8 +80,15 @@ public class BattleScreen implements Screen, InputProcessor {
             movingEntities.add(a);
 
         }
+        //for(RectangleMapObject node:pathNodes){
+        //for
+        //}
+
         entityMap.constructMap(movingEntities);
-        entityMap.update(Gdx.graphics.getDeltaTime());
+        entityMap.switchDirection(pathNodes);
+        //entityMap.update(Gdx.graphics.getDeltaTime());
+        //instead of being a tile map thing this can be a part of entity map
+
 
     }
 
@@ -95,7 +106,7 @@ public class BattleScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        //update();
+        update();
         mapRenderer.render();
         entities.act(delta);
         entities.draw();
