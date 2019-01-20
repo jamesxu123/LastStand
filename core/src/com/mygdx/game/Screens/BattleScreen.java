@@ -80,9 +80,6 @@ public class BattleScreen implements Screen, InputProcessor {
             movingEntities.add(a);
 
         }
-        //for(RectangleMapObject node:pathNodes){
-        //for
-        //}
 
         entityMap.constructMap(movingEntities);
         entityMap.switchDirection(pathNodes);

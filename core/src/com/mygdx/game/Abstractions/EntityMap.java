@@ -48,12 +48,9 @@ public class EntityMap {
     public void switchDirection(Array<RectangleMapObject> nodes) {
         for (RectangleMapObject rectangleMapObject : nodes) {
             Rectangle r = rectangleMapObject.getRectangle();
-
             for (int row = 0; row < r.height / mapArrH; row++) {
-
                 for (int col = 0; col < r.width / mapArrW; col++) {
                     for (Actor a : map.get((int) r.y / (screenH / mapArrH) + row).get((int) r.x / (screenW / mapArrW) + col)) {
-
                         if (a.getClass() == Fighter.class) {
                             Fighter f = (Fighter) a;
                             f.setDirection(rectangleMapObject.getProperties().get("Direction").toString());
