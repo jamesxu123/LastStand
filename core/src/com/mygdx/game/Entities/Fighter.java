@@ -18,11 +18,13 @@ public class Fighter extends Actor {
     private float aniTime = 0;
     private States state;
     private Directions direction;
+    private int speed;
 
     private int health;
 
-
+    //Stats stats,
     public Fighter(HashMap animations, int x, int y) {
+        speed = 1;
         setPosition(x, y);
         sprites = animations;
 
@@ -75,17 +77,17 @@ public class Fighter extends Actor {
         super.act(delta);
         switch (direction) {
             case RIGHT:
-                moveBy(1, 0);
+                moveBy(speed, 0);
                 break;
             case LEFT:
-                moveBy(-1, 0);
+                moveBy(-speed, 0);
                 break;
             case UP:
-                moveBy(0, 1);
+                moveBy(0, speed);
                 break;
 
             case DOWN:
-                moveBy(0, -1);
+                moveBy(0, -speed);
                 break;
 
         }

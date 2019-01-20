@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.Screens.BattleScreen;
+import com.mygdx.game.Screens.GameOverScreen;
 import com.mygdx.game.Screens.MenuScreen;
 import com.mygdx.game.Screens.OptionScreen;
 
@@ -18,6 +19,7 @@ public class LastStand extends Game {
 	public MenuScreen menuScreen;
 	public BattleScreen battleScreen;
 	public OptionScreen optionScreen;
+    public GameOverScreen gameOverScreen;
 
 
 	private static Skin createSkin() {
@@ -32,6 +34,7 @@ public class LastStand extends Game {
 		style = createSkin();
 
         batch = new SpriteBatch();
+        gameOverScreen = new GameOverScreen(this);
 		menuScreen = new MenuScreen(this);
 		battleScreen = new BattleScreen(this);
 		optionScreen = new OptionScreen(this);

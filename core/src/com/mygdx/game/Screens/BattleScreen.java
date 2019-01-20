@@ -1,8 +1,8 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObjects;
@@ -21,7 +21,9 @@ import com.mygdx.game.Abstractions.Spawner;
 import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.Entities.Projectile;
 import com.mygdx.game.Entities.Tower;
+import com.mygdx.game.GameUI;
 import com.mygdx.game.LastStand;
+import com.mygdx.game.Player;
 
 import java.util.ArrayList;
 
@@ -29,7 +31,7 @@ import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 import static com.mygdx.game.Utilities.convertMouseY;
 
-public class BattleScreen implements Screen, InputProcessor {
+public class BattleScreen extends InputAdapter implements Screen {
     private LastStand game;
     private Stage entities;
     private InputMultiplexer inputs;
@@ -42,16 +44,22 @@ public class BattleScreen implements Screen, InputProcessor {
     private EntityGroup towers;
     private EntityMap entityMap;
     private Array<RectangleMapObject> pathNodes;
+    private GameUI gameUI;
+    private Player player;
+
     public BattleScreen(LastStand game) {
 
         entityMap = new EntityMap();
+        player = new Player();
         map = new TmxMapLoader().load("map1.tmx");
         RectangleMapObject spawnPoint = map.getLayers().get("Start").getObjects().getByType(RectangleMapObject.class).get(0);
         pathNodes = map.getLayers().get("Path Nodes").getObjects().getByType(RectangleMapObject.class);
 
 
+
         enemies = new EntityGroup(new FighterSpawner("sprites/FIGHTER", Fighter.class,
                 (int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString()));
+        gameUI = new GameUI(player, game.style, enemies);
         projectiles = new EntityGroup(new Spawner(Projectile.class));
         towers = new EntityGroup(new Spawner(Tower.class));
 
@@ -66,28 +74,13 @@ public class BattleScreen implements Screen, InputProcessor {
         inputs = new InputMultiplexer();
         entities = new Stage();
         this.game = game;
+        inputs.addProcessor(gameUI.getStage());
         inputs.addProcessor(this);
         inputs.addProcessor(entities);
 
     }
 
-    public void update() {
-        ArrayList<Actor> movingEntities = new ArrayList<>();
-        for (Actor a : enemies.getChildren()) {
-            movingEntities.add(a);
-        }
-        for (Actor a : projectiles.getChildren()) {
-            movingEntities.add(a);
 
-        }
-
-        entityMap.constructMap(movingEntities);
-        entityMap.switchDirection(pathNodes);
-        //entityMap.update(Gdx.graphics.getDeltaTime());
-        //instead of being a tile map thing this can be a part of entity map
-
-
-    }
 
     @Override
     public void show() {
@@ -98,19 +91,42 @@ public class BattleScreen implements Screen, InputProcessor {
         entities.addActor(towers);
         //when game wave starts spawning is set to true
         //when wave is over it is set to false
-        enemies.getSpawner().setSpawning(true);
+    }
+
+    private void update() {
+        if (!player.isAlive()) {
+            game.setScreen(game.gameOverScreen);
+            return;
+        }
+        ArrayList<Actor> movingEntities = new ArrayList<>();
+        for (Actor a : enemies.getChildren()) {
+            movingEntities.add(a);
+        }
+        for (Actor a : projectiles.getChildren()) {
+            movingEntities.add(a);
+
+        }
+        entityMap.constructMap(movingEntities, player);
+        entityMap.switchDirection(pathNodes);
+        gameUI.update();
+        //entityMap.update(Gdx.graphics.getDeltaTime());
+        //instead of being a tile map thing this can be a part of entity map
+
+
     }
 
     @Override
     public void render(float delta) {
         update();
+
         mapRenderer.render();
         entities.act(delta);
         entities.draw();
+        gameUI.draw();
     }
 
     enum Current {
-        PLAYING
+        PLAYING, Pause
     }
 
     @Override
@@ -139,20 +155,8 @@ public class BattleScreen implements Screen, InputProcessor {
 
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
 
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
 
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -170,30 +174,6 @@ public class BattleScreen implements Screen, InputProcessor {
         System.out.println(false);
 
 
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-
-    }
-
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-
-        return false;
-    }
-
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
         return false;
     }
 }

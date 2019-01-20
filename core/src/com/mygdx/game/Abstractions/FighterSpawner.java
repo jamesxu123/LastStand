@@ -53,6 +53,7 @@ public class FighterSpawner extends Spawner {
                 Texture[] frames = new Texture[picList.size()];
                 for (int i = 0; i < picList.size(); i++) {
                     frames[i] = new Texture(picList.get(i));
+
                 }
                 sprites.get(state).put(direction, new Animation<>(0.04f, frames));
             }
@@ -63,7 +64,7 @@ public class FighterSpawner extends Spawner {
     @Override
     public void run(float delta) {
         if (getSpawning()) {
-            if (getTotalTime() > 1) {
+            if (getTotalTime() > 0.5) {
                 spawn(spawnX, spawnY);
                 Fighter f = (Fighter) getGroup().getChildren().get(getGroup().getChildren().size - 1);
                 f.setDirection(spawnDir);

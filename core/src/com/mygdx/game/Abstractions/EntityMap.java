@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.Entities.Projectile;
+import com.mygdx.game.Player;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -30,14 +31,22 @@ public class EntityMap {
         }
     }
 
-    public void constructMap(ArrayList<Actor> actors) {
+
+    public void constructMap(ArrayList<Actor> actors, Player player) {
         for (ArrayList<ArrayList<Actor>> row : map) {
             for (ArrayList<Actor> col : row) {
                 col.clear();
             }
         }
+        //problem
+        //looping while removing
         for (Actor a : actors) {
-            System.out.println();
+            if (!((int) a.getY() / (screenH / mapArrH) < mapArrH && a.getX() / (screenW / mapArrW) < mapArrW)) {
+                a.remove();
+                player.loseLife();
+                continue;
+
+            }
             map.get((int) a.getY() / (screenH / mapArrH)).get((int) a.getX() / (screenW / mapArrW)).add(a);
         }
         //System.out.println(map);
