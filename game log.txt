@@ -1,0 +1,89 @@
+Button class
+locate libgdx drawing class for sprites and override it for centre drawing
+
+create an overhead class for screen to hold skin and stuff cuz txtbutton constructor cannot
+the override of the textbutton is working well
+add a scale for the words later
+Also override the input using ispressing and stuff
+learn to use table 
+work with viewport to make game size proper
+make a parent class for all screens to encompass all related things
+
+Think about SmashRoyaleScreen class for holding everything including screen constants
+
+Lots of oop issues : skin,screenW stuff ,repetitive code in screens; SmashRoyaleScreen is definitely needed
+Tommoeow : selection screen,InputListener
+understand oop rules
+getters or protected
+
+SO
+working on character selection - some sort of menu for the character
+characters go on bottom 
+display current character
+
+tomorrow:
+find map 
+shorten namespace somehow
+start game
+get other characters
+
+
+
+learn more about abstract and whether fighter should be abstract
+
+have a map class for the different number of lane maps
+all choice at menu
+Shaperenderer resize is messed up
+
+
+isanimationfinished can be really useful for animations
+viewport is messed up for the stage as well
+
+Ask sirs opinion on try accept vs throws
+
+maybe separate stage for name field because unfocused isn’t working
+
+should the link be abandoned for just fighter 
+
+Have an enemy var that is type player;
+	replace it with bot||enemy from server
+player will have:
+	elixir amount
+	troop placement cool down 
+	what character they are
+bot needs to have access to lane coordinates so it will be passed to it before the battle
+I want the game so that p1 is the server
+the enemy gets filled with either bot or another player
+
+getPlayer()- the method name is the same as the class so what to do?
+
+textures or texture atlas and just spritesheet
+ask sir about the two lines of code that allow transparency
+maybe create a Pygame sprite class?
+give time for death tomorrow
+more precise animation speed; each action should have it's own suitable speed
+have an even higher level interface for weapons as well
+Why is snapshot array used so prevalently in the libgdx things
+what is parentAlpha for
+death Action class that extends action would be useful;
+
+
+
+
+
+
+Entity group can be used by characters and projectiles others need to be slightly extended
+two things need a spawner; projectile and wave.
+
+making the type of the class Actor does not work
+
+
+
+
+Implement actual ui tomorrow
+
+path node class
+need to learn how to add pictures to skin.json file
+
+
+add a progress bar for the time until end of round

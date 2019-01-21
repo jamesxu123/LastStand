@@ -61,6 +61,10 @@ public class FighterSpawner extends Spawner {
         return sprites;
     }
 
+    public void getWaves() {
+
+    }
+
     @Override
     public void run(float delta) {
         if (getSpawning()) {
