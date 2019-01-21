@@ -24,12 +24,12 @@ public class Spawner {
         this.animations = animations;
     }
 
-    public void spawn(int x, int y) {
+    public void spawn(int x, int y, int index) {
 
         try {
             group.addActor((Actor) actorType
                     .getDeclaredConstructor(HashMap.class, int.class, int.class)
-                    .newInstance(animations.get(0), x, y));
+                    .newInstance(animations.get(index), x, y));
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

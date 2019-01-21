@@ -31,7 +31,6 @@ public class Fighter extends Actor {
 
 
         this.state = States.WALK;
-        this.direction = Directions.RIGHT;
 
 
     }
@@ -75,21 +74,23 @@ public class Fighter extends Actor {
     public void act(float delta) {
         aniTime += delta;
         super.act(delta);
-        switch (direction) {
-            case RIGHT:
-                moveBy(speed, 0);
-                break;
-            case LEFT:
-                moveBy(-speed, 0);
-                break;
-            case UP:
-                moveBy(0, speed);
-                break;
+        if (state == States.WALK) {
+            switch (direction) {
+                case RIGHT:
+                    moveBy(speed, 0);
+                    break;
+                case LEFT:
+                    moveBy(-speed, 0);
+                    break;
+                case UP:
+                    moveBy(0, speed);
+                    break;
 
-            case DOWN:
-                moveBy(0, -speed);
-                break;
+                case DOWN:
+                    moveBy(0, -speed);
+                    break;
 
+            }
         }
 
     }

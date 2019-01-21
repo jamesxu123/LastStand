@@ -87,3 +87,5 @@ need to learn how to add pictures to skin.json file
 
 
 add a progress bar for the time until end of round
+
+add a little randomness at every turn

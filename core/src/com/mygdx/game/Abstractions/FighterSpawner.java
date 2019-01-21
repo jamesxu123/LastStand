@@ -5,20 +5,30 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.Directions;
 import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.States;
+import com.mygdx.game.Utilities;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class FighterSpawner extends Spawner {
     private int spawnX;
     private int spawnY;
     private Directions spawnDir;
+    private Scanner waveScanner;
+    private float spawnInterval;
+    private Integer nextSpawn;
 
     public FighterSpawner(String spritesPath, Class actorClass, int x, int y, String dir) {
 
+
         super(actorClass);
+
         spawnX = x;
         spawnY = y;
         spawnDir = Directions.valueOf(dir);
@@ -27,6 +37,11 @@ public class FighterSpawner extends Spawner {
             spriteAnimations.add(getAnimations(p));
         }
         setAnimations(spriteAnimations);
+        try {
+            waveScanner = new Scanner(new BufferedReader(new FileReader("wave1.txt")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -61,17 +76,29 @@ public class FighterSpawner extends Spawner {
         return sprites;
     }
 
-    public void getWaves() {
-
-    }
 
     @Override
     public void run(float delta) {
+
         if (getSpawning()) {
-            if (getTotalTime() > 0.5) {
-                spawn(spawnX, spawnY);
+
+            if (nextSpawn == null) {
+                if (waveScanner.hasNext()) {
+                    String[] wave = waveScanner.nextLine().split(" ");
+                    spawnInterval = Float.parseFloat(wave[0]);
+                    nextSpawn = Integer.parseInt(wave[1]);
+                } else {
+                    setSpawning(false);
+                    return;
+                }
+            }
+            if (getTotalTime() > spawnInterval) {
+                int r = Utilities.rand.nextInt(15);
+                int deviation = (Utilities.rand.nextBoolean()) ? r : -r;
+                spawn(spawnX + deviation, spawnY, nextSpawn);
                 Fighter f = (Fighter) getGroup().getChildren().get(getGroup().getChildren().size - 1);
                 f.setDirection(spawnDir);
+                nextSpawn = null;
                 setTotalTime(0);
             }
             super.run(delta);

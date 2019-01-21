@@ -20,7 +20,7 @@ public class OptionScreen implements Screen {
     private Stage ui;
     private int waveSize = 25;
     private int troops = 0;
-    private int number = 0;
+    private int number = -1;
     private float time = 0;
     private boolean start = false;
 
@@ -30,7 +30,7 @@ public class OptionScreen implements Screen {
         ui = new Stage();
 
         TextButton btn = new TextButton("1", game.style);
-        TextButton btn2 = new TextButton("2", game.style);
+        TextButton btn2 = new TextButton("0", game.style);
         btn.setPosition(100, 300);
         btn.addListener(new ClickListener() {
             @Override
@@ -43,28 +43,25 @@ public class OptionScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                number = 2;
+                number = 0;
             }
         });
 
 
-        waveFile = new File("wave1.txt");
-        try {
-            writer = new BufferedWriter(new FileWriter(waveFile));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         ui.addActor(btn);
         ui.addActor(btn2);
-
-
-
 
 
     }
 
     @Override
     public void show() {
+        waveFile = new File("wave1.txt");
+        try {
+            writer = new BufferedWriter(new FileWriter(waveFile));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Gdx.input.setInputProcessor(ui);
 
 
@@ -77,7 +74,7 @@ public class OptionScreen implements Screen {
             time += delta;
         }
 
-        if (number != 0) {
+        if (number != -1) {
             troops += 1;
             start = true;
             try {
@@ -85,7 +82,7 @@ public class OptionScreen implements Screen {
                 writer.append(time + " " + number);
                 writer.append('\n');
                 time = 0;
-                number = 0;
+                number = -1;
             } catch (IOException e) {
                 e.printStackTrace();
             }
