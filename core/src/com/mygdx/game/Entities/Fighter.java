@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.Abstractions.EntityMap;
 import com.mygdx.game.Directions;
 import com.mygdx.game.States;
 
@@ -22,6 +23,8 @@ public class Fighter extends Actor {
 
     private int health;
 
+    private EntityMap entityMap;
+
     //Stats stats,
     public Fighter(HashMap animations, int x, int y) {
         speed = 1;
@@ -33,6 +36,11 @@ public class Fighter extends Actor {
         this.state = States.WALK;
 
 
+    }
+
+    public Fighter(HashMap animations, int x, int y, EntityMap entityMap) {
+        this(animations, x, y);
+        this.entityMap = entityMap;
     }
 
     public void setDirection(Directions d) {
@@ -97,8 +105,11 @@ public class Fighter extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-
-        batch.draw(sprites.get(state).get(direction).getKeyFrame(aniTime, true), getX(), getY());
+        try {
+            batch.draw(sprites.get(state).get(direction).getKeyFrame(aniTime, true), getX(), getY());
+        } catch (NullPointerException e) {
+            batch.draw(new Texture("sprites/FIGHTER/KNIGHT/WALK/LEFT/LEFT0.png"), getX(), getY());
+        }
     }
 
 

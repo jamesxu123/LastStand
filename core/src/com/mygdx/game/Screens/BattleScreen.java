@@ -166,18 +166,21 @@ public class BattleScreen extends InputAdapter implements Screen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        boolean onTower = false;
         for (RectangleMapObject rectangleObject : collisionObjs.getByType(RectangleMapObject.class)) {
 
 
             Rectangle rectangle = rectangleObject.getRectangle();
-            System.out.println(rectangle);
+//            System.out.println(rectangle);
             if (rectangle.contains(screenX, convertMouseY(screenY))) {
+                onTower = true;
                 //just change rectangle to coordinates later
                 towerPlaceUI = new TowerPlaceUI(rectangle, game.style);
-
-
-
             }
+        }
+
+        if (!onTower) {
+            towerPlaceUI = null;
         }
 
 

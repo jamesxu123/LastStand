@@ -71,7 +71,6 @@ public class EntityMap {
 
     }
 
-
     public void collide(float delta) {
         for (int row = 0; row < map.size(); row++) {
             for (int col = 0; col < map.get(0).size(); col++) {

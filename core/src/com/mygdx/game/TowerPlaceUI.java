@@ -11,24 +11,25 @@ public class TowerPlaceUI {
     private Table table;
     private Stage stage;
 
+    private Image uiBkg;
+
     public TowerPlaceUI(Rectangle rectangle, Skin style) {
         stage = new Stage();
 
 
         //Circle c=new Circle(rectangle.getCenter(new Vector2()),15);
-        Image uibkg = new Image(new Texture("skullButtonDown.png"));
-        uibkg.setPosition(rectangle.x, rectangle.y);
+        uiBkg = new Image(new Texture("skullButtonDown.png"));
+        uiBkg.setPosition(rectangle.x, rectangle.y);
 
-        stage.addActor(uibkg);
-
-
-
-
+        stage.addActor(uiBkg);
     }
 
     public void draw() {
         stage.draw();
+    }
 
+    public void removeUI() {
+        stage.dispose();
     }
 
 }
