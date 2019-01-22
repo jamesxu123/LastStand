@@ -1,8 +1,9 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
@@ -12,10 +13,14 @@ public class TowerPlaceUI {
 
     public TowerPlaceUI(Rectangle rectangle, Skin style) {
         stage = new Stage();
-        table = new Table();
-        table.setPosition(rectangle.x, rectangle.y);
-        table.add(new Label("why u always lyin", style));
-        stage.addActor(table);
+
+
+        //Circle c=new Circle(rectangle.getCenter(new Vector2()),15);
+        Image uibkg = new Image(new Texture("skullButtonDown.png"));
+        uibkg.setPosition(rectangle.x, rectangle.y);
+
+        stage.addActor(uibkg);
+
 
 
 

@@ -110,6 +110,7 @@ public class BattleScreen extends InputAdapter implements Screen {
         }
         entityMap.constructMap(movingEntities, player);
         entityMap.switchDirection(pathNodes);
+        entityMap.collide(Gdx.graphics.getDeltaTime());
         gameUI.update();
         //entityMap.update(Gdx.graphics.getDeltaTime());
         //instead of being a tile map thing this can be a part of entity map
@@ -178,7 +179,6 @@ public class BattleScreen extends InputAdapter implements Screen {
 
             }
         }
-        System.out.println(false);
 
 
         return false;

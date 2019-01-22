@@ -38,8 +38,6 @@ public class EntityMap {
                 col.clear();
             }
         }
-        //problem
-        //looping while removing
         for (Actor a : actors) {
             if (!((int) a.getY() / (screenH / mapArrH) < mapArrH && a.getX() / (screenW / mapArrW) < mapArrW)) {
                 a.remove();
@@ -74,7 +72,7 @@ public class EntityMap {
     }
 
 
-    public void update(float delta) {
+    public void collide(float delta) {
         for (int row = 0; row < map.size(); row++) {
             for (int col = 0; col < map.get(0).size(); col++) {
                 if (map.get(row).get(col).size() > 0) {
