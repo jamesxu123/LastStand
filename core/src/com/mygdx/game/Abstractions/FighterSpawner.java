@@ -11,10 +11,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class FighterSpawner extends Spawner {
     private int spawnX;
@@ -23,29 +20,39 @@ public class FighterSpawner extends Spawner {
     private Scanner waveScanner;
     private float spawnInterval;
     private Integer nextSpawn;
+    private Iterator<File> waves;
 
-    public FighterSpawner(String spritesPath, Class actorClass, int x, int y, String dir) {
+    public FighterSpawner(String spritesPath, Class actorClass, int x, int y, String direction, String roundDir) {
+
 
 
         super(actorClass);
+        waves = Arrays.asList(new File(roundDir).listFiles((d, name) -> !name.equals(".DS_Store"))).iterator();
 
         spawnX = x;
         spawnY = y;
-        spawnDir = Directions.valueOf(dir);
+        spawnDir = Directions.valueOf(direction);
         ArrayList<HashMap<States, HashMap<Directions, Animation<Texture>>>> spriteAnimations = new ArrayList<>();
         for (File p : new File(spritesPath).listFiles((d, name) -> !name.equals(".DS_Store"))) {
             spriteAnimations.add(getAnimations(p));
         }
         setAnimations(spriteAnimations);
-        try {
-            waveScanner = new Scanner(new BufferedReader(new FileReader("wave1.txt")));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        switchWave();
+
 
     }
 
-    public HashMap<States, HashMap<Directions, Animation<Texture>>> getAnimations(File file) {
+    private void switchWave() {
+        try {
+            File f = waves.next();
+            System.out.println(f);
+            waveScanner = new Scanner(new BufferedReader(new FileReader(f)));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private HashMap<States, HashMap<Directions, Animation<Texture>>> getAnimations(File file) {
         HashMap<States, HashMap<Directions, Animation<Texture>>> sprites = new HashMap<>();
         File[] stateFiles = file.listFiles();
         for (File f : stateFiles) {
@@ -87,6 +94,9 @@ public class FighterSpawner extends Spawner {
                     String[] wave = waveScanner.nextLine().split(" ");
                     spawnInterval = Float.parseFloat(wave[0]);
                     nextSpawn = Integer.parseInt(wave[1]);
+                } else if (waves.hasNext()) {
+                    switchWave();
+
                 } else {
                     setSpawning(false);
                     return;

@@ -60,7 +60,7 @@ public class BattleScreen extends InputAdapter implements Screen {
 
 
         enemies = new EntityGroup(new FighterSpawner("sprites/FIGHTER", Fighter.class,
-                (int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString()));
+                (int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString(), "level_1"));
         gameUI = new GameUI(player, game.style, enemies);
         projectiles = new EntityGroup(new Spawner(Projectile.class));
         towers = new EntityGroup(new Spawner(Tower.class));

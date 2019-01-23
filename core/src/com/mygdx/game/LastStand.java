@@ -14,12 +14,15 @@ import com.mygdx.game.Screens.OptionScreen;
 public class LastStand extends Game {
 	public static final int screenW = 1000;
 	public static final int screenH = 720;
+	public int numLevels = 1;
+	public int level = 0;
 	public Skin style;
 	public SpriteBatch batch;
 	public MenuScreen menuScreen;
 	public BattleScreen battleScreen;
 	public OptionScreen optionScreen;
     public GameOverScreen gameOverScreen;
+
 
 
 	private static Skin createSkin() {
@@ -41,6 +44,9 @@ public class LastStand extends Game {
 		setScreen(menuScreen);
 
 	}
+	//public String getLevelFile(){
+
+	//}
 
 	@Override
 	public void dispose() {
