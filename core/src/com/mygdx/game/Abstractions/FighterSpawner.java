@@ -95,12 +95,17 @@ public class FighterSpawner extends Spawner {
                     spawnInterval = Float.parseFloat(wave[0]);
                     nextSpawn = Integer.parseInt(wave[1]);
                 } else if (waves.hasNext()) {
-                    switchWave();
 
+                    switchWave();
+                    setSpawning(false);
+                    return;
                 } else {
                     setSpawning(false);
                     return;
+
                 }
+
+
             }
             if (getTotalTime() > spawnInterval) {
                 int r = Utilities.rand.nextInt(15);
