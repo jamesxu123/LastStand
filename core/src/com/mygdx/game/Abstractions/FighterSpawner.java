@@ -2,6 +2,7 @@ package com.mygdx.game.Abstractions;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.mygdx.game.AniContainer;
 import com.mygdx.game.Directions;
 import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.States;
@@ -22,21 +23,16 @@ public class FighterSpawner extends Spawner {
     private Integer nextSpawn;
     private Iterator<File> waves;
 
-    public FighterSpawner(String spritesPath, Class actorClass, int x, int y, String direction, String roundDir) {
+    public FighterSpawner(String spritesPath, Class actorClass, int x, int y, String direction, String roundDir, ArrayList<AniContainer> animations) {
 
 
-
-        super(actorClass);
+        super(actorClass, animations);
         waves = Arrays.asList(new File(roundDir).listFiles((d, name) -> !name.equals(".DS_Store"))).iterator();
 
         spawnX = x;
         spawnY = y;
         spawnDir = Directions.valueOf(direction);
         ArrayList<HashMap<States, HashMap<Directions, Animation<Texture>>>> spriteAnimations = new ArrayList<>();
-        for (File p : new File(spritesPath).listFiles((d, name) -> !name.equals(".DS_Store"))) {
-            spriteAnimations.add(getAnimations(p));
-        }
-        setAnimations(spriteAnimations);
         switchWave();
 
 
@@ -52,36 +48,7 @@ public class FighterSpawner extends Spawner {
         }
     }
 
-    private HashMap<States, HashMap<Directions, Animation<Texture>>> getAnimations(File file) {
-        HashMap<States, HashMap<Directions, Animation<Texture>>> sprites = new HashMap<>();
-        File[] stateFiles = file.listFiles();
-        for (File f : stateFiles) {
 
-            if (f.getName().equals(".DS_Store")) continue;
-            States state = States.valueOf(f.getName());
-            File[] dirFiles = f.listFiles();
-
-            sprites.put(state, new HashMap<>());
-            for (File d : dirFiles) {
-
-                if (d.getName().equals(".DS_Store")) continue;
-                Directions direction = Directions.valueOf(d.getName());
-                ArrayList<String> picList = new ArrayList<>();
-                for (File p : d.listFiles()) {
-                    if (p.getName().equals(".DS_Store")) continue;
-                    picList.add(p.getPath());
-                }
-                Collections.sort(picList);
-                Texture[] frames = new Texture[picList.size()];
-                for (int i = 0; i < picList.size(); i++) {
-                    frames[i] = new Texture(picList.get(i));
-
-                }
-                sprites.get(state).put(direction, new Animation<>(0.04f, frames));
-            }
-        }
-        return sprites;
-    }
 
 
     @Override

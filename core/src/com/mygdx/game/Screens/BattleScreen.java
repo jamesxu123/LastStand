@@ -60,10 +60,10 @@ public class BattleScreen extends InputAdapter implements Screen {
 
 
         enemies = new EntityGroup(new FighterSpawner("sprites/FIGHTER", Fighter.class,
-                (int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString(), "level_1"));
+                (int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString(), "level_1", game.animations));
         gameUI = new GameUI(player, game.style, enemies);
-        projectiles = new EntityGroup(new Spawner(Projectile.class));
-        towers = new EntityGroup(new Spawner(Tower.class));
+        projectiles = new EntityGroup(new Spawner(Projectile.class, new ArrayList()));
+        towers = new EntityGroup(new Spawner(Tower.class, new ArrayList()));
 
         camera = new OrthographicCamera(screenW, screenH);
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1, game.batch);
@@ -175,11 +175,14 @@ public class BattleScreen extends InputAdapter implements Screen {
             if (rectangle.contains(screenX, convertMouseY(screenY))) {
                 onTower = true;
                 //just change rectangle to coordinates later
-                towerPlaceUI = new TowerPlaceUI(rectangle, game.style);
+
+                towerPlaceUI = new TowerPlaceUI(rectangle.x, rectangle.y, game.style, game.towerIcons, towers);
+                inputs.addProcessor(towerPlaceUI.getStage());
             }
         }
 
-        if (!onTower) {
+        if (!onTower && towerPlaceUI != null) {
+            inputs.removeProcessor(towerPlaceUI.getStage());
             towerPlaceUI = null;
         }
 

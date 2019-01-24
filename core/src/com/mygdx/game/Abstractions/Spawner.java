@@ -2,33 +2,31 @@ package com.mygdx.game.Abstractions;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.mygdx.game.AniContainer;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Spawner {
     private Group group;
     private Class actorType;
-    private ArrayList animations;
+    private ArrayList<AniContainer> animations;
     private boolean spawning;
     private float totalTime;
 
 
-    public Spawner(Class actorType) {
+    public Spawner(Class actorType, ArrayList<AniContainer> animations) {
         this.actorType = actorType;
         spawning = false;
-    }
-
-    public void setAnimations(ArrayList animations) {
         this.animations = animations;
     }
+
 
     public void spawn(int x, int y, int index) {
 
         try {
             group.addActor((Actor) actorType
-                    .getDeclaredConstructor(HashMap.class, int.class, int.class)
+                    .getDeclaredConstructor(AniContainer.class, int.class, int.class)
                     .newInstance(animations.get(index), x, y));
         } catch (InstantiationException e) {
             e.printStackTrace();
