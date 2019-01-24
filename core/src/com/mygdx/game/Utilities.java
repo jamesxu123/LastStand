@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import java.io.File;
 import java.util.Random;
 
 import static com.mygdx.game.LastStand.screenH;
@@ -19,5 +20,11 @@ public class Utilities {
 
     public static int convertMouseY(int y) {
         return screenH - y;
+    }
+
+    public static File[] getListFiles(File f) {
+        return f.listFiles(((dir, name) -> !name.equals(".DS_Store")));
+
+
     }
 }

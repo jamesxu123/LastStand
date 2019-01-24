@@ -16,15 +16,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Abstractions.EntityGroup;
 import com.mygdx.game.Abstractions.EntityMap;
-import com.mygdx.game.Abstractions.FighterSpawner;
-import com.mygdx.game.Abstractions.Spawner;
 import com.mygdx.game.Entities.Fighter;
-import com.mygdx.game.Entities.Projectile;
-import com.mygdx.game.Entities.Tower;
-import com.mygdx.game.GameUI;
 import com.mygdx.game.LastStand;
 import com.mygdx.game.Player;
-import com.mygdx.game.TowerPlaceUI;
+import com.mygdx.game.Spawners.FighterSpawner;
+import com.mygdx.game.UIs.GameUI;
+import com.mygdx.game.UIs.TowerPlaceUI;
 
 import java.util.ArrayList;
 
@@ -60,10 +57,10 @@ public class BattleScreen extends InputAdapter implements Screen {
 
 
         enemies = new EntityGroup(new FighterSpawner("sprites/FIGHTER", Fighter.class,
-                (int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString(), "level_1", game.animations));
+                (int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString(), "level_1", game.fighters));
         gameUI = new GameUI(player, game.style, enemies);
-        projectiles = new EntityGroup(new Spawner(Projectile.class, new ArrayList()));
-        towers = new EntityGroup(new Spawner(Tower.class, new ArrayList()));
+        //projectiles = new EntityGroup(new Spawner(Projectile.class, new ArrayList()));
+        //towers = new EntityGroup(new Spawner(Tower.class, new ArrayList()));
 
         camera = new OrthographicCamera(screenW, screenH);
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1, game.batch);
@@ -88,9 +85,9 @@ public class BattleScreen extends InputAdapter implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(inputs);
         //projectiles.addActor(new Projectile(0, 0, 45, 2, new Point(0,0), new Texture("sprites/knight.png"), new EntityMap()));
-        entities.addActor(projectiles);
+        //entities.addActor(projectiles);
         entities.addActor(enemies);
-        entities.addActor(towers);
+        //entities.addActor(towers);
         //when game wave starts spawning is set to true
         //when wave is over it is set to false
     }
@@ -104,10 +101,10 @@ public class BattleScreen extends InputAdapter implements Screen {
         for (Actor a : enemies.getChildren()) {
             movingEntities.add(a);
         }
-        for (Actor a : projectiles.getChildren()) {
+/*        for (Actor a : projectiles.getChildren()) {
             movingEntities.add(a);
 
-        }
+        }*/
         entityMap.constructMap(movingEntities, player);
         entityMap.switchDirection(pathNodes);
         entityMap.collide(Gdx.graphics.getDeltaTime());
@@ -176,8 +173,8 @@ public class BattleScreen extends InputAdapter implements Screen {
                 onTower = true;
                 //just change rectangle to coordinates later
 
-                towerPlaceUI = new TowerPlaceUI(rectangle.x, rectangle.y, game.style, game.towerIcons, towers);
-                inputs.addProcessor(towerPlaceUI.getStage());
+                //towerPlaceUI = new TowerPlaceUI(rectangle.x, rectangle.y, game.style, game.towerIcons, towers);
+                //inputs.addProcessor(towerPlaceUI.getStage());
             }
         }
 

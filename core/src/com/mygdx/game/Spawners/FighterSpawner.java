@@ -1,10 +1,10 @@
-package com.mygdx.game.Abstractions;
+package com.mygdx.game.Spawners;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.mygdx.game.AniContainer;
 import com.mygdx.game.Directions;
 import com.mygdx.game.Entities.Fighter;
+import com.mygdx.game.EntityUtilities.Entity;
 import com.mygdx.game.States;
 import com.mygdx.game.Utilities;
 
@@ -23,11 +23,11 @@ public class FighterSpawner extends Spawner {
     private Integer nextSpawn;
     private Iterator<File> waves;
 
-    public FighterSpawner(String spritesPath, Class actorClass, int x, int y, String direction, String roundDir, ArrayList<AniContainer> animations) {
+    public FighterSpawner(String spritesPath, Class actorClass, int x, int y, String direction, String roundDir, ArrayList<Entity> entities) {
 
 
-        super(actorClass, animations);
-        waves = Arrays.asList(new File(roundDir).listFiles((d, name) -> !name.equals(".DS_Store"))).iterator();
+        super(actorClass, entities);
+        waves = Arrays.asList(Utilities.getListFiles(new File(roundDir))).iterator();
 
         spawnX = x;
         spawnY = y;
@@ -88,5 +88,10 @@ public class FighterSpawner extends Spawner {
 
         }
 
+    }
+
+    @Override
+    public void spawn(int x, int y, int index) {
+        getGroup().addActor(new Fighter(getAnimations().get(index), x, y));
     }
 }

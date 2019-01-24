@@ -1,6 +1,7 @@
 package com.mygdx.game.Abstractions;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.mygdx.game.Spawners.Spawner;
 
 public class EntityGroup extends Group {
     private Spawner spawner;
