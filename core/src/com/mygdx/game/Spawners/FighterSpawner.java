@@ -1,18 +1,18 @@
 package com.mygdx.game.Spawners;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.Directions;
 import com.mygdx.game.Entities.Fighter;
-import com.mygdx.game.EntityUtilities.Entity;
-import com.mygdx.game.States;
+import com.mygdx.game.EntityUtilities.FighterData;
 import com.mygdx.game.Utilities;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Scanner;
 
 public class FighterSpawner extends Spawner {
     private int spawnX;
@@ -22,17 +22,19 @@ public class FighterSpawner extends Spawner {
     private float spawnInterval;
     private Integer nextSpawn;
     private Iterator<File> waves;
+    private ArrayList<FighterData> fighterDatas;
 
-    public FighterSpawner(String spritesPath, Class actorClass, int x, int y, String direction, String roundDir, ArrayList<Entity> entities) {
+
+    public FighterSpawner(int x, int y, String direction, String roundDir, ArrayList<FighterData> fighterDatas) {
 
 
-        super(actorClass, entities);
+        super();
+        this.fighterDatas = fighterDatas;
         waves = Arrays.asList(Utilities.getListFiles(new File(roundDir))).iterator();
 
         spawnX = x;
         spawnY = y;
         spawnDir = Directions.valueOf(direction);
-        ArrayList<HashMap<States, HashMap<Directions, Animation<Texture>>>> spriteAnimations = new ArrayList<>();
         switchWave();
 
 
@@ -92,6 +94,6 @@ public class FighterSpawner extends Spawner {
 
     @Override
     public void spawn(int x, int y, int index) {
-        getGroup().addActor(new Fighter(getAnimations().get(index), x, y));
+        getGroup().addActor(new Fighter(fighterDatas.get(index), x, y));
     }
 }

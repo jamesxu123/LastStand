@@ -12,6 +12,7 @@ import com.mygdx.game.Abstractions.EntityGroup;
 
 import java.util.ArrayList;
 
+//ui that is placed when a player touches a tower placing spot
 public class TowerPlaceUI {
     private float x;
     private float y;

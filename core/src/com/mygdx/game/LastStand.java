@@ -4,14 +4,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.mygdx.game.Entities.Fighter;
-import com.mygdx.game.EntityUtilities.Entity;
-import com.mygdx.game.Screens.BattleScreen;
-import com.mygdx.game.Screens.GameOverScreen;
-import com.mygdx.game.Screens.MenuScreen;
-import com.mygdx.game.Screens.OptionScreen;
+import com.mygdx.game.EntityUtilities.FighterData;
+import com.mygdx.game.EntityUtilities.TowerData;
+import com.mygdx.game.Screens.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,42 +25,63 @@ public class LastStand extends Game {
 	public BattleScreen battleScreen;
 	public OptionScreen optionScreen;
     public GameOverScreen gameOverScreen;
-	//public ArrayList<Texture> towerIcons;
-	public ArrayList<Entity> fighters;
+	public LoadingScreen loadingScreen;
+	public AssetManager manager = new AssetManager();
 
+	public ArrayList<FighterData> fighterDatas;
+	public ArrayList<TowerData> towerDatas;
 
+	//recursively gets all files to load and puts it in the asynchronous loaders queue
+	public void loadAllFiles(File file) {
+		for (File f : Utilities.getListFiles(file)) {
+			if (f.isDirectory()) {
 
-	private static Skin createSkin() {
-		AssetManager manager = new AssetManager();
-		manager.load("orange/skin/uiskin.json", Skin.class);
-		manager.finishLoading();
-		return manager.get("orange/skin/uiskin.json");
+				loadAllFiles(f);
+			} else {
+				switch (f.getName().split("\\.")[1]) {
+					case "png":
+					case "jpg":
+						manager.load(f.getPath(), Texture.class);
+						break;
+
+					//figure out how to add text files and map
+				}
+			}
+		}
+
 	}
+
 
 
 
 
 	@Override
 	public void create () {
-		style = createSkin();
-		/*towerIcons = new ArrayList<>();
-		towerIcons.addAll(Arrays.asList(new File("sprites/Tower")
-				.listFiles((name, dir) -> !name.equals(".DS_Store"))).stream()
-				.map(n -> new Texture(n.getPath())).collect(Collectors.toList()));
-				*/
-		fighters = new ArrayList<>();
+		batch = new SpriteBatch();
+		//skin is needed for loadingScreen so it is loaded beforehand
+		manager.load("orange/skin/uiskin.json", Skin.class);
+		manager.finishLoading();
+		style = manager.get("orange/skin/uiskin.json");
+		loadAllFiles(new File("sprites/"));
+		loadAllFiles(new File("backgrounds/"));
+		loadingScreen = new LoadingScreen(this);
+		setScreen(loadingScreen);
+	}
+
+	//called when mananger is done loading everything from loadingscreen
+	public void initialize() {
+
+
+		fighterDatas = new ArrayList<>();
 		File[] fighterAnimations = Utilities.getListFiles(new File("sprites/FIGHTER"));
-		//File[] fighterStats=Utilities.getListFiles(new File());
 		for (int i = 0; i < fighterAnimations.length; i++) {
-			fighters.add(new Entity("", fighterAnimations[i], Fighter.class));
+			fighterDatas.add(new FighterData("", fighterAnimations[i], manager));
 		}
-        batch = new SpriteBatch();
-        gameOverScreen = new GameOverScreen(this);
+		gameOverScreen = new GameOverScreen(this);
 		menuScreen = new MenuScreen(this);
 		battleScreen = new BattleScreen(this);
 		optionScreen = new OptionScreen(this);
 		setScreen(menuScreen);
-
 	}
 	//public String getLevelFile(){
 
@@ -77,6 +96,7 @@ public class LastStand extends Game {
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//calls the current screens render
 		super.render();
 	}
 }
