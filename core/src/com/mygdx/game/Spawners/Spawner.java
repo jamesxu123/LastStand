@@ -1,19 +1,19 @@
 package com.mygdx.game.Spawners;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.mygdx.game.EntityUtilities.Entity;
+import com.mygdx.game.EntityUtilities.FighterData;
 
 import java.util.ArrayList;
 
 public abstract class Spawner {
     private Group group;
     private Class actorType;
-    private ArrayList<Entity> entities;
+    private ArrayList<FighterData> entities;
     private boolean spawning;
     private float totalTime;
 
 
-    public Spawner(Class actorType, ArrayList<Entity> entities) {
+    public Spawner(Class actorType, ArrayList<FighterData> entities) {
         this.actorType = actorType;
         spawning = false;
         this.entities = entities;
@@ -52,7 +52,7 @@ public abstract class Spawner {
         this.spawning = spawning;
     }
 
-    public ArrayList<Entity> getAnimations() {
+    public ArrayList<FighterData> getAnimations() {
         return entities;
     }
 }

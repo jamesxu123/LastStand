@@ -12,13 +12,14 @@ import com.mygdx.game.LastStand;
 
 public class MenuScreen implements Screen {
     private LastStand game;
-    private Texture bkg = new Texture("backgrounds/menubkg.jpg");
+    private Texture bkg;
 
     private Stage ui;
 
     public MenuScreen(final LastStand game) {
         //font demo
         this.game = game;
+        bkg = game.manager.get("backgrounds/menubkg.jpg");
 
         ui = new Stage();
         TextButton playButton = new TextButton("Play", game.style);

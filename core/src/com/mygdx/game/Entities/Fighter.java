@@ -3,34 +3,30 @@ package com.mygdx.game.Entities;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.Directions;
-import com.mygdx.game.EntityUtilities.Entity;
-import com.mygdx.game.EntityUtilities.FighterAnis;
-import com.mygdx.game.EntityUtilities.FighterStats;
+import com.mygdx.game.EntityUtilities.FighterData;
 import com.mygdx.game.States;
 
 
 public class Fighter extends Actor {
 
 
-    private Entity entity;
+    private FighterData data;
 
     private float aniTime = 0;
     private States state;
     private Directions direction;
     private int speed;
-    private FighterAnis fighterAnis;
-    private FighterStats stats;
+
 
     private int health;
 
 
     //Stats stats,
-    public Fighter(Entity entity, int x, int y) {
+    public Fighter(FighterData data, int x, int y) {
         speed = 1;
         setPosition(x, y);
-        this.entity = entity;
-        fighterAnis = (FighterAnis) entity.getAniContainer();
-        stats = (FighterStats) entity.getStats();
+        this.data = data;
+
 
 
 
@@ -57,21 +53,6 @@ public class Fighter extends Actor {
             this.remove();
         }
     }
-
-
-
-
-
-
-/*
-        //due to it being a mac /.DS_Store is included whenever a listfile is taken
-        ArrayList<Texture> picArrayList=new ArrayList<Texture>();
-        for(File f:sortedFiles){
-
-                picArrayList.add(new Texture(f.getPath()));
-            }
-        }
-        */
 
 
     @Override
@@ -101,7 +82,7 @@ public class Fighter extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(fighterAnis.get(state, direction).getKeyFrame(aniTime, true), getX(), getY());
+        batch.draw(data.getAnimations().get(state, direction).getKeyFrame(aniTime, true), getX(), getY());
 
     }
 
