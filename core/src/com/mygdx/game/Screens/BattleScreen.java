@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Abstractions.EntityGroup;
 import com.mygdx.game.Abstractions.EntityMap;
-import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.LastStand;
 import com.mygdx.game.Player;
 import com.mygdx.game.Spawners.FighterSpawner;
@@ -51,25 +50,25 @@ public class BattleScreen extends InputAdapter implements Screen {
         entityMap = new EntityMap();
         player = new Player();
         map = new TmxMapLoader().load("map1.tmx");
+        //gets the objects embedded in the tiled map
         RectangleMapObject spawnPoint = map.getLayers().get("Start").getObjects().getByType(RectangleMapObject.class).get(0);
         pathNodes = map.getLayers().get("Path Nodes").getObjects().getByType(RectangleMapObject.class);
 
 
-
-        enemies = new EntityGroup(new FighterSpawner("sprites/FIGHTER", Fighter.class,
-                (int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString(), "level_1", game.fighterDatas));
+        //creates a new group which has a spawner. the spawner gets the initial spawn point
+        enemies = new EntityGroup(new FighterSpawner((int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString(), "level_1", game.fighterDatas));
         gameUI = new GameUI(player, game.style, enemies);
         //projectiles = new EntityGroup(new Spawner(Projectile.class, new ArrayList()));
         //towers = new EntityGroup(new Spawner(Tower.class, new ArrayList()));
 
         camera = new OrthographicCamera(screenW, screenH);
+        //camera is only needed to center the map on the screen
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1, game.batch);
         camera.setToOrtho(false);
         mapRenderer.setView(camera);
-        //map.getLayers().get(2).getObjects()
 
         collisionObjs = map.getLayers().get("Tower Placement").getObjects();
-
+        //input multiplexer holds a bunch of input taking things and passes input to them
         inputs = new InputMultiplexer();
         entities = new Stage();
         this.game = game;
@@ -84,19 +83,20 @@ public class BattleScreen extends InputAdapter implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputs);
-        //projectiles.addActor(new Projectile(0, 0, 45, 2, new Point(0,0), new Texture("sprites/knight.png"), new EntityMap()));
         //entities.addActor(projectiles);
         entities.addActor(enemies);
         //entities.addActor(towers);
-        //when game wave starts spawning is set to true
-        //when wave is over it is set to false
+
     }
 
     private void update() {
+        //checks if the player still has hearts and if not gameover
         if (!player.isAlive()) {
             game.setScreen(game.gameOverScreen);
             return;
         }
+        /* this is where we get all objects into our 2d array so that
+        we can check collision,turn them and stuff*/
         ArrayList<Actor> movingEntities = new ArrayList<>();
         for (Actor a : enemies.getChildren()) {
             movingEntities.add(a);
@@ -163,15 +163,14 @@ public class BattleScreen extends InputAdapter implements Screen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        //loops through all the objects and check if the x,y is on them
         boolean onTower = false;
         for (RectangleMapObject rectangleObject : collisionObjs.getByType(RectangleMapObject.class)) {
 
 
             Rectangle rectangle = rectangleObject.getRectangle();
-//            System.out.println(rectangle);
             if (rectangle.contains(screenX, convertMouseY(screenY))) {
                 onTower = true;
-                //just change rectangle to coordinates later
 
                 //towerPlaceUI = new TowerPlaceUI(rectangle.x, rectangle.y, game.style, game.towerIcons, towers);
                 //inputs.addProcessor(towerPlaceUI.getStage());

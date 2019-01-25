@@ -33,11 +33,13 @@ public class EntityMap {
 
 
     public void constructMap(ArrayList<Actor> actors, Player player) {
+        //map is first cleared of all previous objects
         for (ArrayList<ArrayList<Actor>> row : map) {
             for (ArrayList<Actor> col : row) {
                 col.clear();
             }
         }
+        //actor is put in its respective spot in the grid
         for (Actor a : actors) {
             if (!((int) a.getY() / (screenH / mapArrH) < mapArrH && a.getX() / (screenW / mapArrW) < mapArrW)) {
                 a.remove();
@@ -47,12 +49,11 @@ public class EntityMap {
             }
             map.get((int) a.getY() / (screenH / mapArrH)).get((int) a.getX() / (screenW / mapArrW)).add(a);
         }
-        //System.out.println(map);
-        //System.out.println(true);
 
     }
 
     public void switchDirection(Array<RectangleMapObject> nodes) {
+        //loop through nodes and check in the array spots where the object is if there is anyone and switch their direction
         for (RectangleMapObject rectangleMapObject : nodes) {
             Rectangle r = rectangleMapObject.getRectangle();
             for (int row = 0; row < r.height / mapArrH; row++) {

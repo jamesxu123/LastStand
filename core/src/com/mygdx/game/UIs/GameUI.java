@@ -12,6 +12,7 @@ import com.mygdx.game.Player;
 import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 
+//the actual gameui that is the same throughout
 public class GameUI {
     private Stage stage;
     private Label livesLabel;

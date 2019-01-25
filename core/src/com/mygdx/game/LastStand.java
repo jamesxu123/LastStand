@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.EntityUtilities.FighterData;
+import com.mygdx.game.EntityUtilities.TowerData;
 import com.mygdx.game.Screens.*;
 
 import java.io.File;
@@ -28,7 +29,9 @@ public class LastStand extends Game {
 	public AssetManager manager = new AssetManager();
 
 	public ArrayList<FighterData> fighterDatas;
+	public ArrayList<TowerData> towerDatas;
 
+	//recursively gets all files to load and puts it in the asynchronous loaders queue
 	public void loadAllFiles(File file) {
 		for (File f : Utilities.getListFiles(file)) {
 			if (f.isDirectory()) {
@@ -55,6 +58,7 @@ public class LastStand extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		//skin is needed for loadingScreen so it is loaded beforehand
 		manager.load("orange/skin/uiskin.json", Skin.class);
 		manager.finishLoading();
 		style = manager.get("orange/skin/uiskin.json");
@@ -64,6 +68,7 @@ public class LastStand extends Game {
 		setScreen(loadingScreen);
 	}
 
+	//called when mananger is done loading everything from loadingscreen
 	public void initialize() {
 
 
@@ -91,6 +96,7 @@ public class LastStand extends Game {
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//calls the current screens render
 		super.render();
 	}
 }

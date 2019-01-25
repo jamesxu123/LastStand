@@ -22,11 +22,14 @@ public class FighterSpawner extends Spawner {
     private float spawnInterval;
     private Integer nextSpawn;
     private Iterator<File> waves;
+    private ArrayList<FighterData> fighterDatas;
 
-    public FighterSpawner(String spritesPath, Class actorClass, int x, int y, String direction, String roundDir, ArrayList<FighterData> entities) {
+
+    public FighterSpawner(int x, int y, String direction, String roundDir, ArrayList<FighterData> fighterDatas) {
 
 
-        super(actorClass, entities);
+        super();
+        this.fighterDatas = fighterDatas;
         waves = Arrays.asList(Utilities.getListFiles(new File(roundDir))).iterator();
 
         spawnX = x;
@@ -91,6 +94,6 @@ public class FighterSpawner extends Spawner {
 
     @Override
     public void spawn(int x, int y, int index) {
-        getGroup().addActor(new Fighter(getAnimations().get(index), x, y));
+        getGroup().addActor(new Fighter(fighterDatas.get(index), x, y));
     }
 }

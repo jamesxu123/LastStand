@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+//simple class to hold players current in-game stats
 public class Player {
     private int money;
     private int lives;

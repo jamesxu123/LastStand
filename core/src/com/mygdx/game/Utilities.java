@@ -8,6 +8,7 @@ import java.util.Random;
 import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 
+//Utility class for functions that are used throughout the files
 //the current size doesnt affect the bounds; the screen coords are relative to what it starts with
 public class Utilities {
     public static Random rand = new Random();

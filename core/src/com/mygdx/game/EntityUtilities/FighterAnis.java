@@ -18,7 +18,7 @@ public class FighterAnis {
     public FighterAnis(File spritesFile, AssetManager manager) {
         container = new HashMap<>();
 
-
+        //files are given by taking the folders it is in as keys
         File[] stateFiles = Utilities.getListFiles(spritesFile);
         for (File f : stateFiles) {
             States state = States.valueOf(f.getName());
@@ -45,8 +45,7 @@ public class FighterAnis {
 
     }
 
-    //put method should not be accessible by files outside package
-    void put(States state, Directions direction, Animation<Texture> sprites) {
+    private void put(States state, Directions direction, Animation<Texture> sprites) {
         if (!container.containsKey(state)) {
             container.put(state, new HashMap<>());
         }

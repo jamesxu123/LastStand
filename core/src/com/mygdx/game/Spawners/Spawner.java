@@ -1,25 +1,18 @@
 package com.mygdx.game.Spawners;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.mygdx.game.EntityUtilities.FighterData;
 
-import java.util.ArrayList;
-
+//abstract class that allows a group to spawn a member to its super group
 public abstract class Spawner {
+    //the super group- it has a two way relationship
     private Group group;
-    private Class actorType;
-    private ArrayList<FighterData> entities;
     private boolean spawning;
     private float totalTime;
 
 
-    public Spawner(Class actorType, ArrayList<FighterData> entities) {
-        this.actorType = actorType;
+    public Spawner() {
         spawning = false;
-        this.entities = entities;
     }
-
-
     public abstract void spawn(int x, int y, int index);
 
     public void setGroup(Group group) {
@@ -52,7 +45,4 @@ public abstract class Spawner {
         this.spawning = spawning;
     }
 
-    public ArrayList<FighterData> getAnimations() {
-        return entities;
-    }
 }
