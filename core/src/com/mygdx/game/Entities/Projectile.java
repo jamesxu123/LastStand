@@ -1,6 +1,5 @@
 package com.mygdx.game.Entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -12,30 +11,29 @@ import java.awt.*;
 
 public class Projectile extends Actor {
     public final float damage;
-    private float speed;
-    public final Point dest;
+    public final Point start, end;
     public final Sprite sprite;
     public final float width, height;
-    public final float damageRadius;
     private final EntityMap entityMap;
+    private float speed;
 
-    public Projectile(float damage, float damageRadius, float heading, float speed, Point dest, Texture sprite, EntityMap entityMap) {
+    public Projectile(float damage, Point start, Point end, float speed, Texture sprite, EntityMap entityMap) {
         this.damage = damage;
-        this.damageRadius = damageRadius;
-        setRotation((float)Math.toRadians(heading));
         this.speed = speed;
-        this.dest = dest;
+        this.start = start;
+        this.end = end;
         this.sprite = new Sprite(sprite);
         this.width = sprite.getWidth();
         this.height = sprite.getHeight();
         this.entityMap = entityMap;
-        setPosition(200, 200);
+        setRotation((float) Math.atan2(end.y - start.y, end.x - start.x));
+        setPosition(start.x, start.y);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
 //        batch.draw(sprite, getX(), getY());
-        sprite.setRotation((float)Math.toDegrees(getRotation()));
+        sprite.setRotation((float) Math.toDegrees(getRotation()));
         sprite.draw(batch);
         super.draw(batch, parentAlpha);
     }
@@ -47,17 +45,12 @@ public class Projectile extends Actor {
             return;
         }
         sprite.setPosition(getX(), getY());
-//        System.out.printf("(%f, %f)\n", getX(), getY());
-
-//        if (!Utilities.inScreen(this)) {
-//            this.remove();
-//            return;
-//        }
-        setPosition((float)(getX() + speed * Math.cos(getRotation())), (float)(getY() + speed * Math.sin(getRotation())));
+        setPosition((float) (getX() + speed * Math.cos(getRotation())), (float) (getY() + speed * Math.sin(getRotation())));
         super.act(delta);
     }
 
     public void damage(Fighter fighter) {
-
+        fighter.damage((int) damage);
+        this.remove();
     }
 }

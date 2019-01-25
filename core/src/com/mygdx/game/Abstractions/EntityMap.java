@@ -101,8 +101,7 @@ public class EntityMap {
                                     minDist = distance < minDist ? minDist : distance;
                                     minDistFighter = distance < minDist ? fighter : null;
                                 }
-                                //not good oop stuff
-                                minDistFighter.damage((int) projectile.damage);
+                                projectile.damage(minDistFighter);
                             }
                         }
                     });
