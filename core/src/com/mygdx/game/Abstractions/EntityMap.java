@@ -89,7 +89,7 @@ public class EntityMap {
                             }
                         }
 
-                        if (f.size() > 1) {
+                        if (f.size() >= 1) {
                             for (Projectile projectile : p) {
                                 double minDist = (double) Integer.MAX_VALUE;
                                 Fighter minDistFighter = f.get(0);
