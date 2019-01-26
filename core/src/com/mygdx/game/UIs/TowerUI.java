@@ -1,6 +1,6 @@
 package com.mygdx.game.UIs;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -9,30 +9,32 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Abstractions.EntityGroup;
+import com.mygdx.game.EntityUtilities.TowerData;
 
 import java.util.ArrayList;
 
 //ui that is placed when a player touches a tower placing spot
-public class TowerPlaceUI {
-    private float x;
-    private float y;
+public class TowerUI {
+    private Rectangle rect;
     private Table table;
     private Stage stage;
     private int index;
-    private ArrayList<Texture> towers;
+    private ArrayList<TowerData> towers;
     private EntityGroup group;
 
-    public TowerPlaceUI(float x, float y, Skin style, ArrayList<Texture> towers, EntityGroup towerGroup) {
+    public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towers, EntityGroup towerGroup) {
         index = 0;
         this.towers = towers;
         stage = new Stage();
+        this.rect = rect;
 
 
         //Circle c=new Circle(rectangle.getCenter(new Vector2()),15);
         table = new Table(style);
-        table.setPosition(x, y);
+        table.setPosition(rect.x, rect.y);
         table.setSize(100, 100);
-        Image curTower = new Image(towers.get(index));
+        //replace get key frame with icon later
+        Image curTower = new Image(towers.get(index).getAnimations().getKeyFrame(0));
         table.add(curTower);
         table.row();
         this.group = towerGroup;
@@ -41,8 +43,10 @@ public class TowerPlaceUI {
         payButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float clickX, float clickY) {
+                System.out.println(true);
                 super.clicked(event, clickX, clickY);
-                group.getSpawner().spawn((int) x, (int) y, index);
+                group.getSpawner().spawn((int) rect.x, (int) rect.y, index);
+
             }
         });
         table.add(payButton).size(40, 20);
@@ -54,6 +58,7 @@ public class TowerPlaceUI {
         stage.addActor(table);
     }
 
+
     public void draw() {
         stage.draw();
     }
@@ -62,4 +67,7 @@ public class TowerPlaceUI {
         return stage;
     }
 
+    public Rectangle getRect() {
+        return rect;
+    }
 }

@@ -19,14 +19,15 @@ import com.mygdx.game.Abstractions.EntityMap;
 import com.mygdx.game.LastStand;
 import com.mygdx.game.Player;
 import com.mygdx.game.Spawners.FighterSpawner;
+import com.mygdx.game.Spawners.TowerSpawner;
 import com.mygdx.game.UIs.GameUI;
-import com.mygdx.game.UIs.TowerPlaceUI;
+import com.mygdx.game.UIs.TowerUI;
+import com.mygdx.game.Utilities;
 
 import java.util.ArrayList;
 
 import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
-import static com.mygdx.game.Utilities.convertMouseY;
 
 public class BattleScreen extends InputAdapter implements Screen {
     private LastStand game;
@@ -42,13 +43,15 @@ public class BattleScreen extends InputAdapter implements Screen {
     private EntityMap entityMap;
     private Array<RectangleMapObject> pathNodes;
     private GameUI gameUI;
-    private TowerPlaceUI towerPlaceUI;
+    private TowerUI openTowerUI;
+    private ArrayList<TowerUI> towerUIs;
     private Player player;
 
     public BattleScreen(LastStand game) {
 
         entityMap = new EntityMap();
         player = new Player();
+
         map = new TmxMapLoader().load("map1.tmx");
         //gets the objects embedded in the tiled map
         RectangleMapObject spawnPoint = map.getLayers().get("Start").getObjects().getByType(RectangleMapObject.class).get(0);
@@ -56,9 +59,11 @@ public class BattleScreen extends InputAdapter implements Screen {
 
 
         //creates a new group which has a spawner. the spawner gets the initial spawn point
-        enemies = new EntityGroup(new FighterSpawner((int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString(), "level_1", game.fighterDatas));
+        enemies = new EntityGroup(new FighterSpawner((int) spawnPoint.getRectangle().x,
+                (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString(),
+                "level_1", game.fighterDatas));
         gameUI = new GameUI(player, game.style, enemies);
-        //projectiles = new EntityGroup(new Spawner(Projectile.class, new ArrayList()));
+        towers = new EntityGroup(new TowerSpawner(game.towerDatas));
         //towers = new EntityGroup(new Spawner(Tower.class, new ArrayList()));
 
         camera = new OrthographicCamera(screenW, screenH);
@@ -75,6 +80,13 @@ public class BattleScreen extends InputAdapter implements Screen {
         inputs.addProcessor(gameUI.getStage());
         inputs.addProcessor(this);
         inputs.addProcessor(entities);
+        towerUIs = new ArrayList<>();
+        for (RectangleMapObject rectangleObject : collisionObjs.getByType(RectangleMapObject.class)) {
+
+
+            Rectangle rectangle = rectangleObject.getRectangle();
+            towerUIs.add(new TowerUI(rectangle, game.style, game.towerDatas, towers));
+        }
 
     }
 
@@ -85,7 +97,7 @@ public class BattleScreen extends InputAdapter implements Screen {
         Gdx.input.setInputProcessor(inputs);
         //entities.addActor(projectiles);
         entities.addActor(enemies);
-        //entities.addActor(towers);
+        entities.addActor(towers);
 
     }
 
@@ -117,15 +129,20 @@ public class BattleScreen extends InputAdapter implements Screen {
 
     @Override
     public void render(float delta) {
+
         update();
 
         mapRenderer.render();
         entities.act(delta);
         entities.draw();
+
         gameUI.draw();
-        if (towerPlaceUI != null) {
-            towerPlaceUI.draw();
+        if (openTowerUI != null) {
+            openTowerUI.draw();
+
         }
+
+
     }
 
     enum Current {
@@ -162,22 +179,17 @@ public class BattleScreen extends InputAdapter implements Screen {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         //loops through all the objects and check if the x,y is on them
-        boolean onTower = false;
-        for (RectangleMapObject rectangleObject : collisionObjs.getByType(RectangleMapObject.class)) {
+        for (TowerUI t : towerUIs) {
+            if (t.getRect().contains(screenX, Utilities.convertMouseY(screenY))) {
+                if (openTowerUI != null) {
+                    inputs.removeProcessor(openTowerUI.getStage());
 
+                }
 
-            Rectangle rectangle = rectangleObject.getRectangle();
-            if (rectangle.contains(screenX, convertMouseY(screenY))) {
-                onTower = true;
+                openTowerUI = t;
+                inputs.addProcessor(openTowerUI.getStage());
 
-                //towerPlaceUI = new TowerPlaceUI(rectangle.x, rectangle.y, game.style, game.towerIcons, towers);
-                //inputs.addProcessor(towerPlaceUI.getStage());
             }
-        }
-
-        if (!onTower && towerPlaceUI != null) {
-            inputs.removeProcessor(towerPlaceUI.getStage());
-            towerPlaceUI = null;
         }
 
 

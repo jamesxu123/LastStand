@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.EntityUtilities.FighterData;
 import com.mygdx.game.EntityUtilities.TowerData;
 import com.mygdx.game.Screens.*;
@@ -64,6 +65,7 @@ public class LastStand extends Game {
 		style = manager.get("orange/skin/uiskin.json");
 		loadAllFiles(new File("sprites/"));
 		loadAllFiles(new File("backgrounds/"));
+		manager.finishLoading();
 		loadingScreen = new LoadingScreen(this);
 		setScreen(loadingScreen);
 	}
@@ -77,6 +79,9 @@ public class LastStand extends Game {
 		for (int i = 0; i < fighterAnimations.length; i++) {
 			fighterDatas.add(new FighterData("", fighterAnimations[i], manager));
 		}
+		towerDatas = new ArrayList<>();
+		towerDatas.add(new TowerData("", new File("sprites/TOWER/wizard"), manager, Tower.class));
+		//towerDatas.addAll(new TowerData("","sprites/TOWER/moneymaker"),manager, MoneyTower.class);
 		gameOverScreen = new GameOverScreen(this);
 		menuScreen = new MenuScreen(this);
 		battleScreen = new BattleScreen(this);
