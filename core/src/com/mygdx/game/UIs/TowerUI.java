@@ -22,6 +22,8 @@ public class TowerUI {
     private ArrayList<TowerData> towers;
     private EntityGroup group;
 
+    private int level;
+
     public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towers, EntityGroup towerGroup) {
         index = 0;
         this.towers = towers;
