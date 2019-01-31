@@ -15,6 +15,11 @@ public class EntityGroup extends Group {
     }
 
     @Override
+    public void childrenChanged() {
+        System.out.println(true);
+    }
+
+    @Override
     public void act(float delta) {
         //spawner is told to run but it will only run if spawning is true
         spawner.run(delta);

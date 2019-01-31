@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.EntityUtilities.FighterData;
@@ -28,7 +29,7 @@ public class LastStand extends Game {
     public GameOverScreen gameOverScreen;
 	public LoadingScreen loadingScreen;
 	public AssetManager manager = new AssetManager();
-
+	public ShapeRenderer shapeRenderer;
 	public ArrayList<FighterData> fighterDatas;
 	public ArrayList<TowerData> towerDatas;
 
@@ -59,6 +60,7 @@ public class LastStand extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		shapeRenderer = new ShapeRenderer();
 		//skin is needed for loadingScreen so it is loaded beforehand
 		manager.load("orange/skin/uiskin.json", Skin.class);
 		manager.finishLoading();

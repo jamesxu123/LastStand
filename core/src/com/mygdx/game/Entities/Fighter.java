@@ -6,6 +6,9 @@ import com.mygdx.game.Directions;
 import com.mygdx.game.EntityUtilities.FighterData;
 import com.mygdx.game.States;
 
+import static com.mygdx.game.LastStand.screenH;
+import static com.mygdx.game.LastStand.screenW;
+
 
 public class Fighter extends Actor {
 
@@ -82,7 +85,13 @@ public class Fighter extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(data.getAnimations().get(state, direction).getKeyFrame(aniTime, true), getX(), getY());
+        if (0 <= getX() && getX() < screenW && 0 <= getY() && getY() < screenH) {
+            batch.draw(data.getAnimations().get(state, direction).getKeyFrame(aniTime, true), getX(), getY());
+
+
+        } else {
+            remove();
+        }
 
     }
 

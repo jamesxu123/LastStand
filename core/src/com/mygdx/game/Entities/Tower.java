@@ -1,8 +1,11 @@
 package com.mygdx.game.Entities;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.EntityUtilities.TowerData;
+
+import java.util.ArrayList;
 
 public class Tower extends Actor {
     private TowerData data;
@@ -22,9 +25,17 @@ public class Tower extends Actor {
         super.act(delta);
     }
 
+    public Circle getRadius() {
+        return new Circle(getX(), getY(), data.getStats().getRadius());
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(data.getAnimations().getKeyFrame(aniTime, true), getX(), getY());
 
+    }
+
+    public void attack(ArrayList<Fighter> fighters) {
+        System.out.println(fighters);
     }
 }

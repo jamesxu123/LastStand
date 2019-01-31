@@ -1,12 +1,14 @@
 package com.mygdx.game.Abstractions;
 
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.Entities.Projectile;
-import com.mygdx.game.Player;
+import com.mygdx.game.Entities.Tower;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -31,25 +33,56 @@ public class EntityMap {
         }
     }
 
+    public ArrayList<Fighter> getInRadius(Tower t) {
+        ArrayList<Fighter> fighters = new ArrayList<>();
+        for (Actor actor : getCellsInArea(t.getRadius())) {
+            fighters.add((Fighter) actor);
+        }
 
-    public void constructMap(ArrayList<Actor> actors, Player player) {
-        //map is first cleared of all previous objects
+        return fighters;
+    }
+    //public ArrayList<int[]> getCells(Rectangle r){
+
+    //}
+    public ArrayList<Actor> getCellsInArea(Circle c) {
+        ArrayList<Actor> cells = new ArrayList<>();
+        for (int i = (int) -c.radius / mapArrH; i < c.radius / mapArrH; i++) {
+            for (int j = (int) -c.radius / mapArrW; j < c.radius / mapArrW; j++) {
+                if (c.contains(c.x + i * mapArrH, c.y + j * mapArrW)) {
+                    cells.addAll(map.get(i + convertMapY(c.y)).get(j + convertMapX(c.x)));
+                }
+            }
+        }
+        return cells;
+
+    }
+
+    public void constructMap(SnapshotArray<Actor> actors) {
+
+        //actor is put in its respective spot in the grid
+
+        for (Actor a : actors) {
+
+            map.get(convertMapY(a.getY())).get(convertMapX(a.getX())).add(a);
+        }
+
+    }
+
+    public int convertMapX(float x) {
+        return (int) x / (screenW / mapArrW);
+
+    }
+
+    public int convertMapY(float y) {
+        return (int) y / (screenH / mapArrH);
+    }
+
+    public void resetMap() {
         for (ArrayList<ArrayList<Actor>> row : map) {
             for (ArrayList<Actor> col : row) {
                 col.clear();
             }
         }
-        //actor is put in its respective spot in the grid
-        for (Actor a : actors) {
-            if (!((int) a.getY() / (screenH / mapArrH) < mapArrH && a.getX() / (screenW / mapArrW) < mapArrW)) {
-                a.remove();
-                player.loseLife();
-                continue;
-
-            }
-            map.get((int) a.getY() / (screenH / mapArrH)).get((int) a.getX() / (screenW / mapArrW)).add(a);
-        }
-
     }
 
     public void switchDirection(Array<RectangleMapObject> nodes) {
@@ -58,7 +91,7 @@ public class EntityMap {
             Rectangle r = rectangleMapObject.getRectangle();
             for (int row = 0; row < r.height / mapArrH; row++) {
                 for (int col = 0; col < r.width / mapArrW; col++) {
-                    for (Actor a : map.get((int) r.y / (screenH / mapArrH) + row).get((int) r.x / (screenW / mapArrW) + col)) {
+                    for (Actor a : map.get(convertMapY(r.y) + row).get(convertMapX(r.x) + col)) {
                         if (a.getClass() == Fighter.class) {
                             Fighter f = (Fighter) a;
                             f.setDirection(rectangleMapObject.getProperties().get("Direction").toString());

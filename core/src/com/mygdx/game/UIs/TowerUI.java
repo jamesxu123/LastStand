@@ -1,5 +1,7 @@
 package com.mygdx.game.UIs;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -23,12 +25,14 @@ public class TowerUI {
     private EntityGroup group;
 
     private int level;
+    private ShapeRenderer shapeRenderer;
 
-    public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towers, EntityGroup towerGroup) {
+    public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towers, EntityGroup towerGroup, ShapeRenderer shapeRenderer) {
         index = 0;
         this.towers = towers;
         stage = new Stage();
         this.rect = rect;
+        this.shapeRenderer = shapeRenderer;
 
 
         //Circle c=new Circle(rectangle.getCenter(new Vector2()),15);
@@ -62,7 +66,14 @@ public class TowerUI {
 
 
     public void draw() {
+        shapeRenderer.setColor(0, 0, 0, 0.5f);
+
         stage.draw();
+        shapeRenderer.begin(ShapeType.Filled);
+
+        shapeRenderer.circle(rect.x, rect.y, towers.get(index).getStats().getRadius());
+        shapeRenderer.end();
+
     }
 
     public Stage getStage() {

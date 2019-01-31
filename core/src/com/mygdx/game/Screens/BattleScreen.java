@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Abstractions.EntityGroup;
 import com.mygdx.game.Abstractions.EntityMap;
+import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.LastStand;
 import com.mygdx.game.Player;
 import com.mygdx.game.Spawners.FighterSpawner;
@@ -85,7 +86,7 @@ public class BattleScreen extends InputAdapter implements Screen {
 
 
             Rectangle rectangle = rectangleObject.getRectangle();
-            towerUIs.add(new TowerUI(rectangle, game.style, game.towerDatas, towers));
+            towerUIs.add(new TowerUI(rectangle, game.style, game.towerDatas, towers, game.shapeRenderer));
         }
 
     }
@@ -103,26 +104,25 @@ public class BattleScreen extends InputAdapter implements Screen {
 
     private void update() {
         //checks if the player still has hearts and if not gameover
+
         if (!player.isAlive()) {
             game.setScreen(game.gameOverScreen);
             return;
         }
         /* this is where we get all objects into our 2d array so that
         we can check collision,turn them and stuff*/
-        ArrayList<Actor> movingEntities = new ArrayList<>();
-        for (Actor a : enemies.getChildren()) {
-            movingEntities.add(a);
-        }
-/*        for (Actor a : projectiles.getChildren()) {
-            movingEntities.add(a);
 
-        }*/
-        entityMap.constructMap(movingEntities, player);
+        entityMap.constructMap(enemies.getChildren());
         entityMap.switchDirection(pathNodes);
+
+
+        for (Actor a : towers.getChildren()) {
+            Tower t = (Tower) a;
+            t.attack(entityMap.getInRadius(t));
+        }
         entityMap.collide(Gdx.graphics.getDeltaTime());
         gameUI.update();
-        //entityMap.update(Gdx.graphics.getDeltaTime());
-        //instead of being a tile map thing this can be a part of entity map
+        entityMap.resetMap();
 
 
     }
@@ -179,15 +179,18 @@ public class BattleScreen extends InputAdapter implements Screen {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         //loops through all the objects and check if the x,y is on them
+        if (openTowerUI != null) {
+            inputs.removeProcessor(openTowerUI.getStage());
+        }
+        openTowerUI = null;
+
         for (TowerUI t : towerUIs) {
             if (t.getRect().contains(screenX, Utilities.convertMouseY(screenY))) {
-                if (openTowerUI != null) {
-                    inputs.removeProcessor(openTowerUI.getStage());
 
-                }
 
                 openTowerUI = t;
                 inputs.addProcessor(openTowerUI.getStage());
+
 
             }
         }
