@@ -112,7 +112,7 @@ public class BattleScreen extends InputAdapter implements Screen {
         /* this is where we get all objects into our 2d array so that
         we can check collision,turn them and stuff*/
 
-        entityMap.constructMap(enemies.getChildren());
+        entityMap.constructMap(enemies.getChildren(), player);
         entityMap.switchDirection(pathNodes);
 
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.Entities.Projectile;
 import com.mygdx.game.Entities.Tower;
+import com.mygdx.game.Player;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -57,15 +58,29 @@ public class EntityMap {
 
     }
 
-    public void constructMap(SnapshotArray<Actor> actors) {
+    public void constructMap(SnapshotArray<Actor> actors, Player p) {
 
         //actor is put in its respective spot in the grid
 
         for (Actor a : actors) {
+            if (contains(a)) {
+                map.get(convertMapY(a.getY())).get(convertMapX(a.getX())).add(a);
 
-            map.get(convertMapY(a.getY())).get(convertMapX(a.getX())).add(a);
+            } else if (a.getClass() == Fighter.class) {
+                p.loseLife();
+                a.remove();
+
+            } else {
+                a.remove();
+            }
+
+
         }
 
+    }
+
+    public boolean contains(Actor a) {
+        return (0 <= convertMapX(a.getX()) && convertMapX(a.getX()) < mapArrW) && (0 <= convertMapY(a.getY()) && convertMapY(a.getY()) < mapArrH);
     }
 
     public int convertMapX(float x) {
@@ -85,6 +100,7 @@ public class EntityMap {
         }
     }
 
+    //need to add randomness when switching directions with random and need to adjust tiled map thing
     public void switchDirection(Array<RectangleMapObject> nodes) {
         //loop through nodes and check in the array spots where the object is if there is anyone and switch their direction
         for (RectangleMapObject rectangleMapObject : nodes) {
