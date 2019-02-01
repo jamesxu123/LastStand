@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import java.awt.*;
 import java.io.File;
 import java.util.Random;
 
@@ -25,7 +26,13 @@ public class Utilities {
 
     public static File[] getListFiles(File f) {
         return f.listFiles(((dir, name) -> !name.equals(".DS_Store")));
+    }
 
+    public static double getDistance(Actor a, Actor b) {
+        return Math.hypot(a.getX() - b.getX(), a.getY() - b.getY());
+    }
 
+    public static Point getPoint(Actor a) {
+        return new Point((int) a.getX(), (int) a.getY());
     }
 }

@@ -10,6 +10,7 @@ import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.Entities.Projectile;
 import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.Player;
+import com.mygdx.game.Utilities;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -37,11 +38,23 @@ public class EntityMap {
     public ArrayList<Fighter> getInRadius(Tower t) {
         ArrayList<Fighter> fighters = new ArrayList<>();
         for (Actor actor : getCellsInArea(t.getRadius())) {
-            fighters.add((Fighter) actor);
+            if (actor.getClass() == Fighter.class) {
+                fighters.add((Fighter) actor);
+            }
         }
-
         return fighters;
     }
+
+    public ArrayList<Fighter> getInRadius(Circle radius) {
+        ArrayList<Fighter> fighters = new ArrayList<>();
+        for (Actor actor : getCellsInArea(radius)) {
+            if (actor.getClass() == Fighter.class) {
+                fighters.add((Fighter) actor);
+            }
+        }
+        return fighters;
+    }
+
     //public ArrayList<int[]> getCells(Rectangle r){
 
     //}
@@ -127,16 +140,20 @@ public class EntityMap {
                 if (map.get(row).get(col).size() > 0) {
                     final ArrayList<Actor> actors = map.get(row).get(col);
                     executorService.submit(() -> {
-                        ArrayList<Fighter> f = new ArrayList<>();
                         ArrayList<Projectile> p = new ArrayList<>();
+                        ArrayList<Fighter> f = new ArrayList<>();
 
                         for (Actor actor : actors) {
-                            if (actor.getClass() == Fighter.class) {
-                                f.add((Fighter) actor);
-                            } else if (actor.getClass() == Projectile.class) {
+                            if (actor.getClass() == Projectile.class) {
                                 p.add((Projectile) actor);
                             }
                         }
+
+                        for (Projectile projectile : p) {
+                            f.addAll(this.getInRadius(projectile.range));
+                        }
+
+
 
                         if (f.size() >= 1) {
                             for (Projectile projectile : p) {
@@ -158,5 +175,18 @@ public class EntityMap {
                 }
             }
         }
+    }
+
+    public Fighter closestFighter(Tower tower) {
+        ArrayList<Fighter> fighters = this.getInRadius(tower);
+        double minDist = Double.MAX_VALUE;
+        Fighter closestFighter = fighters.get(0);
+        for (Fighter fighter : fighters) {
+            if (Utilities.getDistance(tower, fighter) < minDist) {
+                closestFighter = fighter;
+            }
+        }
+
+        return closestFighter;
     }
 }
