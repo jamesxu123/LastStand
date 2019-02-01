@@ -25,6 +25,7 @@ public class Fighter extends Actor {
     public Fighter(FighterData data, int x, int y) {
         speed = 1;
         setPosition(x, y);
+
         this.data = data;
 
 

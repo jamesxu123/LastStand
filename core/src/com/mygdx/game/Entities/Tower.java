@@ -29,7 +29,7 @@ public class Tower extends Actor {
 
     public Circle getRadius() {
         //need to get icon and offset the circle center
-        return new Circle(getX() + 20, getY() + 32, data.getStats().getRadius());
+        return new Circle(getX() + 20, getY() + 32, data.getRadius());
     }
 
     @Override

@@ -7,13 +7,14 @@ import java.io.File;
 public class FighterData extends EntityData {
     //entity will also have other attributes such as name, icon, and description
     private FighterAnis animations;
-    private Stats stats;
+    float speed = 1;
+    float health = 20;
 
     //stats path should be file- will replace later
     public FighterData(String statsPath, File spritesPath, AssetManager manager) {
 
         animations = new FighterAnis(spritesPath, manager);
-        stats = new FighterStats(statsPath);
+
 
     }
 
@@ -21,7 +22,11 @@ public class FighterData extends EntityData {
         return animations;
     }
 
-    public Stats getStats() {
-        return stats;
+    public float getSpeed() {
+        return speed;
+    }
+
+    public float getHealth() {
+        return health;
     }
 }

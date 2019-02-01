@@ -13,9 +13,10 @@ import static com.mygdx.game.LastStand.screenW;
 //the current size doesnt affect the bounds; the screen coords are relative to what it starts with
 public class Utilities {
     public static Random rand = new Random();
-    public static boolean inScreen(Actor actor) {
-        if ((0 <= actor.getX()) || (actor.getX() <= screenW)) {
-            return (0 <= actor.getY()) || (actor.getY() <= screenH);
+
+    public static boolean inScreen(float x, float y) {
+        if ((0 <= x) || (x <= screenW)) {
+            return (0 <= y) || (y <= screenH);
         }
         return false;
     }
@@ -34,5 +35,11 @@ public class Utilities {
 
     public static Point getPoint(Actor a) {
         return new Point((int) a.getX(), (int) a.getY());
+    }
+
+    public static boolean inScreen(Actor a) {
+
+        return inScreen(a.getX(), a.getY());
+
     }
 }

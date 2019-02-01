@@ -11,8 +11,8 @@ public class TowerData extends EntityData {
     //will be replaced by a simple animation
     private Animation<Texture> animations;
     //stats will soon be replaced by stat class just for tower
-    private TowerStats stats;
     private Class towerType;
+    int radius = 100;
 
     public TowerData(String statsPath, File spritesPath, AssetManager manager, Class towerType) {
         File[] fileList = Utilities.getListFiles(spritesPath);
@@ -20,7 +20,6 @@ public class TowerData extends EntityData {
         for (int i = 0; i < fileList.length; i++) {
             animationFrames[i] = manager.get(fileList[i].getPath());
         }
-        stats = new TowerStats();
         animations = new Animation<Texture>(1, animationFrames);
         this.towerType = towerType;
 
@@ -35,7 +34,7 @@ public class TowerData extends EntityData {
         return animations;
     }
 
-    public TowerStats getStats() {
-        return stats;
+    public float getRadius() {
+        return radius;
     }
 }

@@ -71,7 +71,7 @@ public class EntityMap {
                 if (c.contains(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH)) {
                     shapeRenderer.rect(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH, screenW / mapArrW, screenH / mapArrH);
 
-                    if (contains(c.x + j * mapArrW, c.y + i * mapArrH)) {
+                    if (Utilities.inScreen(c.x + j * mapArrW, c.y + i * mapArrH)) {
                         cells.addAll(map.get(i + convertMapY(c.y)).get(j + convertMapX(c.x)));
 
                     }
@@ -104,7 +104,7 @@ public class EntityMap {
         //actor is put in its respective spot in the grid
 
         for (Actor a : actors) {
-            if (contains(a)) {
+            if (Utilities.inScreen(a)) {
                 map.get(convertMapY(a.getY())).get(convertMapX(a.getX())).add(a);
 
             } else if (a.getClass() == Fighter.class) {
@@ -120,17 +120,9 @@ public class EntityMap {
 
     }
 
-    public boolean contains(Actor a) {
 
-        return contains(a.getX(), a.getY());
 
-    }
 
-    public boolean contains(float x, float y) {
-
-        return (0 <= convertMapX(x) && convertMapX(x) <= mapArrW) && (0 <= convertMapY(y) && convertMapY(y) <= mapArrH);
-
-    }
 
     public int convertMapX(float x) {
         return Math.round(x / (screenW / mapArrW));
