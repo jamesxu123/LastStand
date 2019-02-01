@@ -3,8 +3,10 @@ package com.mygdx.game.Entities;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.Abstractions.EntityMap;
+import com.mygdx.game.EntityUtilities.ProjectileData;
 import com.mygdx.game.Utilities;
 
 import java.awt.*;
@@ -16,16 +18,18 @@ public class Projectile extends Actor {
     public final float width, height;
     private final EntityMap entityMap;
     private float speed;
+    public final Circle range = new Circle();
 
-    public Projectile(float damage, Point start, Point end, float speed, Texture sprite, EntityMap entityMap) {
-        this.damage = damage;
-        this.speed = speed;
+    public Projectile(ProjectileData projectileData, Point start, Point end, EntityMap entityMap) {
+        this.damage = projectileData.damage;
+        this.speed = projectileData.speed;
         this.start = start;
         this.end = end;
-        this.sprite = new Sprite(sprite);
+        this.sprite = new Sprite(projectileData.sprite);
         this.width = sprite.getWidth();
         this.height = sprite.getHeight();
         this.entityMap = entityMap;
+        this.range.radius = projectileData.range;
         setRotation((float) Math.atan2(end.y - start.y, end.x - start.x));
         setPosition(start.x, start.y);
     }
@@ -44,6 +48,7 @@ public class Projectile extends Actor {
             this.remove();
             return;
         }
+        range.setPosition(getX(), getY());
         sprite.setPosition(getX(), getY());
         setPosition((float) (getX() + speed * Math.cos(getRotation())), (float) (getY() + speed * Math.sin(getRotation())));
         super.act(delta);
