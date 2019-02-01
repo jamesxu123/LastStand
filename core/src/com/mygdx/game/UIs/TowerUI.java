@@ -71,7 +71,7 @@ public class TowerUI {
         stage.draw();
         shapeRenderer.begin(ShapeType.Filled);
 
-        shapeRenderer.circle(rect.x, rect.y, towers.get(index).getStats().getRadius());
+        shapeRenderer.circle(rect.x + rect.width / 2, rect.y + rect.height / 2, towers.get(index).getStats().getRadius());
         shapeRenderer.end();
 
     }

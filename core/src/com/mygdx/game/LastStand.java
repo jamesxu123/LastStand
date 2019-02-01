@@ -67,7 +67,6 @@ public class LastStand extends Game {
 		style = manager.get("orange/skin/uiskin.json");
 		loadAllFiles(new File("sprites/"));
 		loadAllFiles(new File("backgrounds/"));
-		manager.finishLoading();
 		loadingScreen = new LoadingScreen(this);
 		setScreen(loadingScreen);
 	}

@@ -112,37 +112,37 @@
   </layer>
  </group>
  <objectgroup id="18" name="Path Nodes">
-  <object id="88" x="124" y="135" width="90" height="17">
+  <object id="88" x="124" y="112" width="82" height="74">
    <properties>
     <property name="Direction" value="RIGHT"/>
    </properties>
   </object>
-  <object id="92" x="454" y="113" width="17" height="76">
+  <object id="92" x="434" y="94" width="60" height="95">
    <properties>
     <property name="Direction" value="DOWN"/>
    </properties>
   </object>
-  <object id="93" x="412" y="458" width="79" height="17">
+  <object id="93" x="415" y="416" width="95" height="76">
    <properties>
     <property name="Direction" value="LEFT"/>
    </properties>
   </object>
-  <object id="94" x="310" y="419" width="15" height="94">
+  <object id="94" x="307" y="419" width="49" height="94">
    <properties>
     <property name="Direction" value="DOWN"/>
    </properties>
   </object>
-  <object id="95" x="289" y="642" width="82" height="16">
+  <object id="95" x="289" y="592" width="82" height="66">
    <properties>
     <property name="Direction" value="RIGHT"/>
    </properties>
   </object>
-  <object id="96" x="664" y="591" width="19" height="75">
+  <object id="96" x="627" y="591" width="56" height="75">
    <properties>
     <property name="Direction" value="UP"/>
    </properties>
   </object>
-  <object id="99" x="610" y="126" width="92" height="20">
+  <object id="99" x="607" y="126" width="95" height="48">
    <properties>
     <property name="Direction" value="RIGHT"/>
    </properties>

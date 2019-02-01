@@ -50,7 +50,7 @@ public class BattleScreen extends InputAdapter implements Screen {
 
     public BattleScreen(LastStand game) {
 
-        entityMap = new EntityMap();
+        entityMap = new EntityMap(game.shapeRenderer);
         player = new Player();
 
         map = new TmxMapLoader().load("map1.tmx");
@@ -140,6 +140,11 @@ public class BattleScreen extends InputAdapter implements Screen {
         if (openTowerUI != null) {
             openTowerUI.draw();
 
+        }
+        entityMap.debug();
+        for (Actor a : towers.getChildren()) {
+            Tower t = (Tower) a;
+            t.attack(entityMap.getInRadius(t));
         }
 
 

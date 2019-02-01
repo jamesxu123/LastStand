@@ -80,6 +80,10 @@ public class Fighter extends Actor {
 
     }
 
+    public Directions getDirections() {
+        return direction;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
