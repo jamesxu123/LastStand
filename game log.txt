@@ -91,3 +91,10 @@ add a progress bar for the time until end of round
 add a little randomness at every turn
 
 assetManager for txt files as well as the maps next
+
+lots of text file making tommorrow.
+
+freeze all towers idea- towers get frozen in frozen wasteland map
+employed by stopping spawning
+
+look at collide

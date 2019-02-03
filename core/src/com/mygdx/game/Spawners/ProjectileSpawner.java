@@ -1,8 +1,7 @@
 package com.mygdx.game.Spawners;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.mygdx.game.Abstractions.EntityMap;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.Abstractions.EntityGroup;
 import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.Entities.Projectile;
 import com.mygdx.game.Entities.Tower;
@@ -12,48 +11,53 @@ import com.mygdx.game.Utilities;
 import java.awt.*;
 
 public class ProjectileSpawner extends Spawner {
-    private int damage;
-    private float speed;
 
-    private Texture sprite;
-    private EntityMap entityMap;
+    private EntityGroup towers;
 
-    private Tower tower;
 
-    private Projectile projectile;
-    private final ProjectileData projectileData;
+    public ProjectileSpawner(EntityGroup towers) {
+        this.towers = towers;
 
-    private long coolDown;
-    private long lastFired;
-
-    public ProjectileSpawner(Tower tower, int damage, float speed, long coolDown, Texture sprite, EntityMap entityMap) {
-        this.damage = damage;
-        this.speed = speed;
-        this.sprite = sprite;
-        this.entityMap = entityMap;
-        this.tower = tower;
-        this.coolDown = coolDown;
-        this.projectileData = new ProjectileData(sprite, damage, speed, 10, tower);
         setSpawning(true);
     }
 
     @Override
     public void run(float delta) {
+
         if (getSpawning()) {
-            if (TimeUtils.millis() - lastFired > coolDown) {
-                lastFired = TimeUtils.millis();
-                Fighter fighter = entityMap.closestFighter(this.tower);
-                projectile = new Projectile(projectileData, Utilities.getPoint(tower), Utilities.getPoint(fighter), entityMap);
+            for (Actor a : towers.getChildren()) {
+                Tower t = (Tower) a;
+
+                if (!t.getInRadius().isEmpty()) {
+
+
+                    if (t.getLastFired() > t.data.coolDown) {
+                        t.setLastFired(0);
+
+
+                        Fighter fighter = t.getClosest();
+
+
+                        spawn(t.data.projectileData, Utilities.getPoint(t), Utilities.getPoint(fighter), t);
+                    }
+                    t.setLastFired(t.getLastFired() + delta);
+                }
+
             }
+
+
         }
+
         super.run(delta);
+    }
+
+    public void spawn(ProjectileData data, Point start, Point end, Tower t) {
+
+        getGroup().addActor(new Projectile(data, start, end, t));
+
     }
 
     @Override
     public void spawn(int x, int y, int index) {
-        if (projectile != null) {
-            getGroup().addActor(projectile);
-            projectile = null;
-        }
     }
 }

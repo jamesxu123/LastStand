@@ -1,20 +1,30 @@
 package com.mygdx.game.EntityUtilities;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.Entities.Tower;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.mygdx.game.Utilities;
+
+import java.io.File;
 
 public class ProjectileData extends EntityData {
-    public final Texture sprite;
+    //????
+    public final float range;
     public final float damage;
     public final float speed;
-    public final Tower tower;
-    public final float range;
+    public Animation<Texture> animations;
 
-    public ProjectileData(Texture sprite, float damage, float speed, float range, Tower tower) {
-        this.sprite = sprite;
-        this.damage = damage;
-        this.speed = speed;
-        this.tower = tower;
-        this.range = range;
+    public ProjectileData(File spritesPath, String statsPath, AssetManager manager) {
+        File[] fileList = Utilities.getListFiles(spritesPath);
+        Texture[] animationFrames = new Texture[fileList.length];
+        for (int i = 0; i < fileList.length; i++) {
+            animationFrames[i] = manager.get(fileList[i].getPath());
+        }
+        animations = new Animation<>(1, animationFrames);
+        range = 20;
+        damage = 5;
+        speed = 1;
+
+
     }
 }

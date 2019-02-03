@@ -9,12 +9,15 @@ import java.io.File;
 
 public class TowerData extends EntityData {
     //will be replaced by a simple animation
-    private Animation<Texture> animations;
+    public final Animation<Texture> animations;
+    public final ProjectileData projectileData;
+    public final Class towerType;
+    public final int radius = 100;
     //stats will soon be replaced by stat class just for tower
-    private Class towerType;
-    int radius = 100;
+    public float coolDown;
 
     public TowerData(String statsPath, File spritesPath, AssetManager manager, Class towerType) {
+
         File[] fileList = Utilities.getListFiles(spritesPath);
         Texture[] animationFrames = new Texture[fileList.length];
         for (int i = 0; i < fileList.length; i++) {
@@ -22,19 +25,11 @@ public class TowerData extends EntityData {
         }
         animations = new Animation<Texture>(1, animationFrames);
         this.towerType = towerType;
+        //data needs to be obtained from text file things
+        coolDown = 0.5f;
+        projectileData = new ProjectileData(new File("sprites/PROJECTILE/WIZARD"), "statspath", manager);
 
 
-    }
 
-    public Class getTowerType() {
-        return towerType;
-    }
-
-    public Animation<Texture> getAnimations() {
-        return animations;
-    }
-
-    public float getRadius() {
-        return radius;
     }
 }

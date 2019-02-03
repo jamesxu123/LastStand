@@ -24,7 +24,7 @@ public class TowerSpawner extends Spawner {
 
     @Override
     public void spawn(int x, int y, int index) {
-        if (towerDatas.get(index).getTowerType() == MoneyTower.class) {
+        if (towerDatas.get(index).towerType == MoneyTower.class) {
             //getGroup().addActor(new MoneyTower());
         } else {
             getGroup().addActor(new Tower(x, y, towerDatas.get(index)));

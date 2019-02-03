@@ -10,23 +10,20 @@ import com.mygdx.game.States;
 public class Fighter extends Actor {
 
 
-    private FighterData data;
-
+    public final FighterData data;
+    private float health;
     private float aniTime = 0;
     private States state;
     private Directions direction;
-    private int speed;
 
-
-    private int health;
 
 
     //Stats stats,
     public Fighter(FighterData data, int x, int y) {
-        speed = 1;
         setPosition(x, y);
 
         this.data = data;
+        health = data.health;
 
 
 
@@ -63,17 +60,17 @@ public class Fighter extends Actor {
         if (state == States.WALK) {
             switch (direction) {
                 case RIGHT:
-                    moveBy(speed, 0);
+                    moveBy(data.speed, 0);
                     break;
                 case LEFT:
-                    moveBy(-speed, 0);
+                    moveBy(-data.speed, 0);
                     break;
                 case UP:
-                    moveBy(0, speed);
+                    moveBy(0, data.speed);
                     break;
 
                 case DOWN:
-                    moveBy(0, -speed);
+                    moveBy(0, -data.speed);
                     break;
 
             }
@@ -88,7 +85,7 @@ public class Fighter extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
-        batch.draw(data.getAnimations().get(state, direction).getKeyFrame(aniTime, true), getX(), getY());
+        batch.draw(data.animations.get(state, direction).getKeyFrame(aniTime, true), getX(), getY());
 
 
 

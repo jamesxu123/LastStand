@@ -20,6 +20,7 @@ import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.LastStand;
 import com.mygdx.game.Player;
 import com.mygdx.game.Spawners.FighterSpawner;
+import com.mygdx.game.Spawners.ProjectileSpawner;
 import com.mygdx.game.Spawners.TowerSpawner;
 import com.mygdx.game.UIs.GameUI;
 import com.mygdx.game.UIs.TowerUI;
@@ -60,12 +61,11 @@ public class BattleScreen extends InputAdapter implements Screen {
 
 
         //creates a new group which has a spawner. the spawner gets the initial spawn point
-        enemies = new EntityGroup(new FighterSpawner((int) spawnPoint.getRectangle().x,
-                (int) spawnPoint.getRectangle().y, spawnPoint.getProperties().get("Direction").toString(),
-                "level_1", game.fighterDatas));
+        enemies = new EntityGroup(new FighterSpawner((int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y,
+                spawnPoint.getProperties().get("Direction").toString(), "level_1", game.fighterDatas));
         gameUI = new GameUI(player, game.style, enemies);
         towers = new EntityGroup(new TowerSpawner(game.towerDatas));
-        //towers = new EntityGroup(new Spawner(Tower.class, new ArrayList()));
+        projectiles = new EntityGroup(new ProjectileSpawner(towers));
 
         camera = new OrthographicCamera(screenW, screenH);
         //camera is only needed to center the map on the screen
@@ -96,13 +96,14 @@ public class BattleScreen extends InputAdapter implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputs);
-        //entities.addActor(projectiles);
+        entities.addActor(projectiles);
         entities.addActor(enemies);
         entities.addActor(towers);
 
     }
 
-    private void update() {
+    private void update(float delta) {
+        entities.act(delta);
         //checks if the player still has hearts and if not gameover
 
         if (!player.isAlive()) {
@@ -114,14 +115,12 @@ public class BattleScreen extends InputAdapter implements Screen {
 
         entityMap.constructMap(enemies.getChildren(), player);
         entityMap.switchDirection(pathNodes);
-
-
+        entityMap.collide(delta);
+        gameUI.update();
         for (Actor a : towers.getChildren()) {
             Tower t = (Tower) a;
-            t.attack(entityMap.getInRadius(t));
+            t.setInRadius(entityMap.getInRadius(t));
         }
-        entityMap.collide(Gdx.graphics.getDeltaTime());
-        gameUI.update();
         entityMap.resetMap();
 
 
@@ -130,22 +129,21 @@ public class BattleScreen extends InputAdapter implements Screen {
     @Override
     public void render(float delta) {
 
-        update();
+        update(delta);
 
         mapRenderer.render();
-        entities.act(delta);
-        entities.draw();
+
 
         gameUI.draw();
         if (openTowerUI != null) {
             openTowerUI.draw();
 
         }
-        entityMap.debug();
-        for (Actor a : towers.getChildren()) {
-            Tower t = (Tower) a;
-            t.attack(entityMap.getInRadius(t));
-        }
+        //entityMap.debug();
+        entities.draw();
+        //for
+
+
 
 
     }

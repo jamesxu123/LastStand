@@ -77,9 +77,16 @@ public class FighterSpawner extends Spawner {
 
             }
             if (getTotalTime() > spawnInterval) {
-                int r = Utilities.rand.nextInt(15);
+                int r = Utilities.rand.nextInt(20);
+
                 int deviation = (Utilities.rand.nextBoolean()) ? r : -r;
-                spawn(spawnX + deviation, spawnY, nextSpawn);
+                if (spawnDir == Directions.UP || spawnDir == Directions.DOWN) {
+                    spawn(spawnX + deviation, spawnY, nextSpawn);
+
+                } else {
+                    spawn(spawnX, spawnY + deviation, nextSpawn);
+                }
+
                 Fighter f = (Fighter) getGroup().getChildren().get(getGroup().getChildren().size - 1);
                 f.setDirection(spawnDir);
                 nextSpawn = null;

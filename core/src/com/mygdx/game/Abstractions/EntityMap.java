@@ -39,13 +39,7 @@ public class EntityMap {
     }
 
     public ArrayList<Fighter> getInRadius(Tower t) {
-        ArrayList<Fighter> fighters = new ArrayList<>();
-        for (Actor actor : getCellsInArea(t.getRadius())) {
-            if (actor.getClass() == Fighter.class) {
-                fighters.add((Fighter) actor);
-            }
-        }
-        return fighters;
+        return getInRadius(t.getRadius());
     }
 
     public ArrayList<Fighter> getInRadius(Circle radius) {
@@ -62,16 +56,16 @@ public class EntityMap {
 
     //}
     public ArrayList<Actor> getCellsInArea(Circle c) {
-        shapeRenderer.setColor(1, 0, 1, 1);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        //shapeRenderer.setColor(1, 0, 1, 1);
+        //shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         ArrayList<Actor> cells = new ArrayList<>();
         int range = convertMapY(c.radius);
         for (int i = -range; i < range; i++) {
             for (int j = -range; j < range; j++) {
                 if (c.contains(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH)) {
-                    shapeRenderer.rect(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH, screenW / mapArrW, screenH / mapArrH);
+                    //shapeRenderer.rect(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH, screenW / mapArrW, screenH / mapArrH);
 
-                    if (Utilities.inScreen(c.x + j * mapArrW, c.y + i * mapArrH)) {
+                    if (Utilities.inScreen(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH)) {
                         cells.addAll(map.get(i + convertMapY(c.y)).get(j + convertMapX(c.x)));
 
                     }
@@ -79,8 +73,8 @@ public class EntityMap {
                 }
             }
         }
-        shapeRenderer.end();
-        shapeRenderer.setColor(0, 0, 0, 1);
+        //shapeRenderer.end();
+        //shapeRenderer.setColor(0, 0, 0, 1);
         return cells;
 
     }
@@ -104,7 +98,7 @@ public class EntityMap {
         //actor is put in its respective spot in the grid
 
         for (Actor a : actors) {
-            if (Utilities.inScreen(a)) {
+            if (0 <= convertMapX(a.getX()) && convertMapX(a.getX()) < mapArrW && 0 <= convertMapY(a.getY()) && convertMapY(a.getY()) < mapArrH) {
                 map.get(convertMapY(a.getY())).get(convertMapX(a.getX())).add(a);
 
             } else if (a.getClass() == Fighter.class) {
@@ -125,12 +119,12 @@ public class EntityMap {
 
 
     public int convertMapX(float x) {
-        return Math.round(x / (screenW / mapArrW));
+        return (int) Math.floor(x / (screenW / mapArrW));
 
     }
 
     public int convertMapY(float y) {
-        return Math.round(y / (screenH / mapArrH));
+        return (int) Math.floor(y / (screenH / mapArrH));
     }
 
     public void resetMap() {
@@ -209,8 +203,6 @@ public class EntityMap {
                             f.addAll(this.getInRadius(projectile.range));
                         }
 
-
-
                         if (f.size() >= 1) {
                             for (Projectile projectile : p) {
                                 double minDist = (double) Integer.MAX_VALUE;
@@ -231,18 +223,5 @@ public class EntityMap {
                 }
             }
         }
-    }
-
-    public Fighter closestFighter(Tower tower) {
-        ArrayList<Fighter> fighters = this.getInRadius(tower);
-        double minDist = Double.MAX_VALUE;
-        Fighter closestFighter = fighters.get(0);
-        for (Fighter fighter : fighters) {
-            if (Utilities.getDistance(tower, fighter) < minDist) {
-                closestFighter = fighter;
-            }
-        }
-
-        return closestFighter;
     }
 }

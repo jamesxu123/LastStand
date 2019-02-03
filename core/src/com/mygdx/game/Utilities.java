@@ -15,8 +15,8 @@ public class Utilities {
     public static Random rand = new Random();
 
     public static boolean inScreen(float x, float y) {
-        if ((0 <= x) || (x <= screenW)) {
-            return (0 <= y) || (y <= screenH);
+        if ((0 <= x) || (x < screenW)) {
+            return (0 <= y) || (y < screenH);
         }
         return false;
     }

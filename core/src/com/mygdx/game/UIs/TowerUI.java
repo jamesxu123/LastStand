@@ -40,7 +40,7 @@ public class TowerUI {
         table.setPosition(rect.x, rect.y);
         table.setSize(100, 100);
         //replace get key frame with icon later
-        Image curTower = new Image(towers.get(index).getAnimations().getKeyFrame(0));
+        Image curTower = new Image(towers.get(index).animations.getKeyFrame(0));
         table.add(curTower);
         table.row();
         this.group = towerGroup;
@@ -71,7 +71,7 @@ public class TowerUI {
         stage.draw();
         shapeRenderer.begin(ShapeType.Filled);
 
-        shapeRenderer.circle(rect.x + rect.width / 2, rect.y + rect.height / 2, towers.get(index).getRadius());
+        shapeRenderer.circle(rect.x + rect.width / 2, rect.y + rect.height / 2, towers.get(index).radius);
         shapeRenderer.end();
 
     }
