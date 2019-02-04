@@ -45,7 +45,11 @@ public class EntityMap {
     public ArrayList<Fighter> getInRadius(Circle radius) {
         ArrayList<Fighter> fighters = new ArrayList<>();
         for (Actor actor : getCellsInArea(radius)) {
-            if (actor.getClass() == Fighter.class) {
+            if (actor.getClass() == Projectile.class) {
+                continue;
+            }
+            Fighter f = (Fighter) actor;
+            if (((Fighter) actor).isAlive()) {
                 fighters.add((Fighter) actor);
             }
         }
@@ -60,16 +64,14 @@ public class EntityMap {
         //shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         ArrayList<Actor> cells = new ArrayList<>();
         int range = convertMapY(c.radius);
-        for (int i = -range; i < range; i++) {
-            for (int j = -range; j < range; j++) {
+        for (int i = -range; i <= range; i++) {
+            for (int j = -range; j <= range; j++) {
                 if (c.contains(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH)) {
                     //shapeRenderer.rect(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH, screenW / mapArrW, screenH / mapArrH);
 
-                    if (Utilities.inScreen(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH)) {
+                    if (mapContains(c.x, c.y)) {
                         cells.addAll(map.get(i + convertMapY(c.y)).get(j + convertMapX(c.x)));
-
                     }
-
                 }
             }
         }
@@ -98,7 +100,7 @@ public class EntityMap {
         //actor is put in its respective spot in the grid
 
         for (Actor a : actors) {
-            if (0 <= convertMapX(a.getX()) && convertMapX(a.getX()) < mapArrW && 0 <= convertMapY(a.getY()) && convertMapY(a.getY()) < mapArrH) {
+            if (mapContains(a.getX(), a.getY())) {
                 map.get(convertMapY(a.getY())).get(convertMapX(a.getX())).add(a);
 
             } else if (a.getClass() == Fighter.class) {
@@ -107,6 +109,7 @@ public class EntityMap {
 
             } else {
                 a.remove();
+                System.out.println("dead");
             }
 
 
@@ -114,17 +117,21 @@ public class EntityMap {
 
     }
 
+    public boolean mapContains(float x, float y) {
+        return 0 <= convertMapX(x) && convertMapX(x) < mapArrW && 0 <= convertMapY(y) && convertMapY(y) < mapArrH;
+    }
+
 
 
 
 
     public int convertMapX(float x) {
-        return (int) Math.floor(x / (screenW / mapArrW));
+        return Math.round(x / (screenW / mapArrW));
 
     }
 
     public int convertMapY(float y) {
-        return (int) Math.floor(y / (screenH / mapArrH));
+        return Math.round(y / (screenH / mapArrH));
     }
 
     public void resetMap() {
@@ -206,8 +213,11 @@ public class EntityMap {
                         if (f.size() >= 1) {
                             for (Projectile projectile : p) {
                                 double minDist = (double) Integer.MAX_VALUE;
-                                Fighter minDistFighter = f.get(0);
+                                Fighter minDistFighter = null;
                                 for (Fighter fighter : f) {
+                                    if (!fighter.isAlive()) {
+                                        continue;
+                                    }
                                     double x1 = projectile.getX();
                                     double y1 = projectile.getY();
                                     double x2 = fighter.getX();

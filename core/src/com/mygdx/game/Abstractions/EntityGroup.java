@@ -16,7 +16,7 @@ public class EntityGroup extends Group {
 
     @Override
     public void childrenChanged() {
-        System.out.println(true);
+
     }
 
     @Override

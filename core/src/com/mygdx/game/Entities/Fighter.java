@@ -45,10 +45,10 @@ public class Fighter extends Actor {
 
 
     public void damage(int amount) {
-        if (health - amount >= 0) {
-            health -= amount;
-        } else {
-            this.remove();
+        health -= amount;
+        if (!isAlive()) {
+            state = States.DEATH;
+            aniTime = 0;
         }
     }
 
@@ -56,24 +56,32 @@ public class Fighter extends Actor {
     @Override
     public void act(float delta) {
         aniTime += delta;
-        super.act(delta);
         if (state == States.WALK) {
-            switch (direction) {
-                case RIGHT:
-                    moveBy(data.speed, 0);
-                    break;
-                case LEFT:
-                    moveBy(-data.speed, 0);
-                    break;
-                case UP:
-                    moveBy(0, data.speed);
-                    break;
 
-                case DOWN:
-                    moveBy(0, -data.speed);
-                    break;
+            super.act(delta);
+            if (state == States.WALK) {
+                switch (direction) {
+                    case RIGHT:
+                        moveBy(data.speed, 0);
+                        break;
+                    case LEFT:
+                        moveBy(-data.speed, 0);
+                        break;
+                    case UP:
+                        moveBy(0, data.speed);
+                        break;
 
+                    case DOWN:
+                        moveBy(0, -data.speed);
+                        break;
+
+                }
             }
+        } else if (state == States.DEATH) {
+            if (aniTime > 2) {
+                remove();
+            }
+
         }
 
     }
@@ -82,13 +90,15 @@ public class Fighter extends Actor {
         return direction;
     }
 
+    public boolean isAlive() {
+        return health > 0;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
-
-        batch.draw(data.animations.get(state, direction).getKeyFrame(aniTime, true), getX(), getY());
-
-
-
+        boolean looping = state != States.DEATH;
+        batch.draw(data.animations.get(state, direction).getKeyFrame(aniTime, looping), getX(), getY());
+        
     }
 
 

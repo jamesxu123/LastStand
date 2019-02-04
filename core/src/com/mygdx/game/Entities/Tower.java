@@ -32,8 +32,9 @@ public class Tower extends Actor {
 
     public Fighter getClosest() {
         double minDist = Double.MAX_VALUE;
-        Fighter closestFighter = inRadius.get(0);
+        Fighter closestFighter = null;
         for (Fighter fighter : inRadius) {
+            System.out.println(fighter.isAlive());
             if (Utilities.getDistance(this, fighter) < minDist) {
                 closestFighter = fighter;
             }

@@ -23,7 +23,7 @@ public class ProjectileData extends EntityData {
         animations = new Animation<>(1, animationFrames);
         range = 20;
         damage = 5;
-        speed = 1;
+        speed = 5;
 
 
     }
