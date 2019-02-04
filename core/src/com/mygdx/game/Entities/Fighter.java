@@ -98,7 +98,7 @@ public class Fighter extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         boolean looping = state != States.DEATH;
         batch.draw(data.animations.get(state, direction).getKeyFrame(aniTime, looping), getX(), getY());
-        
+
     }
 
 

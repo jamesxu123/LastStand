@@ -63,9 +63,8 @@ public class EntityMap {
         //shapeRenderer.setColor(1, 0, 1, 1);
         //shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         ArrayList<Actor> cells = new ArrayList<>();
-        int range = convertMapY(c.radius);
-        for (int i = -range; i <= range; i++) {
-            for (int j = -range; j <= range; j++) {
+        for (int i = -convertMapY(c.radius); i <= convertMapY(c.radius); i++) {
+            for (int j = -convertMapX(c.radius); j <= convertMapX(c.radius); j++) {
                 if (c.contains(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH)) {
                     //shapeRenderer.rect(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH, screenW / mapArrW, screenH / mapArrH);
 
