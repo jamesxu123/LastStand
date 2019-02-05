@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Abstractions.EntityGroup;
-import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.EntityUtilities.TowerData;
 import com.mygdx.game.Player;
 
@@ -41,6 +40,7 @@ public class TowerUI {
         //replace get key frame with icon later
 //        Image curTower = new Image(towers.get(index).animations.getKeyFrame(0));
         for (TowerData towerData : towers) {
+            System.out.println(towerData.name);
             table.add(new Image(towerData.animations.getKeyFrame(0)));
             table.row();
             if (player.getMoney() - towerData.cost >= 0) {
@@ -57,7 +57,7 @@ public class TowerUI {
                 table.add(payButton).size(40, 20);
                 table.row();
             } else {
-                Label label = new Label("No Coins!", style);
+                Label label = new Label("Not Enough!", style);
                 table.add(label).size(40, 20);
                 table.row();
             }

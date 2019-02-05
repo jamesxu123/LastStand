@@ -6,7 +6,7 @@
       "type": "single",
       "projectile": "Wizard Bolt",
       "radius": 150,
-      "cost": 200,
+      "cost": 10,
       "coolDown": 0.5,
       "radius": 100
     },
