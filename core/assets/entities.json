@@ -1,0 +1,52 @@
+{
+  "towers": [
+    {
+      "name": "Wizard Tower",
+      "aniPath": "sprites/TOWER/WIZARD",
+      "type": "single",
+      "projectile": "Wizard Bolt",
+      "radius": 150,
+      "cost": 200,
+      "coolDown": 0.5,
+      "radius": 100
+    },
+    {
+      "name": "Gold Tower",
+      "aniPath": "sprites/TOWER/GOLD",
+      "projectile": "Gold",
+      "type": "money",
+      "radius": 100,
+      "coolDown": 5,
+      "cost": 200,
+      "damage": 25
+    }
+  ],
+  "fighters": [
+    {
+      "name": "Knight",
+      "aniPath": "sprites/FIGHTER/KNIGHT",
+      "speed": 1,
+      "health": 25
+    },
+    {
+      "name": "Shaman",
+      "aniPath": "sprites/FIGHTER/SHAMAN",
+      "speed": 1.5,
+      "health": 10
+    }
+  ],
+  "projectiles": {
+    "Wizard Bolt": {
+      "aniPath": "sprites/PROJECTILE/WIZARD",
+      "range": 20,
+      "damage": 5,
+      "speed": 5
+    },
+    "Gold": {
+      "aniPath": "sprites/PROJECTILE/GOLD",
+      "range": 0,
+      "damage": 20,
+      "speed": 10
+    }
+  }
+}
