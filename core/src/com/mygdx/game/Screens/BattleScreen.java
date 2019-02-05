@@ -86,7 +86,7 @@ public class BattleScreen extends InputAdapter implements Screen {
 
 
             Rectangle rectangle = rectangleObject.getRectangle();
-            towerUIs.add(new TowerUI(rectangle, game.style, game.towerDatas, towers, game.shapeRenderer));
+            towerUIs.add(new TowerUI(rectangle, game.style, game.towerDatas, towers, game.shapeRenderer, player));
         }
 
     }

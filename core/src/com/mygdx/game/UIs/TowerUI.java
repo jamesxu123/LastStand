@@ -11,7 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Abstractions.EntityGroup;
+import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.EntityUtilities.TowerData;
+import com.mygdx.game.Player;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,7 @@ public class TowerUI {
     private int level;
     private ShapeRenderer shapeRenderer;
 
-    public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towers, EntityGroup towerGroup, ShapeRenderer shapeRenderer) {
+    public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towers, EntityGroup towerGroup, ShapeRenderer shapeRenderer, Player player) {
         index = 0;
         this.towers = towers;
         stage = new Stage();
@@ -40,22 +42,25 @@ public class TowerUI {
         table.setPosition(rect.x, rect.y);
         table.setSize(100, 100);
         //replace get key frame with icon later
-        Image curTower = new Image(towers.get(index).animations.getKeyFrame(0));
-        table.add(curTower);
-        table.row();
+//        Image curTower = new Image(towers.get(index).animations.getKeyFrame(0));
+        for (TowerData towerData : towers) {
+            table.add(new Image(towerData.animations.getKeyFrame(0)));
+            table.row();
+            TextButton payButton = new TextButton("buy", style);
+            payButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float clickX, float clickY) {
+                    System.out.println(true);
+                    super.clicked(event, clickX, clickY);
+                    group.getSpawner().spawn((int) rect.x, (int) rect.y, index);
+                }
+            });
+            table.add(payButton).size(40, 20);
+        }
+//        table.add(curTower);
         this.group = towerGroup;
 
-        TextButton payButton = new TextButton("buy", style);
-        payButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float clickX, float clickY) {
-                System.out.println(true);
-                super.clicked(event, clickX, clickY);
-                group.getSpawner().spawn((int) rect.x, (int) rect.y, index);
 
-            }
-        });
-        table.add(payButton).size(40, 20);
 
 
         table.setDebug(true);

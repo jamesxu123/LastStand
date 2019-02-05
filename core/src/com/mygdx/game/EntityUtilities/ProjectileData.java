@@ -14,7 +14,7 @@ public class ProjectileData extends EntityData {
     public final float speed;
     public Animation<Texture> animations;
 
-    public ProjectileData(File spritesPath, String statsPath, AssetManager manager) {
+    public ProjectileData(File spritesPath, String statsPath, AssetManager manager, float damage) {
         File[] fileList = Utilities.getListFiles(spritesPath);
         Texture[] animationFrames = new Texture[fileList.length];
         for (int i = 0; i < fileList.length; i++) {
@@ -22,7 +22,7 @@ public class ProjectileData extends EntityData {
         }
         animations = new Animation<>(1, animationFrames);
         range = 20;
-        damage = 5;
+        this.damage = damage;
         speed = 5;
 
 
