@@ -14,9 +14,10 @@ public class TowerData extends EntityData {
     public final Class towerType;
     public final int radius = 100;
     //stats will soon be replaced by stat class just for tower
-    public float coolDown;
+    public final float coolDown;
+    public final int cost;
 
-    public TowerData(String statsPath, File spritesPath, AssetManager manager, Class towerType, float damage, float coolDown) {
+    public TowerData(String statsPath, File spritesPath, AssetManager manager, Class towerType, float damage, float coolDown, int cost) {
 
         File[] fileList = Utilities.getListFiles(spritesPath);
         Texture[] animationFrames = new Texture[fileList.length];
@@ -27,6 +28,7 @@ public class TowerData extends EntityData {
         this.towerType = towerType;
         //data needs to be obtained from text file things
         this.coolDown = coolDown;
+        this.cost = cost;
         projectileData = new ProjectileData(new File("sprites/PROJECTILE/WIZARD"), "statspath", manager, damage);
 
 

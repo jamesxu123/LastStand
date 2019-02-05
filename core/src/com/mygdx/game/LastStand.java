@@ -81,7 +81,7 @@ public class LastStand extends Game {
 			fighterDatas.add(new FighterData("", fighterAnimations[i], manager));
 		}
 		towerDatas = new ArrayList<>();
-		towerDatas.add(new TowerData("", new File("sprites/TOWER/wizard"), manager, Tower.class, 50, 0.5f));
+		towerDatas.add(new TowerData("", new File("sprites/TOWER/wizard"), manager, Tower.class, 50, 0.5f, 20));
 		//towerDatas.addAll(new TowerData("","sprites/TOWER/moneymaker"),manager, MoneyTower.class);
 		gameOverScreen = new GameOverScreen(this);
 		menuScreen = new MenuScreen(this);

@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Abstractions.EntityGroup;
 import com.mygdx.game.Entities.Tower;
@@ -46,16 +43,24 @@ public class TowerUI {
         for (TowerData towerData : towers) {
             table.add(new Image(towerData.animations.getKeyFrame(0)));
             table.row();
-            TextButton payButton = new TextButton("buy", style);
-            payButton.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float clickX, float clickY) {
-                    System.out.println(true);
-                    super.clicked(event, clickX, clickY);
-                    group.getSpawner().spawn((int) rect.x, (int) rect.y, index);
-                }
-            });
-            table.add(payButton).size(40, 20);
+            if (player.getMoney() - towerData.cost >= 0) {
+                TextButton payButton = new TextButton("buy", style);
+                payButton.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float clickX, float clickY) {
+                        System.out.println(true);
+                        super.clicked(event, clickX, clickY);
+                        group.getSpawner().spawn((int) rect.x, (int) rect.y, index);
+                        player.addMoney(-towerData.cost);
+                    }
+                });
+                table.add(payButton).size(40, 20);
+                table.row();
+            } else {
+                Label label = new Label("No Coins!", style);
+                table.add(label).size(40, 20);
+                table.row();
+            }
         }
 //        table.add(curTower);
         this.group = towerGroup;
