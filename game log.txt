@@ -98,3 +98,6 @@ freeze all towers idea- towers get frozen in frozen wasteland map
 employed by stopping spawning
 
 look at collide
+making sure there is no stupid code
+
+replace all magic numbers

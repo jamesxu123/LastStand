@@ -1,33 +1,56 @@
 package com.mygdx.game.EntityUtilities;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.utils.JsonValue;
+import com.mygdx.game.Entities.MoneyTower;
+import com.mygdx.game.Entities.SingleTargetTower;
+import com.mygdx.game.Entities.SplashTower;
+import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.Utilities;
 
-import java.io.File;
-
 public class TowerData extends EntityData {
-    //will be replaced by a simple animation
+    public final String name;
     public final Animation<Texture> animations;
     public final ProjectileData projectileData;
     public final Class towerType;
-    public final int radius = 100;
-    //stats will soon be replaced by stat class just for tower
-    public float coolDown;
+    public final int radius;
+    public final float coolDown;
+    public final int cost;
 
-    public TowerData(String statsPath, File spritesPath, AssetManager manager, Class towerType) {
-
-        File[] fileList = Utilities.getListFiles(spritesPath);
+    public TowerData(JsonValue attributes, JsonValue projectile, AssetManager manager) {
+        name = attributes.getString("name");
+        radius = attributes.getInt("radius");
+        cost = attributes.getInt("cost");
+        FileHandle[] fileList = Utilities.listFiles(new FileHandle(attributes.getString("aniPath")));
         Texture[] animationFrames = new Texture[fileList.length];
         for (int i = 0; i < fileList.length; i++) {
-            animationFrames[i] = manager.get(fileList[i].getPath());
+            animationFrames[i] = manager.get(fileList[i].path());
         }
-        animations = new Animation<Texture>(1, animationFrames);
-        this.towerType = towerType;
+        animations = new Animation<>(1, animationFrames);
+        switch (attributes.getString("type")) {
+            case "single":
+                towerType = SingleTargetTower.class;
+                break;
+
+            case "splash":
+                towerType = SplashTower.class;
+                break;
+            case "money":
+                towerType = MoneyTower.class;
+                break;
+            default:
+                towerType = Tower.class;
+        }
         //data needs to be obtained from text file things
         coolDown = 0.5f;
-        projectileData = new ProjectileData(new File("sprites/PROJECTILE/WIZARD"), "statspath", manager);
+        projectileData = new ProjectileData(projectile, manager);
+
+
+
+
 
 
 

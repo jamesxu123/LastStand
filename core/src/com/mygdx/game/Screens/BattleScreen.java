@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -54,7 +53,7 @@ public class BattleScreen extends InputAdapter implements Screen {
         entityMap = new EntityMap(game.shapeRenderer);
         player = new Player();
 
-        map = new TmxMapLoader().load("map1.tmx");
+        map = game.manager.get("maps/map1.tmx");
         //gets the objects embedded in the tiled map
         RectangleMapObject spawnPoint = map.getLayers().get("Start").getObjects().getByType(RectangleMapObject.class).get(0);
         pathNodes = map.getLayers().get("Path Nodes").getObjects().getByType(RectangleMapObject.class);
@@ -96,9 +95,11 @@ public class BattleScreen extends InputAdapter implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputs);
-        entities.addActor(projectiles);
-        entities.addActor(enemies);
+
+
         entities.addActor(towers);
+        entities.addActor(enemies);
+        entities.addActor(projectiles);
 
     }
 

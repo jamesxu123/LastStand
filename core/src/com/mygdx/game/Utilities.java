@@ -1,9 +1,9 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.awt.*;
-import java.io.File;
 import java.util.Random;
 
 import static com.mygdx.game.LastStand.screenH;
@@ -25,8 +25,8 @@ public class Utilities {
         return screenH - y;
     }
 
-    public static File[] getListFiles(File f) {
-        return f.listFiles(((dir, name) -> !name.equals(".DS_Store")));
+    public static FileHandle[] listFiles(FileHandle f) {
+        return f.list(n -> !new FileHandle(n).extension().equals("DS_Store"));
     }
 
     public static double getDistance(Actor a, Actor b) {

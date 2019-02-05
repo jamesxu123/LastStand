@@ -190,6 +190,10 @@ public class EntityMap {
 
     }
 
+    //very inefficient
+    //not smart
+    //instead get the projectiles and just loop through where they are supposed to be
+    //36*30 loops plus checking closest
     public void collide(float delta) {
         for (int row = 0; row < map.size(); row++) {
             for (int col = 0; col < map.get(0).size(); col++) {
@@ -209,7 +213,7 @@ public class EntityMap {
                             f.addAll(this.getInRadius(projectile.range));
                         }
 
-                        if (f.size() >= 1) {
+                        if (!f.isEmpty()) {
                             for (Projectile projectile : p) {
                                 double minDist = (double) Integer.MAX_VALUE;
                                 Fighter minDistFighter = null;

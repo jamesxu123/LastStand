@@ -1,14 +1,12 @@
 package com.mygdx.game.Spawners;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.mygdx.game.Directions;
 import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.EntityUtilities.FighterData;
 import com.mygdx.game.Utilities;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -21,7 +19,7 @@ public class FighterSpawner extends Spawner {
     private Scanner waveScanner;
     private float spawnInterval;
     private Integer nextSpawn;
-    private Iterator<File> waves;
+    private Iterator<FileHandle> waves;
     private ArrayList<FighterData> fighterDatas;
 
 
@@ -30,7 +28,7 @@ public class FighterSpawner extends Spawner {
 
         super();
         this.fighterDatas = fighterDatas;
-        waves = Arrays.asList(Utilities.getListFiles(new File(roundDir))).iterator();
+        waves = Arrays.asList(Utilities.listFiles(new FileHandle(roundDir))).iterator();
 
         spawnX = x;
         spawnY = y;
@@ -41,13 +39,11 @@ public class FighterSpawner extends Spawner {
     }
 
     private void switchWave() {
-        try {
-            File f = waves.next();
-            System.out.println(f);
-            waveScanner = new Scanner(new BufferedReader(new FileReader(f)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
+        FileHandle f = waves.next();
+        System.out.println(f);
+        waveScanner = new Scanner(new BufferedReader(f.reader()));
+
     }
 
 

@@ -1,21 +1,24 @@
 package com.mygdx.game.EntityUtilities;
 
 import com.badlogic.gdx.assets.AssetManager;
-
-import java.io.File;
+import com.badlogic.gdx.utils.JsonValue;
 
 public class FighterData extends EntityData {
     //entity will also have other attributes such as name, icon, and description
     public final FighterAnis animations;
-    public final float speed = 1;
-    public final float health = 5;
+    public final float speed;
+    public final float health;
+    public final String name;
 
     //stats path should be file- will replace later
-    public FighterData(String statsPath, File spritesPath, AssetManager manager) {
+    public FighterData(JsonValue attributes, AssetManager manager) {
 
-        animations = new FighterAnis(spritesPath, manager);
+        animations = new FighterAnis(attributes.getString("aniPath"), manager);
 
+        name = attributes.getString("name");
 
+        speed = attributes.getFloat("speed");
+        health = attributes.getInt("health");
     }
 
 }

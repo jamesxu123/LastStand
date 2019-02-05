@@ -18,6 +18,7 @@ public class GameUI {
     private Label livesLabel;
     private Label moneyLabel;
     private Label levelLabel;
+    private Table infoTable;
     private Table table;
     private Window pane;
 
@@ -67,6 +68,10 @@ public class GameUI {
         levelLabel.setText(String.format("Level: %d", player.getLevel()));
         moneyLabel.setText(String.format("Money: %d", player.getMoney()));
         livesLabel.setText(String.format("Lives: %d", player.getLives()));
+
+    }
+
+    public void changeInfo() {
 
     }
 

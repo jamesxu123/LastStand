@@ -1,13 +1,13 @@
 package com.mygdx.game.EntityUtilities;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.Directions;
 import com.mygdx.game.States;
 import com.mygdx.game.Utilities;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,19 +15,17 @@ import java.util.HashMap;
 public class FighterAnis {
     private HashMap<States, HashMap<Directions, Animation<Texture>>> container;
 
-    public FighterAnis(File spritesFile, AssetManager manager) {
+    public FighterAnis(String spritesPath, AssetManager manager) {
         container = new HashMap<>();
-
-        //files are given by taking the folders it is in as keys
-        File[] stateFiles = Utilities.getListFiles(spritesFile);
-        for (File f : stateFiles) {
-            States state = States.valueOf(f.getName());
-            File[] dirFiles = Utilities.getListFiles(f);
-            for (File d : dirFiles) {
-                Directions direction = Directions.valueOf(d.getName());
+        FileHandle[] stateFiles = Utilities.listFiles(new FileHandle(spritesPath));
+        for (FileHandle f : stateFiles) {
+            States state = States.valueOf(f.name());
+            FileHandle[] dirFiles = Utilities.listFiles(f);
+            for (FileHandle d : dirFiles) {
+                Directions direction = Directions.valueOf(d.name());
                 ArrayList<String> picList = new ArrayList<>();
-                for (File c : Utilities.getListFiles(d)) {
-                    picList.add(c.getPath());
+                for (FileHandle c : Utilities.listFiles(d)) {
+                    picList.add(c.path());
                 }
                 Collections.sort(picList);
                 Texture[] frames = new Texture[picList.size()];
