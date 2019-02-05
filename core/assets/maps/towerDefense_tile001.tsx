@@ -1,4 +1,4 @@
-<;?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.2" tiledversion="1.2.1" name="towerDefense_tile001" tilewidth="64" tileheight="64" tilecount="299"
          columns="0">
     <grid orientation="orthogonal" width="1" height="1"/>
