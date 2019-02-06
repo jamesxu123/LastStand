@@ -21,9 +21,8 @@ public class TowerUI {
     private int index;
     private ArrayList<TowerData> towers;
     private EntityGroup group;
-
-    private int level;
     private ShapeRenderer shapeRenderer;
+    private Player p;
 
     public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towers, EntityGroup towerGroup, ShapeRenderer shapeRenderer, Player player) {
         index = 0;
@@ -37,10 +36,10 @@ public class TowerUI {
         table = new Table(style);
         table.setPosition(rect.x, rect.y);
         table.setSize(100, 100);
-        //replace get key frame with icon later
-//        Image curTower = new Image(towers.get(index).animations.getKeyFrame(0));
+
+//        table.add(curTower);
+        this.group = towerGroup;
         for (TowerData towerData : towers) {
-            System.out.println(towerData.name);
             table.add(new Image(towerData.animations.getKeyFrame(0)));
             table.row();
             if (player.getMoney() - towerData.cost >= 0) {
@@ -48,9 +47,9 @@ public class TowerUI {
                 payButton.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float clickX, float clickY) {
-                        System.out.println(true);
+
                         super.clicked(event, clickX, clickY);
-                        group.getSpawner().spawn((int) rect.x, (int) rect.y, index);
+                        group.getSpawner().spawn((int) rect.x, (int) rect.y, towers.indexOf(towerData));
                         player.addMoney(-towerData.cost);
                     }
                 });
@@ -62,9 +61,6 @@ public class TowerUI {
                 table.row();
             }
         }
-//        table.add(curTower);
-        this.group = towerGroup;
-
 
 
 

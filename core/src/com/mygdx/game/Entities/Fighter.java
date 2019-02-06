@@ -2,6 +2,8 @@ package com.mygdx.game.Entities;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Directions;
 import com.mygdx.game.EntityUtilities.FighterData;
 import com.mygdx.game.States;
@@ -24,6 +26,13 @@ public class Fighter extends Actor {
 
         this.data = data;
         health = data.health;
+        addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Fighter");
+                super.clicked(event, x, y);
+            }
+        });
 
 
 
@@ -55,6 +64,9 @@ public class Fighter extends Actor {
 
     @Override
     public void act(float delta) {
+        setWidth(data.animations.get(state, direction).getKeyFrame(aniTime).getWidth());
+        setHeight(data.animations.get(state,direction).getKeyFrame(aniTime).getHeight());
+        setBounds(getX(),getY(),getWidth(),getHeight());
         aniTime += delta;
         if (state == States.WALK) {
 

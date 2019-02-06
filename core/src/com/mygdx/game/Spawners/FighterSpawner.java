@@ -24,9 +24,6 @@ public class FighterSpawner extends Spawner {
 
 
     public FighterSpawner(int x, int y, String direction, String roundDir, ArrayList<FighterData> fighterDatas) {
-
-
-        super();
         this.fighterDatas = fighterDatas;
         waves = Arrays.asList(Utilities.listFiles(new FileHandle(roundDir))).iterator();
 
@@ -41,7 +38,6 @@ public class FighterSpawner extends Spawner {
     private void switchWave() {
 
         FileHandle f = waves.next();
-        System.out.println(f);
         waveScanner = new Scanner(new BufferedReader(f.reader()));
 
     }

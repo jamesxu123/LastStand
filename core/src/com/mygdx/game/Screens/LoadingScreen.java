@@ -11,8 +11,6 @@ public class LoadingScreen implements Screen {
     public LoadingScreen(LastStand game) {
         loadingLabel = new Label("", game.style);
         loadingLabel.setPosition(400, 400);
-
-
         this.game = game;
     }
 
@@ -25,7 +23,6 @@ public class LoadingScreen implements Screen {
     public void render(float delta) {
 
         if (game.manager.update()) {
-            System.out.println(game.manager.getLoadedAssets());
             game.initialize();
         }
         loadingLabel.setText(Float.toString(game.manager.getProgress()));

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.EntityUtilities.ProjectileData;
+import com.mygdx.game.Player;
 import com.mygdx.game.Utilities;
 
 import java.awt.*;
@@ -15,9 +16,11 @@ public class Projectile extends Actor {
     private Tower tower;
     private float aniTime = 0;
     public final Circle range = new Circle();
-    private ProjectileData data;
+    public final ProjectileData data;
+
 
     public Projectile(ProjectileData data, Point start, Point end, Tower t) {
+
         this.start = start;
         this.end = end;
         this.sprite = new Sprite(data.animations.getKeyFrame(0));
@@ -29,13 +32,8 @@ public class Projectile extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-
-        sprite.setRotation((float) Math.toDegrees(getRotation()));
         sprite.setTexture(data.animations.getKeyFrame(aniTime, true));
-
         sprite.draw(batch);
-
-
         super.draw(batch, parentAlpha);
     }
 
@@ -48,12 +46,11 @@ public class Projectile extends Actor {
         }
         range.setPosition(getX(), getY());
         sprite.setPosition(getX(), getY());
-        setPosition((float) (getX() + data.speed * Math.cos(getRotation())), (float) (getY() + data.speed * Math.sin(getRotation())));
+        sprite.setRotation((float) Math.toDegrees(getRotation()));
         super.act(delta);
     }
 
-    public void damage(Fighter fighter) {
-        fighter.damage((int) data.damage);
-        this.remove();
+    public float getAniTime() {
+        return aniTime;
     }
 }

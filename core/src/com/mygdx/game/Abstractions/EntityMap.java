@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.mygdx.game.Entities.DmgProjectile;
 import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.Entities.Projectile;
 import com.mygdx.game.Entities.Tower;
@@ -21,8 +22,8 @@ import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 
 public class EntityMap {
-    public static final int mapArrW = 36;
-    public static final int mapArrH = 30;
+    public static final int mapArrW = 40;
+    public static final int mapArrH = 40;
     public ArrayList<ArrayList<ArrayList<Actor>>> map;
     private ExecutorService executorService = Executors.newFixedThreadPool(16);
     private ShapeRenderer shapeRenderer;
@@ -45,7 +46,7 @@ public class EntityMap {
     public ArrayList<Fighter> getInRadius(Circle radius) {
         ArrayList<Fighter> fighters = new ArrayList<>();
         for (Actor actor : getCellsInArea(radius)) {
-            if (actor.getClass() == Projectile.class) {
+            if (actor.getClass().getSuperclass() == Projectile.class) {
                 continue;
             }
             Fighter f = (Fighter) actor;
@@ -68,7 +69,7 @@ public class EntityMap {
                 if (c.contains(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH)) {
                     //shapeRenderer.rect(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH, screenW / mapArrW, screenH / mapArrH);
 
-                    if (mapContains(c.x, c.y)) {
+                    if (mapContains(c.x+j*screenW/mapArrW, c.y+i*screenH/mapArrH)) {
                         cells.addAll(map.get(i + convertMapY(c.y)).get(j + convertMapX(c.x)));
                     }
                 }
@@ -108,7 +109,6 @@ public class EntityMap {
 
             } else {
                 a.remove();
-                System.out.println("dead");
             }
 
 
@@ -189,52 +189,40 @@ public class EntityMap {
         }
 
     }
+    public void collide(float delta,EntityGroup projectiles) {
 
-    //very inefficient
-    //not smart
-    //instead get the projectiles and just loop through where they are supposed to be
-    //36*30 loops plus checking closest
-    public void collide(float delta) {
-        for (int row = 0; row < map.size(); row++) {
-            for (int col = 0; col < map.get(0).size(); col++) {
-                if (map.get(row).get(col).size() > 0) {
-                    final ArrayList<Actor> actors = map.get(row).get(col);
-                    executorService.submit(() -> {
-                        ArrayList<Projectile> p = new ArrayList<>();
-                        ArrayList<Fighter> f = new ArrayList<>();
-
-                        for (Actor actor : actors) {
-                            if (actor.getClass() == Projectile.class) {
-                                p.add((Projectile) actor);
+        executorService.submit(() -> {
+            ArrayList<Fighter> f = new ArrayList<>();
+            for (Actor a : projectiles.getChildren()) {
+                Projectile p=(Projectile)a;
+                f.addAll(this.getInRadius(p.range));
+            }
+            if (!f.isEmpty()) {
+                for (Actor a : projectiles.getChildren()) {
+                    Projectile projectile=(Projectile)a;
+                    if (projectile.getClass() == DmgProjectile.class) {
+                        DmgProjectile damageProjectile=(DmgProjectile)projectile;
+                        double minDist = (double) Integer.MAX_VALUE;
+                        Fighter minDistFighter = null;
+                        for (Fighter fighter : f) {
+                            if (!fighter.isAlive()) {
+                                continue;
                             }
+                            double x1 = damageProjectile.getX();
+                            double y1 = damageProjectile.getY();
+                            double x2 = fighter.getX();
+                            double y2 = fighter.getY();
+                            double distance = Math.hypot(x2 - x1, y2 - y1);
+                            minDist = distance < minDist ? minDist : distance;
+                            minDistFighter = distance < minDist ? fighter : null;
                         }
-
-                        for (Projectile projectile : p) {
-                            f.addAll(this.getInRadius(projectile.range));
-                        }
-
-                        if (!f.isEmpty()) {
-                            for (Projectile projectile : p) {
-                                double minDist = (double) Integer.MAX_VALUE;
-                                Fighter minDistFighter = null;
-                                for (Fighter fighter : f) {
-                                    if (!fighter.isAlive()) {
-                                        continue;
-                                    }
-                                    double x1 = projectile.getX();
-                                    double y1 = projectile.getY();
-                                    double x2 = fighter.getX();
-                                    double y2 = fighter.getY();
-                                    double distance = Math.hypot(x2 - x1, y2 - y1);
-                                    minDist = distance < minDist ? minDist : distance;
-                                    minDistFighter = distance < minDist ? fighter : null;
-                                }
-                                projectile.damage(minDistFighter);
-                            }
-                        }
-                    });
+                        damageProjectile.damage(minDistFighter);
+                    }
                 }
             }
-        }
+        });
     }
 }
+
+
+

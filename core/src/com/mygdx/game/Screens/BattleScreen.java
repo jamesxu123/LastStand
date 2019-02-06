@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 
-public class BattleScreen extends InputAdapter implements Screen {
+public class BattleScreen implements Screen {
     private LastStand game;
     private Stage entities;
     private InputMultiplexer inputs;
@@ -62,9 +62,9 @@ public class BattleScreen extends InputAdapter implements Screen {
         //creates a new group which has a spawner. the spawner gets the initial spawn point
         enemies = new EntityGroup(new FighterSpawner((int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y,
                 spawnPoint.getProperties().get("Direction").toString(), "level_1", game.fighterDatas));
-        gameUI = new GameUI(player, game.style, enemies);
+        gameUI = new GameUI(player, game.style, enemies,this);
         towers = new EntityGroup(new TowerSpawner(game.towerDatas));
-        projectiles = new EntityGroup(new ProjectileSpawner(towers));
+        projectiles = new EntityGroup(new ProjectileSpawner(towers,player));
 
         camera = new OrthographicCamera(screenW, screenH);
         //camera is only needed to center the map on the screen
@@ -78,7 +78,7 @@ public class BattleScreen extends InputAdapter implements Screen {
         entities = new Stage();
         this.game = game;
         inputs.addProcessor(gameUI.getStage());
-        inputs.addProcessor(this);
+        inputs.addProcessor(gameUI);
         inputs.addProcessor(entities);
         towerUIs = new ArrayList<>();
         for (RectangleMapObject rectangleObject : collisionObjs.getByType(RectangleMapObject.class)) {
@@ -94,9 +94,8 @@ public class BattleScreen extends InputAdapter implements Screen {
 
     @Override
     public void show() {
+
         Gdx.input.setInputProcessor(inputs);
-
-
         entities.addActor(towers);
         entities.addActor(enemies);
         entities.addActor(projectiles);
@@ -117,7 +116,7 @@ public class BattleScreen extends InputAdapter implements Screen {
         entityMap.constructMap(enemies.getChildren(), player);
         entityMap.switchDirection(pathNodes);
         entityMap.constructMap(projectiles.getChildren(), player);
-        entityMap.collide(delta);
+        entityMap.collide(delta,projectiles);
         gameUI.update();
         for (Actor a : towers.getChildren()) {
             Tower t = (Tower) a;
@@ -141,13 +140,29 @@ public class BattleScreen extends InputAdapter implements Screen {
             openTowerUI.draw();
 
         }
-        //entityMap.debug();
+        entityMap.debug();
         entities.draw();
         //for
 
 
 
 
+    }
+
+    public TowerUI getOpenTowerUI() {
+        return openTowerUI;
+    }
+
+    public ArrayList<TowerUI> getTowerUIs() {
+        return towerUIs;
+    }
+
+    public InputMultiplexer getInputs() {
+        return inputs;
+    }
+
+    public void setOpenTowerUI(TowerUI openTowerUI) {
+        this.openTowerUI = openTowerUI;
     }
 
     enum Current {
@@ -181,26 +196,5 @@ public class BattleScreen extends InputAdapter implements Screen {
     }
 
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        //loops through all the objects and check if the x,y is on them
-        if (openTowerUI != null) {
-            inputs.removeProcessor(openTowerUI.getStage());
-        }
-        openTowerUI = null;
 
-        for (TowerUI t : towerUIs) {
-            if (t.getRect().contains(screenX, Utilities.convertMouseY(screenY))) {
-
-
-                openTowerUI = t;
-                inputs.addProcessor(openTowerUI.getStage());
-
-
-            }
-        }
-
-
-        return false;
-    }
 }

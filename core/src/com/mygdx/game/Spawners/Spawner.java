@@ -6,13 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 public abstract class Spawner {
     //the super group- it has a two way relationship
     private Group group;
-    private boolean spawning;
+    private static boolean spawning=false;
     private float totalTime;
 
-
-    public Spawner() {
-        spawning = false;
-    }
     public abstract void spawn(int x, int y, int index);
 
     public void setGroup(Group group) {

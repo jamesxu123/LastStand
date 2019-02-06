@@ -3,21 +3,18 @@
     {
       "name": "Wizard Tower",
       "aniPath": "sprites/TOWER/WIZARD",
-      "type": "single",
       "projectile": "Wizard Bolt",
       "radius": 150,
-      "cost": 10,
-      "coolDown": 0.5,
-      "radius": 100
+      "cost": 70,
+      "coolDown": 0.5
     },
     {
       "name": "Gold Tower",
       "aniPath": "sprites/TOWER/GOLD",
       "projectile": "Gold",
-      "type": "money",
-      "radius": 100,
-      "coolDown": 5,
-      "cost": 200,
+      "radius": 0,
+      "coolDown": 3,
+      "cost": 20,
       "damage": 25
     }
   ],
@@ -40,13 +37,19 @@
       "aniPath": "sprites/PROJECTILE/WIZARD",
       "range": 20,
       "damage": 5,
-      "speed": 5
+      "speed": 5,
+      "decay": 5,
+      "type": "damage",
+      "homing": false
     },
     "Gold": {
       "aniPath": "sprites/PROJECTILE/GOLD",
       "range": 0,
       "damage": 20,
-      "speed": 10
+      "speed": 10,
+      "decay": 0.3,
+      "type": "money",
+      "homing": null
     }
   }
 }

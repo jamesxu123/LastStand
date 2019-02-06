@@ -59,6 +59,7 @@ public class Tower extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+
         batch.draw(data.animations.getKeyFrame(aniTime, true), getX(), getY());
 
     }
