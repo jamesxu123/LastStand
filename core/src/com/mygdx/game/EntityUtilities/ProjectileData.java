@@ -10,7 +10,7 @@ import com.mygdx.game.Entities.MoneyProjectile;
 import com.mygdx.game.Utilities;
 
 
-public class ProjectileData extends EntityData {
+public class ProjectileData {
     //????
     public final float range;
     public final float damage;

@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Utilities;
 
-public class TowerData extends EntityData {
+public class TowerData {
     public final String name;
     public final Animation<Texture> animations;
     public final ProjectileData projectileData;

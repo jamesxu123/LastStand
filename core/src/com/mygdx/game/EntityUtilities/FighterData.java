@@ -3,7 +3,7 @@ package com.mygdx.game.EntityUtilities;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.utils.JsonValue;
 
-public class FighterData extends EntityData {
+public class FighterData {
     //entity will also have other attributes such as name, icon, and description
     public final FighterAnis animations;
     public final float speed;
