@@ -1,0 +1,11 @@
+{
+  "hard": {
+    "initialCash": 400
+  },
+  "medium": {
+    "initialCash": 600
+  },
+  "easy": {
+    "initialCash": 800
+  }
+}

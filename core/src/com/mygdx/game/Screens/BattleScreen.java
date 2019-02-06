@@ -1,7 +1,6 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,7 +22,6 @@ import com.mygdx.game.Spawners.ProjectileSpawner;
 import com.mygdx.game.Spawners.TowerSpawner;
 import com.mygdx.game.UIs.GameUI;
 import com.mygdx.game.UIs.TowerUI;
-import com.mygdx.game.Utilities;
 
 import java.util.ArrayList;
 
@@ -140,7 +138,7 @@ public class BattleScreen implements Screen {
             openTowerUI.draw();
 
         }
-        entityMap.debug();
+        //entityMap.debug();
         entities.draw();
         //for
 

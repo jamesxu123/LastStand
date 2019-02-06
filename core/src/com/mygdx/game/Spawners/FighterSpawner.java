@@ -95,4 +95,8 @@ public class FighterSpawner extends Spawner {
     public void spawn(int x, int y, int index) {
         getGroup().addActor(new Fighter(fighterDatas.get(index), x, y));
     }
+
+    public void spawn(int x, int y, int index, Directions directions) {
+        getGroup().addActor(new Fighter(fighterDatas.get(index), x, y));
+    }
 }

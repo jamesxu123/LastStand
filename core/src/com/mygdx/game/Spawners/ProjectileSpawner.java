@@ -2,8 +2,10 @@ package com.mygdx.game.Spawners;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.Abstractions.EntityGroup;
-import com.mygdx.game.Entities.*;
-import com.mygdx.game.EntityUtilities.ProjectileData;
+import com.mygdx.game.Entities.DmgProjectile;
+import com.mygdx.game.Entities.Fighter;
+import com.mygdx.game.Entities.MoneyProjectile;
+import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.Player;
 import com.mygdx.game.Utilities;
 
@@ -53,8 +55,5 @@ public class ProjectileSpawner extends Spawner {
             getGroup().addActor(new MoneyProjectile(t.data.projectileData,start,end,t,player));
         }
 
-    }
-    @Override
-    public void spawn(int x, int y, int index) {
     }
 }

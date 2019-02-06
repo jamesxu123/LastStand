@@ -9,7 +9,8 @@ public abstract class Spawner {
     private static boolean spawning=false;
     private float totalTime;
 
-    public abstract void spawn(int x, int y, int index);
+    public void spawn(int x, int y, int index) {
+    }
 
     public void setGroup(Group group) {
         this.group = group;
@@ -38,7 +39,7 @@ public abstract class Spawner {
     }
 
     public void setSpawning(boolean spawning) {
-        this.spawning = spawning;
+        Spawner.spawning = spawning;
     }
 
 }
