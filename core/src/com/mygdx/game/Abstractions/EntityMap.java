@@ -22,8 +22,8 @@ import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 
 public class EntityMap {
-    public static final int mapArrW = 40;
-    public static final int mapArrH = 40;
+    public static final int mapArrW = 38;
+    public static final int mapArrH = 36;
     public ArrayList<ArrayList<ArrayList<Actor>>> map;
     private ExecutorService executorService = Executors.newFixedThreadPool(16);
     private ShapeRenderer shapeRenderer;

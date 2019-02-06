@@ -56,7 +56,7 @@ public class OptionScreen implements Screen {
 
     @Override
     public void show() {
-        waveFile = new File("wave1.txt");
+        waveFile = new File("wave3.txt");
         try {
             writer = new BufferedWriter(new FileWriter(waveFile));
         } catch (IOException e) {

@@ -23,8 +23,6 @@ import com.mygdx.game.Spawners.TowerSpawner;
 import com.mygdx.game.UIs.GameUI;
 import com.mygdx.game.UIs.TowerUI;
 
-import java.util.ArrayList;
-
 import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 
@@ -42,8 +40,7 @@ public class BattleScreen implements Screen {
     private EntityMap entityMap;
     private Array<RectangleMapObject> pathNodes;
     private GameUI gameUI;
-    private TowerUI openTowerUI;
-    private ArrayList<TowerUI> towerUIs;
+
     private Player player;
 
     public BattleScreen(LastStand game) {
@@ -75,15 +72,13 @@ public class BattleScreen implements Screen {
         inputs = new InputMultiplexer();
         entities = new Stage();
         this.game = game;
-        inputs.addProcessor(gameUI.getStage());
         inputs.addProcessor(gameUI);
+        inputs.addProcessor(gameUI.getStage());
         inputs.addProcessor(entities);
-        towerUIs = new ArrayList<>();
+
         for (RectangleMapObject rectangleObject : collisionObjs.getByType(RectangleMapObject.class)) {
-
-
             Rectangle rectangle = rectangleObject.getRectangle();
-            towerUIs.add(new TowerUI(rectangle, game.style, game.towerDatas, towers, game.shapeRenderer, player));
+            gameUI.getTowerUIs().add(new TowerUI(rectangle, game.style, game.towerDatas, towers, game.shapeRenderer, player));
         }
 
     }
@@ -127,41 +122,19 @@ public class BattleScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
         update(delta);
 
         mapRenderer.render();
 
 
         gameUI.draw();
-        if (openTowerUI != null) {
-            openTowerUI.draw();
 
-        }
         //entityMap.debug();
         entities.draw();
-        //for
-
-
-
 
     }
 
-    public TowerUI getOpenTowerUI() {
-        return openTowerUI;
-    }
 
-    public ArrayList<TowerUI> getTowerUIs() {
-        return towerUIs;
-    }
-
-    public InputMultiplexer getInputs() {
-        return inputs;
-    }
-
-    public void setOpenTowerUI(TowerUI openTowerUI) {
-        this.openTowerUI = openTowerUI;
-    }
 
     enum Current {
         PLAYING, Pause

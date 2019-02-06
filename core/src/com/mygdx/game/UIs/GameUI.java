@@ -12,6 +12,8 @@ import com.mygdx.game.Player;
 import com.mygdx.game.Screens.BattleScreen;
 import com.mygdx.game.Utilities;
 
+import java.util.ArrayList;
+
 import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 
@@ -25,6 +27,8 @@ public class GameUI extends InputAdapter {
     private Table table;
     private Window pane;
     private BattleScreen screen;
+    private TowerUI openTowerUI;
+    private ArrayList<TowerUI> towerUIs;
 
 
     private Player player;
@@ -36,9 +40,8 @@ public class GameUI extends InputAdapter {
         levelLabel = new Label("Level:", style);
         moneyLabel = new Label("Money:", style);
         livesLabel = new Label("Lives:", style);
-        this.screen=screen;
         table.setDebug(true);
-
+        towerUIs = new ArrayList<>();
         table.add(levelLabel).width(100).center();
         table.row();
         table.add(moneyLabel).width(100).center();
@@ -52,6 +55,7 @@ public class GameUI extends InputAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                //make this static
                 entityGroup.getSpawner().setSpawning(true);
             }
         });
@@ -72,6 +76,10 @@ public class GameUI extends InputAdapter {
         livesLabel.setText(String.format("Lives: %d", player.getLives()));
 
     }
+
+    public ArrayList<TowerUI> getTowerUIs() {
+        return towerUIs;
+    }
     public void changeInfo() {
 
     }
@@ -82,17 +90,21 @@ public class GameUI extends InputAdapter {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         //loops through all the objects and check if the x,y is on them
-        if (screen.getOpenTowerUI() != null) {
-            screen.getInputs().removeProcessor(screen.getOpenTowerUI().getStage());
-        }
-        screen.setOpenTowerUI(null);
+        if (openTowerUI != null) {
+            openTowerUI.getUI().remove();
+            openTowerUI = null;
 
-        for (TowerUI t : screen.getTowerUIs()) {
+        }
+
+
+        for (TowerUI t : towerUIs) {
+
             if (t.getRect().contains(screenX, Utilities.convertMouseY(screenY))) {
 
 
-                screen.setOpenTowerUI(t);
-                screen.getInputs().addProcessor(screen.getOpenTowerUI().getStage());
+                openTowerUI = t;
+
+                stage.addActor(openTowerUI.getUI());
 
 
             }

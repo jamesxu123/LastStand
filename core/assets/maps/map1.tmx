@@ -127,7 +127,7 @@
     <property name="Direction" value="LEFT"/>
    </properties>
   </object>
-  <object id="94" x="307" y="419" width="49" height="94">
+  <object id="94" x="300" y="399" width="56" height="112">
    <properties>
     <property name="Direction" value="DOWN"/>
    </properties>
@@ -137,7 +137,7 @@
     <property name="Direction" value="RIGHT"/>
    </properties>
   </object>
-  <object id="96" x="627" y="591" width="56" height="75">
+  <object id="96" x="627" y="580" width="65" height="93">
    <properties>
     <property name="Direction" value="UP"/>
    </properties>

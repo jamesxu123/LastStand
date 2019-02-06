@@ -1,10 +1,9 @@
 package com.mygdx.game.UIs;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Abstractions.EntityGroup;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 public class TowerUI {
     private Rectangle rect;
     private Table table;
-    private Stage stage;
+    private Group ui;
     private int index;
     private ArrayList<TowerData> towers;
     private EntityGroup group;
@@ -27,15 +26,16 @@ public class TowerUI {
     public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towers, EntityGroup towerGroup, ShapeRenderer shapeRenderer, Player player) {
         index = 0;
         this.towers = towers;
-        stage = new Stage();
+        ui = new Group();
         this.rect = rect;
         this.shapeRenderer = shapeRenderer;
+
 
 
         //Circle c=new Circle(rectangle.getCenter(new Vector2()),15);
         table = new Table(style);
         table.setPosition(rect.x, rect.y);
-        table.setSize(100, 100);
+        table.setSize(rect.width, rect.height);
 
 //        table.add(curTower);
         this.group = towerGroup;
@@ -67,23 +67,13 @@ public class TowerUI {
         table.setDebug(true);
 
 
-        stage.addActor(table);
-    }
-
-
-    public void draw() {
-        shapeRenderer.setColor(0, 0, 0, 0.5f);
-
-        stage.draw();
-        shapeRenderer.begin(ShapeType.Filled);
-
-        shapeRenderer.circle(rect.x + rect.width / 2, rect.y + rect.height / 2, towers.get(index).radius);
-        shapeRenderer.end();
+        ui.addActor(table);
 
     }
 
-    public Stage getStage() {
-        return stage;
+
+    public Group getUI() {
+        return ui;
     }
 
     public Rectangle getRect() {
