@@ -112,7 +112,6 @@ public class BattleScreen implements Screen {
 
         entityMap.constructMap(enemies.getChildren(), player);
         entityMap.switchDirection(pathNodes);
-        entityMap.constructMap(projectiles.getChildren(), player);
         entityMap.collide(delta,projectiles);
         gameUI.update();
         for (Actor a : towers.getChildren()) {

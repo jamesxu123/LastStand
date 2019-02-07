@@ -24,7 +24,7 @@ import static com.mygdx.game.LastStand.screenW;
 public class EntityMap {
     public static final int mapArrW = 38;
     public static final int mapArrH = 36;
-    public ArrayList<ArrayList<ArrayList<Actor>>> map;
+    public ArrayList<ArrayList<ArrayList<Fighter>>> map;
     private ExecutorService executorService = Executors.newFixedThreadPool(16);
     private ShapeRenderer shapeRenderer;
 
@@ -40,30 +40,18 @@ public class EntityMap {
     }
 
     public ArrayList<Fighter> getInRadius(Tower t) {
-        return getInRadius(t.getRadius());
+        return getCellsInArea(t.getRadius());
     }
 
-    public ArrayList<Fighter> getInRadius(Circle radius) {
-        ArrayList<Fighter> fighters = new ArrayList<>();
-        for (Actor actor : getCellsInArea(radius)) {
-            if (actor.getClass().getSuperclass() == Projectile.class) {
-                continue;
-            }
-            Fighter f = (Fighter) actor;
-            if (((Fighter) actor).isAlive()) {
-                fighters.add((Fighter) actor);
-            }
-        }
-        return fighters;
-    }
+
 
     //public ArrayList<int[]> getCells(Rectangle r){
 
     //}
-    public ArrayList<Actor> getCellsInArea(Circle c) {
+    public ArrayList<Fighter> getCellsInArea(Circle c) {
         //shapeRenderer.setColor(1, 0, 1, 1);
         //shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        ArrayList<Actor> cells = new ArrayList<>();
+        ArrayList<Fighter> cells = new ArrayList<>();
         for (int i = -convertMapY(c.radius); i <= convertMapY(c.radius); i++) {
             for (int j = -convertMapX(c.radius); j <= convertMapX(c.radius); j++) {
                 if (c.contains(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH)) {
@@ -99,16 +87,14 @@ public class EntityMap {
 
         //actor is put in its respective spot in the grid
 
-        for (Actor a : actors) {
-            if (mapContains(a.getX(), a.getY())) {
-                map.get(convertMapY(a.getY())).get(convertMapX(a.getX())).add(a);
+        for (Actor f : actors) {
+            if (mapContains(f.getX(), f.getY())) {
+                map.get(convertMapY(f.getY())).get(convertMapX(f.getX())).add((Fighter) f);
 
-            } else if (a.getClass() == Fighter.class) {
-                p.loseLife();
-                a.remove();
 
             } else {
-                a.remove();
+                p.loseLife();
+                f.remove();
             }
 
 
@@ -134,8 +120,8 @@ public class EntityMap {
     }
 
     public void resetMap() {
-        for (ArrayList<ArrayList<Actor>> row : map) {
-            for (ArrayList<Actor> col : row) {
+        for (ArrayList<ArrayList<Fighter>> row : map) {
+            for (ArrayList<Fighter> col : row) {
                 col.clear();
             }
         }
@@ -189,14 +175,17 @@ public class EntityMap {
         }
 
     }
-    public void collide(float delta,EntityGroup projectiles) {
+
+    //going to do a bfs instead so that the closest will be the closest
+    public void collide(float delta, EntityGroup projectiles) {
 
         executorService.submit(() -> {
             ArrayList<Fighter> f = new ArrayList<>();
             for (Actor a : projectiles.getChildren()) {
                 Projectile p=(Projectile)a;
-                f.addAll(this.getInRadius(p.range));
+                f.addAll(this.getCellsInArea(p.range));
             }
+
             if (!f.isEmpty()) {
                 for (Actor a : projectiles.getChildren()) {
                     Projectile projectile=(Projectile)a;
