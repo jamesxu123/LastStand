@@ -2,8 +2,6 @@ package com.mygdx.game.Entities;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Directions;
 import com.mygdx.game.EntityUtilities.FighterData;
 import com.mygdx.game.States;
@@ -13,39 +11,25 @@ public class Fighter extends Actor {
 
 
     public final FighterData data;
+
     private float health;
     private float aniTime = 0;
     private States state;
     private Directions direction;
 
 
-
-    //Stats stats,
-    public Fighter(FighterData data, int x, int y) {
+    //Stats stats
+    public Fighter(FighterData data, int x, int y, Directions direction) {
         setPosition(x, y);
 
         this.data = data;
         health = data.health;
-        addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Fighter");
-                super.clicked(event, x, y);
-            }
-        });
-
-
+        this.direction = direction;
 
 
         this.state = States.WALK;
-
-
     }
 
-    public void setDirection(Directions d) {
-        direction = d;
-
-    }
 
     public void setDirection(String d) {
         direction = Directions.valueOf(d);
@@ -96,6 +80,10 @@ public class Fighter extends Actor {
 
         }
 
+    }
+
+    public float getHealth() {
+        return health;
     }
 
     public Directions getDirections() {

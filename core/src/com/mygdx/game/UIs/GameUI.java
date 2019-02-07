@@ -2,12 +2,15 @@ package com.mygdx.game.UIs;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.Abstractions.EntityGroup;
+import com.mygdx.game.Entities.Fighter;
+import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.Player;
 import com.mygdx.game.Screens.BattleScreen;
 import com.mygdx.game.Utilities;
@@ -23,8 +26,12 @@ public class GameUI extends InputAdapter {
     private Label livesLabel;
     private Label moneyLabel;
     private Label levelLabel;
-    private Table infoTable;
-    private Table table;
+    private Table entityTable;
+    private Label info;
+    private Actor entity;
+    private Label name;
+    private Label health;
+    private Table gameTable;
     private Window pane;
     private BattleScreen screen;
     private TowerUI openTowerUI;
@@ -36,18 +43,29 @@ public class GameUI extends InputAdapter {
 
     public GameUI(Player player, Skin style, EntityGroup entityGroup, BattleScreen screen) {
         this.player = player;
-        table = new Table();
+        gameTable = new Table();
         levelLabel = new Label("Level:", style);
         moneyLabel = new Label("Money:", style);
         livesLabel = new Label("Lives:", style);
-        table.setDebug(true);
+
+        gameTable.setDebug(true);
         towerUIs = new ArrayList<>();
-        table.add(levelLabel).width(100).center();
-        table.row();
-        table.add(moneyLabel).width(100).center();
-        table.row();
-        table.add(livesLabel).width(100).center();
-        table.setPosition(75, screenH - 50);
+        gameTable.add(levelLabel).width(100).center();
+        gameTable.row();
+        gameTable.add(moneyLabel).width(100).center();
+        gameTable.row();
+        gameTable.add(livesLabel).width(100).center();
+        gameTable.setPosition(75, screenH - 50);
+
+        health = new Label("", style);
+        name = new Label("", style);
+        entityTable = new Table(style);
+        entityTable.setDebug(true);
+        entityTable.setPosition(200, 0);
+        entityTable.left().bottom().add(name).center();
+        entityTable.add(health);
+        //entityTable.add(info);
+
         pane = new Window("", style);
         ImageButton playButton = new ImageButton(new TextureRegionDrawable(new Texture("skullButtonUp.png"))
                 , new TextureRegionDrawable(new Texture("skullButtonDown.png")));
@@ -62,7 +80,8 @@ public class GameUI extends InputAdapter {
         pane.add(playButton);
         pane.setPosition(screenW, 0);
         stage = new Stage();
-        stage.addActor(table);
+        stage.addActor(entityTable);
+        stage.addActor(gameTable);
         stage.addActor(pane);
     }
 
@@ -80,10 +99,34 @@ public class GameUI extends InputAdapter {
     public ArrayList<TowerUI> getTowerUIs() {
         return towerUIs;
     }
-    public void changeInfo() {
+
+    public void updateInfo() {
+        if (entity.getClass() == Fighter.class) {
+            Fighter f = (Fighter) entity;
+            health.setText(String.format("HP: %f", f.getHealth()));
+            name.setText(String.format("NAME:%s", f.data.name));
+            if (!f.isAlive()) {
+                entity = null;
+            }
+
+
+        } else if (entity.getClass() == Tower.class) {
+            Tower t = (Tower) entity;
+
+        }
+    }
+
+    public void changeInfo(Actor actor) {
+        entity = actor;
 
     }
     public void draw() {
+        if (entity != null) {
+            updateInfo();
+
+        }
+
+
 
         stage.draw();
     }

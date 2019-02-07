@@ -1,9 +1,12 @@
 package com.mygdx.game.Spawners;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Directions;
 import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.EntityUtilities.FighterData;
+import com.mygdx.game.UIs.GameUI;
 import com.mygdx.game.Utilities;
 
 import java.io.BufferedReader;
@@ -21,18 +24,23 @@ public class FighterSpawner extends Spawner {
     private Integer nextSpawn;
     private Iterator<FileHandle> waves;
     private ArrayList<FighterData> fighterDatas;
+    private GameUI gameUI;
+    private Fighter latestFighter;
 
 
     public FighterSpawner(int x, int y, String direction, String roundDir, ArrayList<FighterData> fighterDatas) {
         this.fighterDatas = fighterDatas;
         waves = Arrays.asList(Utilities.listFiles(new FileHandle(roundDir))).iterator();
-
         spawnX = x;
         spawnY = y;
         spawnDir = Directions.valueOf(direction);
         switchWave();
 
 
+    }
+
+    public void setGameUI(GameUI gameUI) {
+        this.gameUI = gameUI;
     }
 
     private void switchWave() {
@@ -73,14 +81,22 @@ public class FighterSpawner extends Spawner {
 
                 int deviation = (Utilities.rand.nextBoolean()) ? r : -r;
                 if (spawnDir == Directions.UP || spawnDir == Directions.DOWN) {
-                    spawn(spawnX + deviation, spawnY, nextSpawn);
+                    spawn(spawnX + deviation, spawnY, nextSpawn, spawnDir);
 
                 } else {
-                    spawn(spawnX, spawnY + deviation, nextSpawn);
+                    spawn(spawnX, spawnY + deviation, nextSpawn, spawnDir);
                 }
 
-                Fighter f = (Fighter) getGroup().getChildren().get(getGroup().getChildren().size - 1);
-                f.setDirection(spawnDir);
+                latestFighter = (Fighter) getGroup().getChildren().get(getGroup().getChildren().size - 1);
+                latestFighter.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        gameUI.changeInfo(latestFighter);
+
+
+                        super.clicked(event, x, y);
+                    }
+                });
                 nextSpawn = null;
                 setTotalTime(0);
             }
@@ -91,12 +107,9 @@ public class FighterSpawner extends Spawner {
 
     }
 
-    @Override
-    public void spawn(int x, int y, int index) {
-        getGroup().addActor(new Fighter(fighterDatas.get(index), x, y));
-    }
+
 
     public void spawn(int x, int y, int index, Directions directions) {
-        getGroup().addActor(new Fighter(fighterDatas.get(index), x, y));
+        getGroup().addActor(new Fighter(fighterDatas.get(index), x, y, directions));
     }
 }
