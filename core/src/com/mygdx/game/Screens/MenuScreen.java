@@ -5,6 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.LastStand;
@@ -13,7 +15,7 @@ import com.mygdx.game.LastStand;
 public class MenuScreen implements Screen {
     private LastStand game;
     private Texture bkg;
-
+    private Label mapName;
     private Stage ui;
 
     public MenuScreen(final LastStand game) {
@@ -41,9 +43,43 @@ public class MenuScreen implements Screen {
                 game.setScreen(game.optionScreen);
             }
         });
+        ImageButton leftButton = new ImageButton(game.style);
+        leftButton.setPosition(800, 350);
+        leftButton.setSize(50, 50);
+        ImageButton rightButton = new ImageButton(game.style);
+        rightButton.setPosition(600, 350);
+        rightButton.setSize(50, 50);
+
+        leftButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (game.mapIndex > 0) {
+                    game.mapIndex -= 1;
+                } else {
+                    game.mapIndex = game.maps.size() - 1;
+                }
+                System.out.println(game.mapIndex);
+                mapName.setText(game.maps.get(game.mapIndex).toString());
+                super.clicked(event, x, y);
+            }
+        });
+        rightButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.mapIndex = (game.mapIndex + 1) % game.maps.size();
+                mapName.setText(game.maps.get(game.mapIndex).toString());
+                super.clicked(event, x, y);
+            }
+        });
+
+        mapName = new Label(game.maps.get(game.mapIndex).toString(), game.style);
+        mapName.setPosition(400, 100);
 
         ui.addActor(playButton);
         ui.addActor(optionButton);
+        ui.addActor(mapName);
+        ui.addActor(leftButton);
+        ui.addActor(rightButton);
 
 
     }

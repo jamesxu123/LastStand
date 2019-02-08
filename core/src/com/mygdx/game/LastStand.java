@@ -36,6 +36,8 @@ public class LastStand extends Game {
     public ShapeRenderer shapeRenderer;
     public ArrayList<FighterData> fighterDatas;
     public ArrayList<TowerData> towerDatas;
+    public ArrayList<TiledMap> maps;
+    public int mapIndex = 0;
     public JsonReader jsonReader;
 
     //recursively gets all files to load and puts it in the asynchronous loaders queue
@@ -83,7 +85,25 @@ public class LastStand extends Game {
 
     //called when manager is done loading everything from loadingscreen
     public void initialize() {
+        maps = new ArrayList<>();
         JsonValue objects = jsonReader.parse(new FileHandle("entities.json"));
+        for (FileHandle fileHandle : Utilities.listFiles(new FileHandle("maps/"))) {
+            if (manager.contains(fileHandle.path(), TiledMap.class)) {
+                System.out.println(fileHandle.path());
+                maps.add(manager.get(fileHandle.path()));
+
+
+            }
+
+
+        }
+
+
+
+
+
+
+
         towerDatas = new ArrayList<>();
         fighterDatas = new ArrayList<>();
         for (int i = 0; i < objects.get("towers").size; i++) {
@@ -98,6 +118,10 @@ public class LastStand extends Game {
         battleScreen = new BattleScreen(this);
         optionScreen = new OptionScreen(this);
         setScreen(menuScreen);
+    }
+
+    public TiledMap getMap() {
+        return maps.get(mapIndex);
     }
 
 

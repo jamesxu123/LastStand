@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -31,7 +30,6 @@ public class BattleScreen implements Screen {
     private Stage entities;
     private InputMultiplexer inputs;
     private OrthographicCamera camera;
-    private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
     private MapObjects collisionObjs;
     private EntityGroup enemies;
@@ -44,38 +42,41 @@ public class BattleScreen implements Screen {
     private Player player;
 
     public BattleScreen(LastStand game) {
+        this.game = game;
+    }
 
+
+
+    @Override
+    public void show() {
         entityMap = new EntityMap(game.shapeRenderer);
         player = new Player();
-
-        map = game.manager.get("maps/map1.tmx");
         //gets the objects embedded in the tiled map
-        RectangleMapObject spawnPoint = map.getLayers().get("Start").getObjects().getByType(RectangleMapObject.class).get(0);
-        pathNodes = map.getLayers().get("Path Nodes").getObjects().getByType(RectangleMapObject.class);
-
+        RectangleMapObject spawnPoint = game.getMap().getLayers().get("Start").getObjects().getByType(RectangleMapObject.class).get(0);
+        pathNodes = game.getMap().getLayers().get("Path Nodes").getObjects().getByType(RectangleMapObject.class);
 
         //creates a new group which has a spawner. the spawner gets the initial spawn point
 
         FighterSpawner fighterSpawner = new FighterSpawner((int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y,
                 spawnPoint.getProperties().get("Direction").toString(), "level_1", game.fighterDatas);
         enemies = new EntityGroup(fighterSpawner);
-        gameUI = new GameUI(player, game.style, enemies,this);
+        gameUI = new GameUI(player, game.style, enemies, this);
         fighterSpawner.setGameUI(gameUI);
 
         towers = new EntityGroup(new TowerSpawner(game.towerDatas));
-        projectiles = new EntityGroup(new ProjectileSpawner(towers,player));
+        projectiles = new EntityGroup(new ProjectileSpawner(towers, player));
 
         camera = new OrthographicCamera(screenW, screenH);
         //camera is only needed to center the map on the screen
-        mapRenderer = new OrthogonalTiledMapRenderer(map, 1, game.batch);
+        mapRenderer = new OrthogonalTiledMapRenderer(game.getMap(), 1, game.batch);
         camera.setToOrtho(false);
         mapRenderer.setView(camera);
 
-        collisionObjs = map.getLayers().get("Tower Placement").getObjects();
+        collisionObjs = game.getMap().getLayers().get("Tower Placement").getObjects();
         //input multiplexer holds a bunch of input taking things and passes input to them
         inputs = new InputMultiplexer();
         entities = new Stage();
-        this.game = game;
+
         inputs.addProcessor(gameUI);
         inputs.addProcessor(gameUI.getStage());
         inputs.addProcessor(entities);
@@ -84,13 +85,6 @@ public class BattleScreen implements Screen {
             Rectangle rectangle = rectangleObject.getRectangle();
             gameUI.getTowerUIs().add(new TowerUI(rectangle, game.style, game.towerDatas, towers, game.shapeRenderer, player));
         }
-
-    }
-
-
-
-    @Override
-    public void show() {
 
         Gdx.input.setInputProcessor(inputs);
         entities.addActor(towers);

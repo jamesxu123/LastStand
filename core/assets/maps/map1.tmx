@@ -148,7 +148,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="19" name="Tower Placement" locked="1">
+ <objectgroup id="19" name="Tower Placement">
   <object id="102" x="333" y="337" width="63" height="63"/>
   <object id="103" x="224" y="210" width="65" height="58"/>
   <object id="104" x="222" y="528" width="65" height="59"/>
