@@ -9,7 +9,6 @@ public class DmgProjectile extends Projectile{
         super(data,start,end,t);
     }
     public void damage(Fighter fighter) {
-        System.out.println("DmgProjectile");
         fighter.damage((int) data.damage);
         this.remove();
     }

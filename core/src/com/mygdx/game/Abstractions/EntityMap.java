@@ -17,6 +17,7 @@ import com.mygdx.game.Utilities;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
@@ -40,7 +41,7 @@ public class EntityMap {
     }
 
     public ArrayList<Fighter> getInRadius(Tower t) {
-        return getCellsInArea(t.getRadius());
+        return getCellsInArea(t.getRadius()).stream().filter(fighter -> fighter.isAlive()).collect(Collectors.toCollection(ArrayList::new));
     }
 
 
