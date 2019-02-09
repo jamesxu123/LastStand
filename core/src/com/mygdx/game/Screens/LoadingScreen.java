@@ -1,7 +1,6 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.LastStand;
@@ -27,11 +26,11 @@ public class LoadingScreen implements Screen {
         shapeRenderer.setProjectionMatrix(game.batch.getProjectionMatrix());
         shapeRenderer.setTransformMatrix(game.batch.getTransformMatrix());
         if (game.manager.update()) {
-            if (game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower.png")) {
+            //if (game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower.png")) {
                 game.initialize();
-            } else {
-                game.manager.load("sprites/TOWER/WIZARD/wizard-tower.png", Texture.class);
-            }
+            //} else {
+            //game.manager.load("sprites/TOWER/WIZARD/wizard-tower.png", Texture.class);
+            //}
         }
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.rect(100, 359, 824, 50);

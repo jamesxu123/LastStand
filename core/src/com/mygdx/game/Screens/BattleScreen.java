@@ -126,7 +126,6 @@ public class BattleScreen implements Screen {
 
 
         gameUI.draw();
-        debug();
         entities.draw();
 
 

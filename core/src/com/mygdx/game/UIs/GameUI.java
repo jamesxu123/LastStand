@@ -2,7 +2,6 @@ package com.mygdx.game.UIs;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.Abstractions.EntityGroup;
 import com.mygdx.game.Entities.Fighter;
-import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.Player;
 import com.mygdx.game.Screens.BattleScreen;
 import com.mygdx.game.Utilities;
@@ -28,7 +26,7 @@ public class GameUI extends InputAdapter {
     private Label levelLabel;
     private Table entityTable;
     private Label info;
-    private Actor entity;
+    private Fighter fighter;
     private Label name;
     private Label health;
     private Table gameTable;
@@ -101,61 +99,41 @@ public class GameUI extends InputAdapter {
     }
 
     public void updateInfo() {
-        if (entity.getClass() == Fighter.class) {
-            Fighter f = (Fighter) entity;
-            health.setText(String.format("HP: %f", f.getHealth()));
-            name.setText(String.format("NAME:%s", f.data.name));
-            if (!f.isAlive()) {
-                entity = null;
+        if (fighter.getClass() == Fighter.class) {
+            health.setText(String.format("HP: %f", fighter.getHealth()));
+            name.setText(String.format("NAME:%s", fighter.data.name));
+            if (!fighter.isAlive()) {
+                fighter = null;
             }
-
-
-        } else if (entity.getClass() == Tower.class) {
-            Tower t = (Tower) entity;
-
         }
     }
 
-    public void changeInfo(Actor actor) {
-        entity = actor;
-
+    public void changeInfo(Fighter fighter) {
+        this.fighter = fighter;
     }
     public void draw() {
-        if (entity != null) {
+        if (fighter != null) {
             updateInfo();
-
         }
-
-
-
         stage.draw();
     }
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         //loops through all the objects and check if the x,y is on them
-        if (openTowerUI != null) {
-            openTowerUI.getUI().remove();
-            openTowerUI = null;
-
+        if (stage.touchDown(screenX, screenY, pointer, button)) {
+            return true;
         }
-
-
+        if (openTowerUI != null) {
+            openTowerUI.remove();
+            openTowerUI = null;
+        }
 
         for (TowerUI t : towerUIs) {
-
-
             if (t.getRect().contains(screenX, Utilities.convertMouseY(screenY))) {
-
-
                 openTowerUI = t;
-
-                stage.addActor(openTowerUI.getUI());
-
-
+                stage.addActor(openTowerUI);
             }
         }
-
-
         return false;
     }
 }
