@@ -6,7 +6,8 @@
       "projectile": "Wizard Bolt",
       "radius": 150,
       "cost": 70,
-      "coolDown": 0.5
+      "coolDown": 0.5,
+      "homing": true
     },
     {
       "name": "Gold Tower",
@@ -15,7 +16,8 @@
       "radius": 0,
       "coolDown": 3,
       "cost": 20,
-      "damage": 25
+      "damage": 25,
+      "homing": false
     }
   ],
   "fighters": [
