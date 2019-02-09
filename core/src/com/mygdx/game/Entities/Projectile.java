@@ -17,10 +17,22 @@ public class Projectile extends Actor {
     private float aniTime = 0;
     public final Circle range = new Circle();
     public final ProjectileData data;
+    private Fighter target;
 
+
+    public Projectile(ProjectileData data, Point start, Fighter target, Tower t) {
+
+        this.start = start;
+        this.end = new Point((int)target.getX(), (int)target.getY());
+        this.target = target;
+        this.sprite = new Sprite(data.animations.getKeyFrame(0));
+        this.range.radius = data.range;
+        this.data = data;
+        setRotation((float) Math.atan2(end.y - start.y, end.x - start.x));
+        setPosition(start.x, start.y);
+    }
 
     public Projectile(ProjectileData data, Point start, Point end, Tower t) {
-
         this.start = start;
         this.end = end;
         this.sprite = new Sprite(data.animations.getKeyFrame(0));
@@ -46,8 +58,8 @@ public class Projectile extends Actor {
         }
         range.setPosition(getX(), getY());
         sprite.setPosition(getX(), getY());
-        if (data.homing) {
-            setRotation((float) Math.atan2(end.y - getX(), end.x - getY()));
+        if (data.homing && target != null) {
+            setRotation((float) Math.atan2(target.getY() - getY(), target.getX() - getX()));
         }
         sprite.setRotation((float) Math.toDegrees(getRotation()));
         super.act(delta);

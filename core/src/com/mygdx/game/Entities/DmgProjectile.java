@@ -5,8 +5,8 @@ import com.mygdx.game.EntityUtilities.ProjectileData;
 import java.awt.*;
 
 public class DmgProjectile extends Projectile{
-    public DmgProjectile(ProjectileData data, Point start, Point end, Tower t){
-        super(data,start,end,t);
+    public DmgProjectile(ProjectileData data, Point start, Fighter target, Tower t){
+        super(data,start, target,t);
     }
     public void damage(Fighter fighter) {
         fighter.damage((int) data.damage);

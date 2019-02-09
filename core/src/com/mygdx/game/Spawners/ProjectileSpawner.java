@@ -22,7 +22,7 @@ public class ProjectileSpawner extends Spawner {
 
     public ProjectileSpawner(EntityGroup towers, Player player) {
         this.towers = towers;
-        this.player=player;
+        this.player = player;
     }
 
     @Override
@@ -35,25 +35,29 @@ public class ProjectileSpawner extends Spawner {
             if (t.getLastFired() > t.data.coolDown) {
                 t.setLastFired(0);
                 //money will only be generated if the fighter spawner is currently spawning
-                if (t.data.projectileData.type == MoneyProjectile.class&&getSpawning()) {
+                if (t.data.projectileData.type == MoneyProjectile.class && getSpawning()) {
 
                     spawn(Utilities.getPoint(t), new Point(Utilities.rand.nextInt(screenW), Utilities.rand.nextInt(screenH)), t);
                 }
                 //only sends out projectile when there is an enemy in the radius
                 if (!t.getInRadius().isEmpty()) {
                     Fighter fighter = t.getClosest();
-                    spawn(Utilities.getPoint(t), Utilities.getPoint(fighter), t);
+                    spawn(Utilities.getPoint(t), fighter, t);
                 }
             }
         }
         super.run(delta);
     }
-    public void spawn(Point start, Point end, Tower t) {
-        if(t.data.projectileData.type== DmgProjectile.class){
-            getGroup().addActor(new DmgProjectile(t.data.projectileData, start, end, t));
-        }else if(t.data.projectileData.type== MoneyProjectile.class){
-            getGroup().addActor(new MoneyProjectile(t.data.projectileData,start,end,t,player));
-        }
 
+    public void spawn(Point start, Fighter target, Tower t) {
+        if (t.data.projectileData.type == DmgProjectile.class) {
+            getGroup().addActor(new DmgProjectile(t.data.projectileData, start, target, t));
+        }
+    }
+
+    public void spawn(Point start, Point end, Tower t) {
+         if (t.data.projectileData.type == MoneyProjectile.class) {
+            getGroup().addActor(new MoneyProjectile(t.data.projectileData, start, end, t, player));
+        }
     }
 }
