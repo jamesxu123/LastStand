@@ -126,15 +126,27 @@ public class BattleScreen implements Screen {
 
 
         gameUI.draw();
-
-        //entityMap.debug();
+        debug();
         entities.draw();
+
+
+    }
+
+    public void debug() {
+        entityMap.debug();
         game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (TowerUI t : gameUI.getTowerUIs()) {
 
             game.shapeRenderer.rect(t.getRect().x, t.getRect().y, t.getRect().width, t.getRect().height);
         }
         game.shapeRenderer.end();
+        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        for (RectangleMapObject rmo : pathNodes) {
+            Rectangle r = rmo.getRectangle();
+            game.shapeRenderer.rect(r.x, r.y, r.width, r.height);
+        }
+        game.shapeRenderer.end();
+
     }
 
 
