@@ -17,6 +17,7 @@ public class ProjectileData {
     public final float speed;
     public final float decay;
     public final Class type;
+    public final boolean homing;
     public Animation<Texture> animations;
 
     public ProjectileData(JsonValue attributes, AssetManager manager) {
@@ -30,6 +31,7 @@ public class ProjectileData {
         damage = attributes.getInt("damage");
         speed = attributes.getInt("speed");
         decay=attributes.getFloat("decay");
+        homing = attributes.getBoolean("homing");
         switch(attributes.getString("type")){
             case "money": type= MoneyProjectile.class;
             break;

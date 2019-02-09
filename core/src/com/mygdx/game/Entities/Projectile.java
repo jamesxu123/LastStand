@@ -47,6 +47,9 @@ public class Projectile extends Actor {
         range.setPosition(getX(), getY());
         sprite.setPosition(getX(), getY());
         sprite.setRotation((float) Math.toDegrees(getRotation()));
+        if (data.homing) {
+            setRotation((float) Math.atan2(end.y - getX(), end.x - getY()));
+        }
         super.act(delta);
     }
 
