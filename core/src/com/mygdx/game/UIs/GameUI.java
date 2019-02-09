@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.Abstractions.EntityGroup;
 import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.Player;
-import com.mygdx.game.Screens.BattleScreen;
 import com.mygdx.game.Utilities;
 
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ public class GameUI extends InputAdapter {
     private Label health;
     private Table gameTable;
     private Window pane;
-    private BattleScreen screen;
     private TowerUI openTowerUI;
     private ArrayList<TowerUI> towerUIs;
 
@@ -39,7 +37,7 @@ public class GameUI extends InputAdapter {
     private Player player;
 
 
-    public GameUI(Player player, Skin style, EntityGroup entityGroup, BattleScreen screen) {
+    public GameUI(Player player, Skin style, EntityGroup entityGroup) {
         this.player = player;
         gameTable = new Table();
         levelLabel = new Label("Level:", style);
@@ -71,8 +69,9 @@ public class GameUI extends InputAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //make this static
+
                 entityGroup.getSpawner().setSpawning(true);
+                player.setLevel(entityGroup.getSpawner().getWave());
             }
         });
         pane.add(playButton);

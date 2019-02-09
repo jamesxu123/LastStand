@@ -61,7 +61,7 @@ public class BattleScreen implements Screen {
         FighterSpawner fighterSpawner = new FighterSpawner((int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y,
                 spawnPoint.getProperties().get("Direction").toString(), game.fighterDatas);
         enemies = new EntityGroup(fighterSpawner);
-        gameUI = new GameUI(player, game.style, enemies, this);
+        gameUI = new GameUI(player, game.style, enemies);
         fighterSpawner.setGameUI(gameUI);
 
         towers = new EntityGroup(new TowerSpawner(game.towerDatas));

@@ -26,6 +26,10 @@ public abstract class Spawner {
         }
     }
 
+    public int getWave() {
+        return -1;
+    }
+
     public float getTotalTime() {
         return totalTime;
     }

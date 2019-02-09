@@ -30,6 +30,12 @@
       "aniPath": "sprites/FIGHTER/SHAMAN",
       "speed": 1.5,
       "health": 10
+    },
+    {
+      "name": "Orc",
+      "aniPath": "sprites/FIGHTER/ORC",
+      "speed": 0.5,
+      "health": 35
     }
   ],
   "projectiles": {

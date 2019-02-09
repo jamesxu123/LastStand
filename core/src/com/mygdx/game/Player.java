@@ -17,6 +17,10 @@ public class Player {
 
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     public void loseLife() {
         lives -= 1;
     }

@@ -34,8 +34,12 @@ public class FighterSpawner extends Spawner {
         this.gameUI = gameUI;
     }
 
+    @Override
+    public int getWave() {
+        return wave;
+    }
 
-    public void setNextWave() {
+    private void setNextWave() {
         numEnemies = wave * wave + wave + 10;
         spawnIntervalRange = (25 + wave) / numEnemies;
     }
