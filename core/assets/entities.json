@@ -6,8 +6,7 @@
       "projectile": "Wizard Bolt",
       "radius": 150,
       "cost": 70,
-      "coolDown": 0.5,
-      "homing": true
+      "coolDown": 0.5
     },
     {
       "name": "Gold Tower",
@@ -16,8 +15,7 @@
       "radius": 0,
       "coolDown": 3,
       "cost": 20,
-      "damage": 25,
-      "homing": false
+      "damage": 25
     }
   ],
   "fighters": [
@@ -42,7 +40,7 @@
       "speed": 5,
       "decay": 5,
       "type": "damage",
-      "homing": false
+      "homing": true
     },
     "Gold": {
       "aniPath": "sprites/PROJECTILE/GOLD",
@@ -51,7 +49,7 @@
       "speed": 10,
       "decay": 0.3,
       "type": "money",
-      "homing": null
+      "homing": false
     }
   }
 }
