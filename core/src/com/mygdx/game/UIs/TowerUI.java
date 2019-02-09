@@ -96,6 +96,7 @@ public class TowerUI extends Table {
 
 
         super.draw(batch, parentAlpha);
+        shapeRenderer.setColor(0, 0, 0, 0.4f);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         if (tower == null) {
             shapeRenderer.circle(rect.x + rect.width / 2, rect.y + rect.height / 2, towerDatas.get(index).radius);

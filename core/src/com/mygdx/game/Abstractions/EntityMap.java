@@ -46,9 +46,6 @@ public class EntityMap {
     }
 
 
-    //public ArrayList<int[]> getCells(Rectangle r){
-
-    //}
     public ArrayList<Fighter> getCellsInArea(Circle c) {
         //shapeRenderer.setColor(1, 0, 1, 1);
         //shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
