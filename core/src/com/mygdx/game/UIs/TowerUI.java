@@ -1,6 +1,7 @@
 package com.mygdx.game.UIs;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.Abstractions.EntityGroup;
+import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.EntityUtilities.TowerData;
 import com.mygdx.game.Player;
 
@@ -18,10 +20,11 @@ public class TowerUI extends Table {
     private Rectangle rect;
     private int index = 0;
     private EntityGroup group;
-    private ArrayList<TowerData> towerDatas;
-    private ShapeRenderer shapeRenderer;
+    private Tower tower;
     private Label priceLabel;
+    private ShapeRenderer shapeRenderer;
     private Image towerImg;
+    private ArrayList<TowerData> towerDatas;
 
 
     public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towerDatas, EntityGroup towerGroup, ShapeRenderer shapeRenderer, Player player) {
@@ -30,6 +33,7 @@ public class TowerUI extends Table {
 
         this.rect = rect;
         this.shapeRenderer = shapeRenderer;
+        this.towerDatas = towerDatas;
         towerImg = new Image(towerDatas.get(index).animations.getKeyFrame(0));
         priceLabel = new Label(Integer.toString(towerDatas.get(index).cost), style);
         //Circle c=new Circle(rectangle.getCenter(new Vector2()),15);
@@ -77,6 +81,7 @@ public class TowerUI extends Table {
                     super.clicked(event, clickX, clickY);
                     group.getSpawner().spawn((int) rect.x, (int) rect.y, towerDatas.indexOf(towerDatas.get(index)));
                     player.addMoney(-towerDatas.get(index).cost);
+
                 }
             }
         });
@@ -85,6 +90,23 @@ public class TowerUI extends Table {
         add(payButton).size(40, 20).center();
     }
 
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+
+
+        super.draw(batch, parentAlpha);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        if (tower == null) {
+            shapeRenderer.circle(rect.x + rect.width / 2, rect.y + rect.height / 2, towerDatas.get(index).radius);
+
+        } else {
+            shapeRenderer.circle(rect.x + rect.width / 2, rect.y + rect.height / 2, tower.data.radius);
+
+
+        }
+        shapeRenderer.end();
+    }
 
 
     public Rectangle getRect() {

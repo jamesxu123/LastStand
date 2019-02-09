@@ -1,6 +1,5 @@
 package com.mygdx.game.Spawners;
 
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Directions;
@@ -9,48 +8,37 @@ import com.mygdx.game.EntityUtilities.FighterData;
 import com.mygdx.game.UIs.GameUI;
 import com.mygdx.game.Utilities;
 
-import java.io.BufferedReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Scanner;
 
 public class FighterSpawner extends Spawner {
     private int spawnX;
     private int spawnY;
     private Directions spawnDir;
-    private Scanner waveScanner;
-    private float spawnInterval;
-    private Integer nextSpawn;
-    private Iterator<FileHandle> waves;
+    private Float spawnInterval;
+    private float spawnIntervalRange;
+    private int numEnemies;
     private ArrayList<FighterData> fighterDatas;
     private GameUI gameUI;
-    private Fighter latestFighter;
+    private int wave = 0;
 
 
-    public FighterSpawner(int x, int y, String direction, String roundDir, ArrayList<FighterData> fighterDatas) {
+    public FighterSpawner(int x, int y, String direction, ArrayList<FighterData> fighterDatas) {
         this.fighterDatas = fighterDatas;
-        waves = Arrays.asList(Utilities.listFiles(new FileHandle(roundDir))).iterator();
         spawnX = x;
         spawnY = y;
         spawnDir = Directions.valueOf(direction);
-        switchWave();
-
-
     }
+
 
     public void setGameUI(GameUI gameUI) {
         this.gameUI = gameUI;
     }
 
-    private void switchWave() {
 
-        FileHandle f = waves.next();
-        waveScanner = new Scanner(new BufferedReader(f.reader()));
-
+    public void setNextWave() {
+        numEnemies = wave * wave + wave + 10;
+        spawnIntervalRange = (25 + wave) / numEnemies;
     }
-
-
 
 
     @Override
@@ -58,25 +46,14 @@ public class FighterSpawner extends Spawner {
 
         if (getSpawning()) {
 
-            if (nextSpawn == null) {
-                if (waveScanner.hasNext()) {
-                    String[] wave = waveScanner.nextLine().split(" ");
-                    spawnInterval = Float.parseFloat(wave[0]);
-                    nextSpawn = Integer.parseInt(wave[1]);
-                } else if (waves.hasNext()) {
-
-                    switchWave();
-                    setSpawning(false);
-                    return;
-                } else {
-                    setSpawning(false);
-                    return;
-
-                }
-
+            if (spawnInterval == null) {
+                spawnInterval = Utilities.rand.nextFloat() * spawnIntervalRange;
 
             }
+
+
             if (getTotalTime() > spawnInterval) {
+                int nextSpawn = Utilities.rand.nextInt(fighterDatas.size());
                 int r = Utilities.rand.nextInt(20);
 
                 int deviation = (Utilities.rand.nextBoolean()) ? r : -r;
@@ -87,7 +64,7 @@ public class FighterSpawner extends Spawner {
                     spawn(spawnX, spawnY + deviation, nextSpawn, spawnDir);
                 }
 
-                latestFighter = (Fighter) getGroup().getChildren().get(getGroup().getChildren().size - 1);
+                Fighter latestFighter = (Fighter) getGroup().getChildren().get(getGroup().getChildren().size - 1);
                 latestFighter.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
@@ -97,12 +74,16 @@ public class FighterSpawner extends Spawner {
                         super.clicked(event, x, y);
                     }
                 });
-                nextSpawn = null;
+                spawnInterval = null;
+                numEnemies -= 1;
                 setTotalTime(0);
             }
             super.run(delta);
-
-
+            if (numEnemies < 1) {
+                setSpawning(false);
+                wave += 1;
+                setNextWave();
+            }
         }
 
     }
