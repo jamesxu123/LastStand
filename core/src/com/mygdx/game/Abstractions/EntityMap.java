@@ -7,10 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.mygdx.game.Entities.DmgProjectile;
-import com.mygdx.game.Entities.Fighter;
-import com.mygdx.game.Entities.Projectile;
-import com.mygdx.game.Entities.Tower;
+import com.mygdx.game.Entities.*;
 import com.mygdx.game.Player;
 import com.mygdx.game.Utilities;
 
@@ -44,6 +41,9 @@ public class EntityMap {
         return getCellsInArea(t.getRadius()).stream().filter(fighter -> fighter.isAlive()).collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public ArrayList<Fighter> getInRadius(Circle c) {
+        return getCellsInArea(c).stream().filter(fighter -> fighter.isAlive()).collect(Collectors.toCollection(ArrayList::new));
+    }
 
 
     //public ArrayList<int[]> getCells(Rectangle r){
@@ -58,7 +58,7 @@ public class EntityMap {
                 if (c.contains(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH)) {
                     //shapeRenderer.rect(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH, screenW / mapArrW, screenH / mapArrH);
 
-                    if (mapContains(c.x+j*screenW/mapArrW, c.y+i*screenH/mapArrH)) {
+                    if (mapContains(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH)) {
                         cells.addAll(map.get(i + convertMapY(c.y)).get(j + convertMapX(c.x)));
                     }
                 }
@@ -106,9 +106,6 @@ public class EntityMap {
     public boolean mapContains(float x, float y) {
         return 0 <= convertMapX(x) && convertMapX(x) < mapArrW && 0 <= convertMapY(y) && convertMapY(y) < mapArrH;
     }
-
-
-
 
 
     public int convertMapX(float x) {
@@ -179,39 +176,17 @@ public class EntityMap {
 
     //going to do a bfs instead so that the closest will be the closest
     public void collide(float delta, EntityGroup projectiles) {
-
-        executorService.submit(() -> {
-            ArrayList<Fighter> f = new ArrayList<>();
-            for (Actor a : projectiles.getChildren()) {
-                Projectile p=(Projectile)a;
-                f.addAll(this.getCellsInArea(p.range));
-            }
-
-            if (!f.isEmpty()) {
-                for (Actor a : projectiles.getChildren()) {
-                    Projectile projectile=(Projectile)a;
-                    if (projectile.getClass() == DmgProjectile.class) {
-                        DmgProjectile damageProjectile=(DmgProjectile)projectile;
-                        double minDist = (double) Integer.MAX_VALUE;
-                        Fighter minDistFighter = null;
-                        for (Fighter fighter : f) {
-                            if (!fighter.isAlive()) {
-                                continue;
-                            }
-                            double x1 = damageProjectile.getX();
-                            double y1 = damageProjectile.getY();
-                            double x2 = fighter.getX();
-                            double y2 = fighter.getY();
-                            double distance = Math.hypot(x2 - x1, y2 - y1);
-                            minDist = distance < minDist ? minDist : distance;
-                            minDistFighter = distance < minDist ? fighter : null;
-                        }
-                        damageProjectile.damage(minDistFighter);
-                    }
+        for (Actor a : projectiles.getChildren()) {
+            Projectile p = (Projectile) a;
+            for (Fighter f : getInRadius(p.range)) {
+                if (p.getClass() == DmgProjectile.class) {
+                    ((DmgProjectile) p).damage(f);
+                } else if (p.getClass() == MoneyProjectile.class) {
                 }
             }
-        });
+        }
     }
+
 }
 
 
