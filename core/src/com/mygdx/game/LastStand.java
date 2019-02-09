@@ -44,11 +44,12 @@ public class LastStand extends Game {
     public void loadAllFiles(FileHandle file) {
         for (FileHandle f : file.list()) {
             if (f.isDirectory()) {
-
                 loadAllFiles(f);
             } else {
                 switch (f.extension()) {
                     case "png":
+                        manager.load(f.path(), Texture.class);
+                        break;
                     case "jpg":
                         manager.load(f.path(), Texture.class);
                         break;
