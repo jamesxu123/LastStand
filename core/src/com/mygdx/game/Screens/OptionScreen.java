@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.LastStand;
@@ -29,7 +30,9 @@ public class OptionScreen implements Screen {
 
         this.game = game;
         ui = new Stage();
-
+        Label title = new Label("Options", game.style);
+        title.setFontScale(1.5f);
+        title.setPosition(512 - title.getWidth() / 2, 768 - 100);
         TextButton btn = new TextButton("Add Shaman", game.style);
         TextButton btn2 = new TextButton("Add Knight", game.style);
         btn.setPosition(100, 300);
@@ -52,6 +55,7 @@ public class OptionScreen implements Screen {
 
         ui.addActor(btn);
         ui.addActor(btn2);
+        ui.addActor(title);
 
 
     }
