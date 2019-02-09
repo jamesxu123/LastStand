@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -128,7 +129,12 @@ public class BattleScreen implements Screen {
 
         //entityMap.debug();
         entities.draw();
+        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        for (TowerUI t : gameUI.getTowerUIs()) {
 
+            game.shapeRenderer.rect(t.getRect().x, t.getRect().y, t.getRect().width, t.getRect().height);
+        }
+        game.shapeRenderer.end();
     }
 
 
@@ -162,7 +168,6 @@ public class BattleScreen implements Screen {
     public void dispose() {
 
     }
-
 
 
 }

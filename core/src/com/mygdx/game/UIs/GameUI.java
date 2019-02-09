@@ -140,7 +140,9 @@ public class GameUI extends InputAdapter {
         }
 
 
+
         for (TowerUI t : towerUIs) {
+
 
             if (t.getRect().contains(screenX, Utilities.convertMouseY(screenY))) {
 

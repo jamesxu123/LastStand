@@ -21,8 +21,8 @@ import com.mygdx.game.Screens.*;
 import java.util.ArrayList;
 
 public class LastStand extends Game {
-    public static final int screenW = 1000;
-    public static final int screenH = 720;
+    public static final int screenW = 1024;
+    public static final int screenH = 768;
     public int numLevels = 1;
     public int level = 0;
     public Skin style;
