@@ -179,46 +179,13 @@ public class EntityMap {
 
     //going to do a bfs instead so that the closest will be the closest
     public void collide(float delta, EntityGroup projectiles) {
-//        executorService.submit(() -> {
-//            ArrayList<Fighter> f = new ArrayList<>();
-//            for (Actor a : projectiles.getChildren()) {
-//                Projectile p = (Projectile) a;
-//                f.addAll(this.getCellsInArea(p.range));
-//            }
-//
-//            if (!f.isEmpty()) {
-//                for (Actor a : projectiles.getChildren()) {
-//                    Projectile projectile = (Projectile) a;
-//                    if (projectile.getClass() == DmgProjectile.class) {
-//                        DmgProjectile damageProjectile = (DmgProjectile) projectile;
-//                        double minDist = (double) Integer.MAX_VALUE;
-//                        Fighter minDistFighter = null;
-//                        for (Fighter fighter : f) {
-//                            if (!fighter.isAlive()) {
-//                                continue;
-//                            }
-//                            double x1 = damageProjectile.getX();
-//                            double y1 = damageProjectile.getY();
-//                            double x2 = fighter.getX();
-//                            double y2 = fighter.getY();
-//                            double distance = Math.hypot(x2 - x1, y2 - y1);
-//                            minDist = distance < minDist ? minDist : distance;
-//                            minDistFighter = distance < minDist ? fighter : null;
-//                        }
-//                        damageProjectile.damage(minDistFighter);
-//                    }
-//                }
-//            }
-//        });
         for (Actor a : projectiles.getChildren()) {
             Projectile p = (Projectile) a;
-            executorService.submit(() -> {
-                for (Fighter f : getInRadius(p.range)) {
-                    if (p.getClass() == DmgProjectile.class) {
-                        ((DmgProjectile) p).damage(f);
-                    }
+            for (Fighter f : getInRadius(p.range)) {
+                if (p.getClass() == DmgProjectile.class) {
+                    ((DmgProjectile) p).damage(f);
                 }
-            });
+            }
         }
     }
 
