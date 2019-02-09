@@ -12,6 +12,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 public class OptionScreen implements Screen {
     private LastStand game;
@@ -29,9 +30,10 @@ public class OptionScreen implements Screen {
         this.game = game;
         ui = new Stage();
 
-        TextButton btn = new TextButton("1", game.style);
-        TextButton btn2 = new TextButton("0", game.style);
+        TextButton btn = new TextButton("Add Shaman", game.style);
+        TextButton btn2 = new TextButton("Add Knight", game.style);
         btn.setPosition(100, 300);
+        btn2.setPosition(100, 400);
         btn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -77,22 +79,26 @@ public class OptionScreen implements Screen {
         if (number != -1) {
             troops += 1;
             start = true;
-            try {
-                System.out.println(number);
-                writer.append(time + " " + number);
-                writer.append('\n');
-                time = 0;
-                number = -1;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            CompletableFuture.runAsync(() -> {
+                try {
+                    System.out.println(number);
+                    writer.append(time + " " + number);
+                    writer.append('\n');
+                    time = 0;
+                    number = -1;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
         if (troops >= waveSize) {
-            try {
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            CompletableFuture.runAsync(() -> {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).thenRun(() -> game.initialize());
         }
 
 
