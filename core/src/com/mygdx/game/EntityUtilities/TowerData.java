@@ -27,6 +27,7 @@ public class TowerData {
 
         }
 
+
         //data needs to be obtained from text file things
         coolDown = attributes.getFloat("coolDown");
         projectileData = new ProjectileData(projectile, manager);
