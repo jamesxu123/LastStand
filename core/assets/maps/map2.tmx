@@ -105,7 +105,7 @@
   </object>
  </objectgroup>
  <objectgroup id="7" name="Start">
-  <object id="17" x="124" y="729" width="13" height="13">
+  <object id="17" x="122" y="746" width="13" height="13">
    <properties>
     <property name="Direction" value="UP"/>
    </properties>

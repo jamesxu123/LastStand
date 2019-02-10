@@ -48,11 +48,12 @@ public class LastStand extends Game {
             } else {
                 switch (f.extension()) {
                     case "png":
-                        manager.load(f.path(), Texture.class);
-                        break;
                     case "jpg":
                         manager.load(f.path(), Texture.class);
                         break;
+                    case ".json":
+                        manager.load(f.path(), Skin.class);
+
 
                 }
             }
@@ -68,17 +69,18 @@ public class LastStand extends Game {
         //skin is needed for loadingScreen so it is loaded beforehand
         jsonReader = new JsonReader();
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-        manager.load("orange/skin/uiskin.json", Skin.class);
+        manager.load("skins/orange/skin/uiskin.json", Skin.class);
         manager.finishLoading();
-        style = manager.get("orange/skin/uiskin.json");
+        style = manager.get("skins/orange/skin/uiskin.json");
         loadAllFiles(new FileHandle("sprites/"));
-        loadAllFiles(new FileHandle("backgrounds/"));
-        for (FileHandle f : new FileHandle("maps/").list()) {
+        for (FileHandle f : Utilities.listFiles(new FileHandle("maps/"))) {
             if (f.extension().equals("tmx")) {
                 manager.load(f.path(), TiledMap.class);
             }
-
         }
+        loadAllFiles(new FileHandle("skins/"));
+        loadAllFiles(new FileHandle("backgrounds/"));
+
 
         loadingScreen = new LoadingScreen(this);
         setScreen(loadingScreen);

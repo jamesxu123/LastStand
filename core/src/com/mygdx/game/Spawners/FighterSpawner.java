@@ -20,6 +20,7 @@ public class FighterSpawner extends Spawner {
     private ArrayList<FighterData> fighterDatas;
     private GameUI gameUI;
     private int wave = 0;
+    private static boolean constantSpawn = false;
 
 
     public FighterSpawner(int x, int y, String direction, ArrayList<FighterData> fighterDatas) {
@@ -27,6 +28,11 @@ public class FighterSpawner extends Spawner {
         spawnX = x;
         spawnY = y;
         spawnDir = Directions.valueOf(direction);
+    }
+
+    public static void setConstantSpawn(boolean cs) {
+        constantSpawn = cs;
+
     }
 
 
@@ -41,7 +47,7 @@ public class FighterSpawner extends Spawner {
 
     public void setNextWave() {
         numEnemies = (int) (0.25 * wave * wave + wave + 10);
-        spawnIntervalRange = (25.f + wave) / numEnemies;
+        spawnIntervalRange = ((25.f + wave) + 10) / numEnemies;
     }
 
 
@@ -84,16 +90,16 @@ public class FighterSpawner extends Spawner {
             }
             super.run(delta);
             if (numEnemies < 1) {
-                setSpawning(false);
+                if (!constantSpawn) {
+                    setSpawning(false);
+                }
+
                 wave += 1;
                 setNextWave();
             }
         }
 
     }
-
-
-
     public void spawn(int x, int y, int index, Directions directions) {
         getGroup().addActor(new Fighter(fighterDatas.get(index), x, y, directions));
     }
