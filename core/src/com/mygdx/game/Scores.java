@@ -20,7 +20,7 @@ public class Scores {
     }
 
     public static CompletableFuture<ArrayList<Integer>> getScores() {
-        CompletableFuture<ArrayList<Integer>> arrayListCompletableFuture = CompletableFuture.supplyAsync(() -> {
+        return CompletableFuture.supplyAsync(() -> {
             FileHandle fileHandle = new FileHandle("highscores.txt");
             Scanner scanner = new Scanner(fileHandle.reader());
             ArrayList<Integer> scores = new ArrayList<>();
@@ -29,6 +29,5 @@ public class Scores {
             }
             return scores;
         });
-        return arrayListCompletableFuture;
     }
 }
