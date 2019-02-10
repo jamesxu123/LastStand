@@ -14,6 +14,10 @@ import java.awt.*;
 import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 
+/*
+Class that spawns projectiles for a tower
+ */
+
 public class ProjectileSpawner extends Spawner {
 
     private EntityGroup towers;
@@ -55,13 +59,13 @@ public class ProjectileSpawner extends Spawner {
         super.run(delta);
     }
 
-    public void spawn(Point start, Fighter target, Tower t) {
+    private void spawn(Point start, Fighter target, Tower t) {
         if (t.data.projectileData.type == DmgProjectile.class) {
             getGroup().addActor(new DmgProjectile(t.data.projectileData, start, target, t));
         }
     }
 
-    public void spawn(Point start, Point end, Tower t) {
+    private void spawn(Point start, Point end, Tower t) {
          if (t.data.projectileData.type == MoneyProjectile.class) {
             getGroup().addActor(new MoneyProjectile(t.data.projectileData, start, end, t, player));
         }
