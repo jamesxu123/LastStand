@@ -10,6 +10,7 @@ public class FighterData {
     public final float health;
     public final String name;
     public final int size;
+    public final int worth;
 
 
 
@@ -22,6 +23,7 @@ public class FighterData {
 
         speed = attributes.getFloat("speed");
         health = attributes.getInt("health");
+        worth = attributes.getInt("worth");
 
     }
 

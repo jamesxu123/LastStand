@@ -4,9 +4,9 @@ import sys, os, glob
 os.environ['SDL_VIDEO_WINDOW_POS'] = '10,30'
 
 init()
-fname = glob.glob("human_regular_hair.png")
+fname = glob.glob("skeleton_flame.png")
 #fname = "naruto.png"
-pic = image.load("orc_turquoise.png")   
+pic = image.load("elf_regular_hair.png")   
 
 wid,hi = pic.get_size()
 back = Surface((wid+2,hi+2),SRCALPHA)

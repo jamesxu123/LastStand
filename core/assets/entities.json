@@ -22,7 +22,7 @@
       "aniPath": "sprites/TOWER/ARCHER",
       "projectile": "Arrow",
       "radius": 300,
-      "coolDown": 1,
+      "coolDown": 2,
       "cost": 60,
       "damage": 25
     },
@@ -43,7 +43,8 @@
       "speed": 1,
       "health": 25,
       "aniSpeed": 0.5,
-      "size": 1
+      "size": 1,
+      "worth": 10
 
     },
     {
@@ -52,7 +53,8 @@
       "speed": 1.5,
       "health": 10,
       "aniSpeed": 0.3,
-      "size": 1
+      "size": 1,
+      "worth": 5
     },
     {
       "name": "Orc",
@@ -60,13 +62,32 @@
       "speed": 0.5,
       "health": 35,
       "aniSpeed": 0.6,
-      "size": 2
+      "size": 2,
+      "worth": 15
+    },
+    {
+      "name": "Skeleton",
+      "aniPath": "sprites/FIGHTER/SKELETON",
+      "speed": 1,
+      "health": 20,
+      "aniSpeed": 0.7,
+      "size": 2,
+      "worth": 10
+    },
+    {
+      "name": "Elf",
+      "aniPath": "sprites/FIGHTER/ELF",
+      "speed": 4,
+      "health": 5,
+      "aniSpeed": 1.3,
+      "size": 1,
+      "worth": 50
     }
   ],
   "projectiles": {
     "Wizard Bolt": {
       "aniPath": "sprites/PROJECTILE/WIZARD",
-      "range": 10,
+      "range": 5,
       "damage": 5,
       "speed": 5,
       "decay": 0,
@@ -85,7 +106,7 @@
     "Arrow": {
       "aniPath": "sprites/PROJECTILE/ARROW",
       "range": 1,
-      "damage": 20,
+      "damage": 5,
       "speed": 15,
       "decay": 0,
       "type": "damage",

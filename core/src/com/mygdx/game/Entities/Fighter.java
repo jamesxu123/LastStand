@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.Directions;
 import com.mygdx.game.EntityUtilities.FighterData;
+import com.mygdx.game.Player;
 import com.mygdx.game.States;
 
 
@@ -12,7 +13,7 @@ public class Fighter extends Actor {
 
 
     public final FighterData data;
-
+    private final Player player;
     private float health;
     private float aniTime = 0;
     private States state;
@@ -20,8 +21,9 @@ public class Fighter extends Actor {
 
 
     //Stats stats
-    public Fighter(FighterData data, int x, int y, Directions direction) {
+    public Fighter(FighterData data, int x, int y, Directions direction, Player player) {
         setPosition(x, y);
+        this.player = player;
 
 
         this.data = data;
@@ -43,6 +45,7 @@ public class Fighter extends Actor {
         health -= amount;
         if (!isAlive()) {
             state = States.DEATH;
+            player.addMoney(data.worth);
             aniTime = 0;
         }
     }
@@ -50,6 +53,8 @@ public class Fighter extends Actor {
 
     @Override
     public void act(float delta) {
+        System.out.println(data.name);
+        System.out.println(data.animations.get(state, direction));
         setWidth(data.animations.get(state, direction).getKeyFrame(aniTime).getWidth());
         setHeight(data.animations.get(state,direction).getKeyFrame(aniTime).getHeight());
         setBounds(getX(),getY(),getWidth(),getHeight());
@@ -77,6 +82,7 @@ public class Fighter extends Actor {
         } else if (state == States.DEATH) {
             if (aniTime > 2) {
                 remove();
+
             }
 
         }

@@ -101,12 +101,6 @@ public class LastStand extends Game {
 
         }
 
-
-
-
-
-
-
         towerDatas = new ArrayList<>();
         fighterDatas = new ArrayList<>();
         for (int i = 0; i < objects.get("towers").size; i++) {

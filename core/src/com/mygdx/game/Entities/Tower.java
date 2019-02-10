@@ -13,6 +13,8 @@ public class Tower extends Actor {
     private int numProjectiles = 1;
     private float lastFired = 0;
     private int level = 0;
+    private int offsetX;
+    private int offsetY;
     private ArrayList<Fighter> inRadius;
 
 
@@ -20,8 +22,18 @@ public class Tower extends Actor {
         super();
         setPosition(x, y);
         this.data = data;
+        offsetX = data.upgrades.get(0).getWidth() / 2;
+        offsetY = data.upgrades.get(0).getHeight() / 2;
         inRadius = new ArrayList<>();
 
+    }
+
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
     }
 
     public int getNumProjectiles() {
@@ -62,12 +74,13 @@ public class Tower extends Actor {
 
     public Circle getRadius() {
         //need to get icon and offset the circle center
-        return new Circle(getX() + 20, getY() + 32, data.radius);
+        return new Circle(getX() + offsetX, getY() + offsetY, data.radius);
     }
 
     public void setLevel(int level) {
         this.level = level;
-        if (level % 2 == 1) {
+        if (level == 3) {
+            System.out.println(true);
             numProjectiles += 1;
         }
 

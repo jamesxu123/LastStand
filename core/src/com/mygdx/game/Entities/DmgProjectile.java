@@ -12,6 +12,9 @@ public class DmgProjectile extends Projectile{
         fighter.damage((int) (data.damage * (getTower().getLevel() + 1)));
         setDone(true);
         setAniTime(0);
+        if (data.decay == 0) {
+            remove();
+        }
 
 
     }

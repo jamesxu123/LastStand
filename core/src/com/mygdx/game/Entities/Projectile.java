@@ -58,7 +58,7 @@ public class Projectile extends Actor {
     @Override
     public void act(float delta) {
         aniTime += delta;
-        if (!Utilities.inScreen(this)) {
+        if (!Utilities.inScreen(this) || !target.isAlive()) {
             this.remove();
             return;
         }
@@ -67,6 +67,7 @@ public class Projectile extends Actor {
         if (data.homing && target != null) {
             setRotation((float) Math.atan2(target.getY() - getY(), target.getX() - getX()));
         }
+
         sprite.setRotation((float) Math.toDegrees(getRotation()));
         super.act(delta);
     }

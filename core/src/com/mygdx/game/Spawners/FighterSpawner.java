@@ -5,12 +5,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Directions;
 import com.mygdx.game.Entities.Fighter;
 import com.mygdx.game.EntityUtilities.FighterData;
+import com.mygdx.game.Player;
 import com.mygdx.game.UIs.GameUI;
 import com.mygdx.game.Utilities;
 
 import java.util.ArrayList;
 
 public class FighterSpawner extends Spawner {
+    private final Player player;
     private int spawnX;
     private int spawnY;
     private Directions spawnDir;
@@ -23,7 +25,8 @@ public class FighterSpawner extends Spawner {
     private static boolean constantSpawn = false;
 
 
-    public FighterSpawner(int x, int y, String direction, ArrayList<FighterData> fighterDatas) {
+    public FighterSpawner(int x, int y, String direction, ArrayList<FighterData> fighterDatas, Player player) {
+        this.player = player;
         this.fighterDatas = fighterDatas;
         spawnX = x;
         spawnY = y;
@@ -101,6 +104,6 @@ public class FighterSpawner extends Spawner {
 
     }
     public void spawn(int x, int y, int index, Directions directions) {
-        getGroup().addActor(new Fighter(fighterDatas.get(index), x, y, directions));
+        getGroup().addActor(new Fighter(fighterDatas.get(index), x, y, directions, player));
     }
 }

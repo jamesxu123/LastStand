@@ -17,7 +17,7 @@ import static com.mygdx.game.LastStand.screenW;
 public class ProjectileSpawner extends Spawner {
 
     private EntityGroup towers;
-    private Player player;
+    private final Player player;
 
 
     public ProjectileSpawner(EntityGroup towers, Player player) {
@@ -44,7 +44,7 @@ public class ProjectileSpawner extends Spawner {
                     Fighter fighter = t.getClosest();
                     for (int i = 0; i < t.getNumProjectiles(); i++) {
                         Point p = Utilities.getPoint(t);
-                        p.translate(Utilities.rand.nextInt(10), Utilities.rand.nextInt(10));
+                        p.translate(t.getOffsetX(), t.getOffsetY());
                         spawn(p, fighter, t);
 
                     }
