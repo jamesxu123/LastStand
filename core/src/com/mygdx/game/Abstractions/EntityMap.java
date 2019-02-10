@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.mygdx.game.Entities.DmgProjectile;
 import com.mygdx.game.Entities.Fighter;
-import com.mygdx.game.Entities.Projectile;
 import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.Player;
 import com.mygdx.game.Utilities;
@@ -47,6 +46,7 @@ public class EntityMap {
     }
 
     public ArrayList<Fighter> getInRadius(Circle c) {
+        //Method that gets all enemies within the range of a radius that are alive
         return getCellsInArea(c).stream().filter(Fighter::isAlive).collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -174,8 +174,9 @@ public class EntityMap {
 
     //going to do a bfs instead so that the closest will be the closest
     public void collide(float delta, EntityGroup projectiles) {
+        //Damage enemies that are within range of a projectile
         projectiles.getChildren().forEach(actor -> {
-            if (actor.getClass() == DmgProjectile.class) {
+            if (actor.getClass() == DmgProjectile.class) { //Make sure it isn't a coin projectile
                 getInRadius(((DmgProjectile) actor).range).forEach(((DmgProjectile) actor)::damage);
             }
         });
