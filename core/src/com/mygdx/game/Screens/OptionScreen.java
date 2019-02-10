@@ -63,6 +63,7 @@ public class OptionScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (musicToggle.isChecked()) {
+                    game.music.setLooping(true);
                     game.music.play();
                 } else {
                     game.music.stop();
