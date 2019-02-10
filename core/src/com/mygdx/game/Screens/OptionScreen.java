@@ -2,15 +2,15 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.LastStand;
 import com.mygdx.game.Spawners.FighterSpawner;
+import org.w3c.dom.Text;
 
 public class OptionScreen implements Screen {
     private LastStand game;
@@ -26,10 +26,10 @@ public class OptionScreen implements Screen {
         CheckBox musicToggle = new CheckBox("music", game.style);
         CheckBox constantSpawnToggle = new CheckBox("Spawn Constantly", game.style);
         constantSpawnToggle.setSize(120, 100);
-        constantSpawnToggle.setPosition(100, 300);
+        constantSpawnToggle.setPosition(120, 200);
         musicToggle.setSize(300, 400);
-        musicToggle.setPosition(100, 400);
-        ImageButton backButton = new ImageButton(game.style);
+        musicToggle.setPosition(120, 300);
+        TextButton backButton = new TextButton("Back", game.style);
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -37,6 +37,7 @@ public class OptionScreen implements Screen {
                 super.clicked(event, x, y);
             }
         });
+        backButton.setPosition(120, 400);
 
         constantSpawnToggle.addListener(new ClickListener() {
             @Override
@@ -50,7 +51,6 @@ public class OptionScreen implements Screen {
                     FighterSpawner.setConstantSpawn(false);
 
                 }
-
 
 
             }
@@ -70,6 +70,7 @@ public class OptionScreen implements Screen {
         ui.addActor(constantSpawnToggle);
         ui.addActor(musicToggle);
         ui.addActor(title);
+        ui.addActor(backButton);
 
 
     }
