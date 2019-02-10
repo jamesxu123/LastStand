@@ -1,5 +1,7 @@
 package com.mygdx.game.UIs;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -84,15 +86,17 @@ public class TowerUI extends Table {
                         tower = (Tower) group.getSpawner().getGroup().getChildren().get(size - 1);
                         towerImg.setDrawable(new TextureRegionDrawable(tower.data.upgrades.get(level + 1)));
                         player.addMoney(-towerDatas.get(index).cost);
+                        priceLabel.setText(Integer.toString(tower.data.cost * (2 + level)));
                         createMenu();
 
 
                     }
                 } else {
-                    if (player.getMoney() - tower.data.cost * (1 + level) >= 0) {
+                    if (player.getMoney() - tower.data.cost * (2 + level) >= 0) {
                         level += 1;
                         tower.setLevel(level);
-                        player.addMoney(-towerDatas.get(index).cost);
+                        priceLabel.setText(Integer.toString(tower.data.cost * (2 + level)));
+                        player.addMoney(-tower.data.cost * (2 + level));
 
 
                     }
@@ -115,7 +119,7 @@ public class TowerUI extends Table {
         sellButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float clickX, float clickY) {
-                player.addMoney(tower.data.cost / 2);
+                player.addMoney((tower.data.cost * (2 + level)) / 2);
                 tower.remove();
                 tower = null;
                 level = 0;
@@ -141,6 +145,7 @@ public class TowerUI extends Table {
             row();
             add(payButton).size(40, 20).center();
 
+
         } else {
             add(towerImg);
             row();
@@ -157,18 +162,22 @@ public class TowerUI extends Table {
     public void draw(Batch batch, float parentAlpha) {
 
 
-        super.draw(batch, parentAlpha);
+        batch.end();
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.setColor(0, 0, 0, 0.4f);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
         if (tower == null) {
             shapeRenderer.circle(rect.x + rect.width / 2, rect.y + rect.height / 2, towerDatas.get(index).radius);
 
         } else {
             shapeRenderer.circle(rect.x + rect.width / 2, rect.y + rect.height / 2, tower.data.radius);
-
-
         }
         shapeRenderer.end();
+        batch.begin();
+        super.draw(batch, parentAlpha);
+
     }
 
 

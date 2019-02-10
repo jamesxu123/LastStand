@@ -5,7 +5,7 @@
       "aniPath": "sprites/TOWER/WIZARD",
       "projectile": "Wizard Bolt",
       "radius": 150,
-      "cost": 50,
+      "cost": 20,
       "coolDown": 0.3
     },
     {
