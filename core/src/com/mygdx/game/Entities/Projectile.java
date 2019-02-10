@@ -58,7 +58,7 @@ public class Projectile extends Actor {
     @Override
     public void act(float delta) {
         aniTime += delta;
-        if (!Utilities.inScreen(this) || (target == null)) {
+        if (!Utilities.inScreen(this) || (target == null) || (!target.isAlive())) {
             this.remove();
             return;
         }
