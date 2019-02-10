@@ -13,7 +13,7 @@ public class DmgProjectile extends Projectile{
         setDone(true);
         setAniTime(0);
 
-        
+
     }
     @Override
     public void act(float delta){
