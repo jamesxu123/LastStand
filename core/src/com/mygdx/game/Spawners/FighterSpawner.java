@@ -49,7 +49,7 @@ public class FighterSpawner extends Spawner {
     }
 
     public void setNextWave() {
-        numEnemies = (int) (0.25 * wave * wave + wave + 10);
+        numEnemies = (int) (0.25 * wave * wave * wave + wave + 10);
         spawnIntervalRange = ((25.f + wave) + 10) / numEnemies;
     }
 
