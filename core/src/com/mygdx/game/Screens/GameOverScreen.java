@@ -13,7 +13,7 @@ import com.mygdx.game.LastStand;
 
 public class GameOverScreen implements Screen {
     private LastStand game;
-    private Stage ui;
+    private Stage ui = new Stage();
 
     public GameOverScreen(LastStand game) {
         this.game = game;
