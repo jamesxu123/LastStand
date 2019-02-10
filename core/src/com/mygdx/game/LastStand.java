@@ -24,8 +24,6 @@ import java.util.ArrayList;
 public class LastStand extends Game {
     public static final int screenW = 1024;
     public static final int screenH = 768;
-    public int numLevels = 1;
-    public int level = 0;
     public Skin style;
     public SpriteBatch batch;
     public MenuScreen menuScreen;
@@ -134,8 +132,11 @@ public class LastStand extends Game {
 
     @Override
     public void render() {
+
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
         //calls the current screens render
         super.render();
     }
