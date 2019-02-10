@@ -22,7 +22,7 @@
       "aniPath": "sprites/TOWER/ARCHER",
       "projectile": "Arrow",
       "radius": 300,
-      "coolDown": 2,
+      "coolDown": 0.1,
       "cost": 60,
       "damage": 25
     },
@@ -88,11 +88,11 @@
     "Wizard Bolt": {
       "aniPath": "sprites/PROJECTILE/WIZARD",
       "range": 5,
-      "damage": 5,
-      "speed": 5,
+      "damage": 15,
+      "speed": 10,
       "decay": 0,
       "type": "damage",
-      "homing": false
+      "homing": true
     },
     "Gold": {
       "aniPath": "sprites/PROJECTILE/GOLD",
@@ -106,11 +106,11 @@
     "Arrow": {
       "aniPath": "sprites/PROJECTILE/ARROW",
       "range": 1,
-      "damage": 5,
-      "speed": 15,
+      "damage": 1,
+      "speed": 5,
       "decay": 0,
       "type": "damage",
-      "homing": true
+      "homing": false
     },
     "Fire": {
       "aniPath": "sprites/PROJECTILE/FIRE",

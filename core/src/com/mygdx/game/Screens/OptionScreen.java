@@ -2,6 +2,8 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.LastStand;
 import com.mygdx.game.Spawners.FighterSpawner;
+
+import java.util.Arrays;
 
 public class OptionScreen implements Screen {
     private LastStand game;
@@ -61,8 +65,10 @@ public class OptionScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (musicToggle.isChecked()) {
-
-
+                    game.music.setLooping(true);
+                    game.music.play();
+                } else {
+                    game.music.stop();
                 }
                 super.clicked(event, x, y);
             }

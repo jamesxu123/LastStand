@@ -44,7 +44,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(ui);
     }
 
     @Override

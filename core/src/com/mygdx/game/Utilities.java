@@ -47,4 +47,8 @@ public class Utilities {
 
     }
 
+    public static double getDistance(Point a, Point b) {
+        return Math.hypot(a.getX() - b.getX(), a.getY() - b.getY());
+    }
+
 }
