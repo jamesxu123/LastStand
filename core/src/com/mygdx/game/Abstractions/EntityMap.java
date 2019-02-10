@@ -52,13 +52,10 @@ public class EntityMap {
 
 
     public ArrayList<Fighter> getCellsInArea(Circle c) {
-        //shapeRenderer.setColor(1, 0, 1, 1);
-        //shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         ArrayList<Fighter> cells = new ArrayList<>();
-        for (int i = -convertMapY(c.radius); i <= convertMapY(c.radius); i++) {
-            for (int j = -convertMapX(c.radius); j <= convertMapX(c.radius); j++) {
+        for (int i = -convertMapY(c.radius); i <= convertMapY(c.radius); i++) { //Loop between the y boundaries
+            for (int j = -convertMapX(c.radius); j <= convertMapX(c.radius); j++) { //Loop between the x boundaries
                 if (c.contains(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH)) {
-                    //shapeRenderer.rect(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH, screenW / mapArrW, screenH / mapArrH);
 
                     if (mapContains(c.x + j * screenW / mapArrW, c.y + i * screenH / mapArrH)) {
                         cells.addAll(map.get(i + convertMapY(c.y)).get(j + convertMapX(c.x)));
@@ -87,16 +84,15 @@ public class EntityMap {
     }
 
     public void constructMap(SnapshotArray<Actor> actors, Player p) {
-
-        //actor is put in its respective spot in the grid
+        //Actor is put in its respective spot in the grid
 
         for (Actor f : actors) {
             if (mapContains(f.getX(), f.getY())) {
-                map.get(convertMapY(f.getY())).get(convertMapX(f.getX())).add((Fighter) f);
+                map.get(convertMapY(f.getY())).get(convertMapX(f.getX())).add((Fighter) f); //Add fighter to grid each loop iteration
 
 
             } else {
-                p.loseLife();
+                p.loseLife(); //When an enemy leaves the game map, it means player failed to kill it
                 f.remove();
             }
 
@@ -106,20 +102,24 @@ public class EntityMap {
     }
 
     public boolean mapContains(float x, float y) {
+        //Check if a coordinate is on the map
         return 0 <= convertMapX(x) && convertMapX(x) < mapArrW && 0 <= convertMapY(y) && convertMapY(y) < mapArrH;
     }
 
 
     public int convertMapX(float x) {
+        //Convert x coordinate to 2D array index
         return Math.round(x / (screenW / mapArrW));
 
     }
 
     public int convertMapY(float y) {
+        //Convert y coordinate to 2D array index
         return Math.round(y / (screenH / mapArrH));
     }
 
     public void resetMap() {
+        //Clear each map cell
         for (ArrayList<ArrayList<Fighter>> row : map) {
             for (ArrayList<Fighter> col : row) {
                 col.clear();
@@ -177,7 +177,7 @@ public class EntityMap {
         //Damage enemies that are within range of a projectile
         projectiles.getChildren().forEach(actor -> {
             if (actor.getClass() == DmgProjectile.class) { //Make sure it isn't a coin projectile
-                getInRadius(((DmgProjectile) actor).range).forEach(((DmgProjectile) actor)::damage);
+                getInRadius(((DmgProjectile) actor).range).forEach(((DmgProjectile) actor)::damage); //Damage each enemy
             }
         });
 //        for (Actor a : projectiles.getChildren()) {

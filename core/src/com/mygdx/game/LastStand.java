@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -40,9 +41,11 @@ public class LastStand extends Game {
     public int mapIndex = 0;
     public JsonReader jsonReader;
     public Player player;
+    public Music music;
 
     //recursively gets all files to load and puts it in the asynchronous loaders queue
     public void loadAllFiles(FileHandle file) {
+        music = Gdx.audio.newMusic(Gdx.files.internal("music/music.mp3"));
         for (FileHandle f : file.list()) {
             if (f.isDirectory()) {
                 loadAllFiles(f);
@@ -54,8 +57,7 @@ public class LastStand extends Game {
                         break;
                     case ".json":
                         manager.load(f.path(), Skin.class);
-
-
+                        break;
                 }
             }
         }
