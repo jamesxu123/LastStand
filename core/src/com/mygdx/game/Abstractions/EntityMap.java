@@ -20,6 +20,10 @@ import java.util.stream.Collectors;
 import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 
+/*
+Class that handles collision for all entities
+ */
+
 public class EntityMap {
     public static final int mapArrW = 32;
     public static final int mapArrH = 24;
@@ -38,11 +42,12 @@ public class EntityMap {
     }
 
     public ArrayList<Fighter> getInRadius(Tower t) {
-        return getCellsInArea(t.getRadius()).stream().filter(fighter -> fighter.isAlive()).collect(Collectors.toCollection(ArrayList::new));
+        //Method that gets all enemies within the range of the attacking tower that are alive
+        return getCellsInArea(t.getRadius()).stream().filter(Fighter::isAlive).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<Fighter> getInRadius(Circle c) {
-        return getCellsInArea(c).stream().filter(fighter -> fighter.isAlive()).collect(Collectors.toCollection(ArrayList::new));
+        return getCellsInArea(c).stream().filter(Fighter::isAlive).collect(Collectors.toCollection(ArrayList::new));
     }
 
 
@@ -169,17 +174,22 @@ public class EntityMap {
 
     //going to do a bfs instead so that the closest will be the closest
     public void collide(float delta, EntityGroup projectiles) {
-        for (Actor a : projectiles.getChildren()) {
-            Projectile p = (Projectile) a;
-            for (Fighter f : getInRadius(p.range)) {
-                if (p.getClass() == DmgProjectile.class) {
-                    ((DmgProjectile) p).damage(f);
-                }
-                if (p.range.radius == 1) {
-                    break;
-                }
+        projectiles.getChildren().forEach(actor -> {
+            if (actor.getClass() == DmgProjectile.class) {
+                getInRadius(((DmgProjectile) actor).range).forEach(((DmgProjectile) actor)::damage);
             }
-        }
+        });
+//        for (Actor a : projectiles.getChildren()) {
+//            Projectile p = (Projectile) a;
+//            for (Fighter f : getInRadius(p.range)) {
+//                if (p.getClass() == DmgProjectile.class) {
+//                    ((DmgProjectile) p).damage(f);
+//                }
+//                if (p.range.radius == 1) {
+//                    break;
+//                }
+//            }
+//        }
     }
 }
 
