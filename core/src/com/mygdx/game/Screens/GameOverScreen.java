@@ -2,12 +2,19 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.LastStand;
+import com.mygdx.game.Scores;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.logging.FileHandler;
 
 
 public class GameOverScreen implements Screen {
@@ -32,7 +39,7 @@ public class GameOverScreen implements Screen {
                 super.clicked(event, x, y);
             }
         });
-        Label title = new Label(String.format("Noob u lost haha wave %d", game.player), game.style);
+        Label title = new Label(String.format("Noob u lost haha wave %d", game.player.getLevel()), game.style);
         title.setFontScale(1.5f);
         title.setPosition(512 - title.getWidth() / 2, 768 - 100);
         menu.setPosition(100, 768 - 200);
@@ -40,11 +47,13 @@ public class GameOverScreen implements Screen {
         ui.addActor(menu);
         ui.addActor(quit);
         ui.addActor(title);
+
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(ui);
+        Scores.writeScore(game.player.getLevel(), game);
     }
 
     @Override
