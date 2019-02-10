@@ -39,6 +39,7 @@ public class LastStand extends Game {
     public ArrayList<TiledMap> maps;
     public int mapIndex = 0;
     public JsonReader jsonReader;
+    public Player player;
 
     //recursively gets all files to load and puts it in the asynchronous loaders queue
     public void loadAllFiles(FileHandle file) {
@@ -115,6 +116,7 @@ public class LastStand extends Game {
         menuScreen = new MenuScreen(this);
         battleScreen = new BattleScreen(this);
         optionScreen = new OptionScreen(this);
+        player = new Player();
         setScreen(menuScreen);
     }
 

@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -17,18 +16,6 @@ public class GameOverScreen implements Screen {
 
     public GameOverScreen(LastStand game) {
         this.game = game;
-
-
-    }
-
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void render(float delta) {
-
         TextButton menu = new TextButton("Back To Menu", game.style);
         TextButton quit = new TextButton("Exit", game.style);
         menu.addListener(new ClickListener() {
@@ -45,7 +32,7 @@ public class GameOverScreen implements Screen {
                 super.clicked(event, x, y);
             }
         });
-        Label title = new Label("Noob u lost haha", game.style);
+        Label title = new Label(String.format("Noob u lost haha wave %d", game.player), game.style);
         title.setFontScale(1.5f);
         title.setPosition(512 - title.getWidth() / 2, 768 - 100);
         menu.setPosition(100, 768 - 200);
@@ -53,6 +40,16 @@ public class GameOverScreen implements Screen {
         ui.addActor(menu);
         ui.addActor(quit);
         ui.addActor(title);
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void render(float delta) {
+
 
     }
 

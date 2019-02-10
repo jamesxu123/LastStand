@@ -33,6 +33,7 @@ public class GameUI extends InputAdapter {
     private Window pane;
     private TowerUI openTowerUI;
     private ArrayList<TowerUI> towerUIs;
+    private EntityGroup fighterGroup;
 
 
     private Player player;
@@ -44,7 +45,7 @@ public class GameUI extends InputAdapter {
         levelLabel = new Label("Level:", style);
         moneyLabel = new Label("Money:", style);
         livesLabel = new Label("Lives:", style);
-
+        fighterGroup = entityGroup;
         gameTable.setDebug(true);
         towerUIs = new ArrayList<>();
         gameTable.add(levelLabel).width(100).center();
@@ -62,17 +63,17 @@ public class GameUI extends InputAdapter {
         entityTable.left().bottom().add(name).center();
         entityTable.add(health);
         //entityTable.add(info);
-
+        Texture down = manager.get("buttons/skullButtonDown.png");
+        Texture up = manager.get("buttons/skullButtonUp.png");
         pane = new Window("", style);
-        ImageButton playButton = new ImageButton(new TextureRegionDrawable(new Texture("buttons/skullButtonUp.png"))
-                , new TextureRegionDrawable(new Texture("buttons/skullButtonDown.png")));
+        ImageButton playButton = new ImageButton(new TextureRegionDrawable(up)
+                , new TextureRegionDrawable(down));
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
 
                 entityGroup.getSpawner().setSpawning(true);
-                player.setLevel(entityGroup.getSpawner().getWave());
             }
         });
         pane.add(playButton);
@@ -88,6 +89,7 @@ public class GameUI extends InputAdapter {
     }
 
     public void update() {
+        player.setLevel(fighterGroup.getSpawner().getWave());
         levelLabel.setText(String.format("Level: %d", player.getLevel()));
         moneyLabel.setText(String.format("Money: %d", player.getMoney()));
         livesLabel.setText(String.format("Lives: %d", player.getLives()));

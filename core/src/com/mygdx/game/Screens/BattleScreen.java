@@ -16,7 +16,6 @@ import com.mygdx.game.Abstractions.EntityGroup;
 import com.mygdx.game.Abstractions.EntityMap;
 import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.LastStand;
-import com.mygdx.game.Player;
 import com.mygdx.game.Spawners.FighterSpawner;
 import com.mygdx.game.Spawners.ProjectileSpawner;
 import com.mygdx.game.Spawners.TowerSpawner;
@@ -40,7 +39,7 @@ public class BattleScreen implements Screen {
     private Array<RectangleMapObject> pathNodes;
     private GameUI gameUI;
 
-    private Player player;
+
 
     public BattleScreen(LastStand game) {
         this.game = game;
@@ -51,7 +50,6 @@ public class BattleScreen implements Screen {
     @Override
     public void show() {
         entityMap = new EntityMap(game.shapeRenderer);
-        player = new Player();
         //gets the objects embedded in the tiled map
         RectangleMapObject spawnPoint = game.getMap().getLayers().get("Start").getObjects().getByType(RectangleMapObject.class).get(0);
         pathNodes = game.getMap().getLayers().get("Path Nodes").getObjects().getByType(RectangleMapObject.class);
@@ -59,13 +57,13 @@ public class BattleScreen implements Screen {
         //creates a new group which has a spawner. the spawner gets the initial spawn point
 
         FighterSpawner fighterSpawner = new FighterSpawner((int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y,
-                spawnPoint.getProperties().get("Direction").toString(), game.fighterDatas, player);
+                spawnPoint.getProperties().get("Direction").toString(), game.fighterDatas, game.player);
         enemies = new EntityGroup(fighterSpawner);
-        gameUI = new GameUI(player, game.style, enemies, game.manager);
+        gameUI = new GameUI(game.player, game.style, enemies, game.manager);
         fighterSpawner.setGameUI(gameUI);
 
         towers = new EntityGroup(new TowerSpawner(game.towerDatas));
-        projectiles = new EntityGroup(new ProjectileSpawner(towers, player));
+        projectiles = new EntityGroup(new ProjectileSpawner(towers, game.player));
 
         camera = new OrthographicCamera(screenW, screenH);
         //camera is only needed to center the map on the screen
@@ -84,7 +82,7 @@ public class BattleScreen implements Screen {
 
         for (RectangleMapObject rectangleObject : collisionObjs.getByType(RectangleMapObject.class)) {
             Rectangle rectangle = rectangleObject.getRectangle();
-            gameUI.getTowerUIs().add(new TowerUI(rectangle, game.style, game.towerDatas, towers, game.shapeRenderer, player, game.manager));
+            gameUI.getTowerUIs().add(new TowerUI(rectangle, game.style, game.towerDatas, towers, game.shapeRenderer, game.player, game.manager));
         }
 
         Gdx.input.setInputProcessor(inputs);
@@ -98,14 +96,14 @@ public class BattleScreen implements Screen {
         entities.act(delta);
         //checks if the player still has hearts and if not gameover
 
-        if (!player.isAlive()) {
+        if (!game.player.isAlive()) {
             game.setScreen(game.gameOverScreen);
             return;
         }
         /* this is where we get all objects into our 2d array so that
         we can check collision,turn them and stuff*/
 
-        entityMap.constructMap(enemies.getChildren(), player);
+        entityMap.constructMap(enemies.getChildren(), game.player);
         entityMap.switchDirection(pathNodes);
         entityMap.collide(delta,projectiles);
         gameUI.update();
