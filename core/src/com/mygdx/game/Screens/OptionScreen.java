@@ -2,8 +2,6 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,15 +13,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.LastStand;
 import com.mygdx.game.Spawners.FighterSpawner;
 
-import java.util.Arrays;
-
 public class OptionScreen implements Screen {
     private LastStand game;
     private Stage ui;
+    private Texture bkg;
+
 
     public OptionScreen(LastStand game) {
 
         this.game = game;
+        bkg = game.manager.get("backgrounds/selectionbkg.png");
         ui = new Stage();
         Label title = new Label("Options", game.style);
         title.setFontScale(1.5f);
@@ -85,6 +84,9 @@ public class OptionScreen implements Screen {
 
     @Override
     public void show() {
+        game.batch.begin();
+        game.batch.draw(bkg, 0, 0);
+        game.batch.end();
 
         Gdx.input.setInputProcessor(ui);
 
@@ -93,6 +95,9 @@ public class OptionScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        game.batch.begin();
+        game.batch.draw(bkg, 0, 0);
+        game.batch.end();
         ui.draw();
 
 
