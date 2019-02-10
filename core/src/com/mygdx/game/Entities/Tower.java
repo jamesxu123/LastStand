@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class Tower extends Actor {
     public final TowerData data;
-    private float aniTime = 0;
     private float lastFired = 0;
+    private int level = 0;
     private ArrayList<Fighter> inRadius;
 
 
@@ -20,13 +20,16 @@ public class Tower extends Actor {
         setPosition(x, y);
         this.data = data;
         inRadius = new ArrayList<>();
+
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+
     }
 
     @Override
     public void act(float delta) {
-        aniTime += delta;
-
-
         super.act(delta);
     }
 
@@ -61,7 +64,7 @@ public class Tower extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
-        batch.draw(data.animations.getKeyFrame(aniTime, true), getX(), getY());
+        batch.draw(data.upgrades.get(level), getX(), getY());
 
     }
 
@@ -71,9 +74,5 @@ public class Tower extends Actor {
 
     public void setLastFired(float lastFired) {
         this.lastFired = lastFired;
-    }
-
-    public void attack(ArrayList<Fighter> fighters) {
-        System.out.println(fighters);
     }
 }

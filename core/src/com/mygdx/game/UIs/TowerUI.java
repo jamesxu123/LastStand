@@ -19,12 +19,19 @@ import java.util.ArrayList;
 public class TowerUI extends Table {
     private Rectangle rect;
     private int index = 0;
+    private int level = 0;
     private EntityGroup group;
     private Tower tower;
     private Label priceLabel;
     private ShapeRenderer shapeRenderer;
     private Image towerImg;
     private ArrayList<TowerData> towerDatas;
+    private ImageButton left;
+    private ImageButton right;
+    private TextButton payButton;
+    private TextButton sellButton;
+
+
 
 
     public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towerDatas, EntityGroup towerGroup, ShapeRenderer shapeRenderer, Player player) {
@@ -34,16 +41,16 @@ public class TowerUI extends Table {
         this.rect = rect;
         this.shapeRenderer = shapeRenderer;
         this.towerDatas = towerDatas;
-        towerImg = new Image(towerDatas.get(index).animations.getKeyFrame(0));
+        this.group = towerGroup;
+        towerImg = new Image(towerDatas.get(index).upgrades.get(level));
         priceLabel = new Label(Integer.toString(towerDatas.get(index).cost), style);
         //Circle c=new Circle(rectangle.getCenter(new Vector2()),15);
         setDebug(true);
-        setPosition(rect.x - rect.width / 2, rect.y - rect.height / 2);
+        setPosition(rect.x - 100 + rect.width / 2, rect.y - 75 + rect.height / 2);
         setSize(200, 150);
 
-//        table.add(curTower);
-        ImageButton right = new ImageButton(new TextureRegionDrawable(new Texture("forward.png")));
-        ImageButton left = new ImageButton(new TextureRegionDrawable(new Texture("backward.png")));
+        right = new ImageButton(new TextureRegionDrawable(new Texture("forward.png")));
+        left = new ImageButton(new TextureRegionDrawable(new Texture("backward.png")));
         left.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -53,7 +60,7 @@ public class TowerUI extends Table {
                     index = towerDatas.size() - 1;
                 }
                 priceLabel.setText(Integer.toString(towerDatas.get(index).cost));
-                towerImg.setDrawable(new TextureRegionDrawable(towerDatas.get(index).animations.getKeyFrame(0)));
+                towerImg.setDrawable(new TextureRegionDrawable(towerDatas.get(index).upgrades.get(level)));
                 super.clicked(event, x, y);
             }
         });
@@ -62,32 +69,87 @@ public class TowerUI extends Table {
             public void clicked(InputEvent event, float x, float y) {
                 index = (index + 1) % towerDatas.size();
                 priceLabel.setText(Integer.toString(towerDatas.get(index).cost));
-                towerImg.setDrawable(new TextureRegionDrawable(towerDatas.get(index).animations.getKeyFrame(0)));
+                towerImg.setDrawable(new TextureRegionDrawable(towerDatas.get(index).upgrades.get(level)));
                 super.clicked(event, x, y);
             }
         });
-
-        this.group = towerGroup;
-        add(left);
-        add(towerImg);
-        add(right);
-        row();
-        TextButton payButton = new TextButton("buy", style);
+        payButton = new TextButton("buy", style);
         payButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float clickX, float clickY) {
-                if (player.getMoney() - towerDatas.get(index).cost >= 0) {
+                if (tower == null) {
+                    if (player.getMoney() - towerDatas.get(index).cost >= 0) {
+                        group.getSpawner().spawn((int) rect.x, (int) rect.y, towerDatas.indexOf(towerDatas.get(index)));
+                        int size = group.getSpawner().getGroup().getChildren().size;
+                        tower = (Tower) group.getSpawner().getGroup().getChildren().get(size - 1);
+                        towerImg.setDrawable(new TextureRegionDrawable(tower.data.upgrades.get(level + 1)));
+                        player.addMoney(-towerDatas.get(index).cost);
+                        createMenu();
 
-                    super.clicked(event, clickX, clickY);
-                    group.getSpawner().spawn((int) rect.x, (int) rect.y, towerDatas.indexOf(towerDatas.get(index)));
-                    player.addMoney(-towerDatas.get(index).cost);
 
+                    }
+                } else {
+                    if (player.getMoney() - tower.data.cost * (1 + level) >= 0) {
+                        level += 1;
+                        tower.setLevel(level);
+                        player.addMoney(-towerDatas.get(index).cost);
+
+
+                    }
+                    if (tower.data.upgrades.size() > level + 1) {
+
+                        towerImg.setDrawable(new TextureRegionDrawable(tower.data.upgrades.get(level + 1)));
+
+                    } else {
+
+                        payButton.remove();
+                        towerImg.remove();
+                        towerImg = null;
+
+                    }
                 }
+                super.clicked(event, clickX, clickY);
             }
         });
-        add(priceLabel).center();
-        row();
-        add(payButton).size(40, 20).center();
+        sellButton = new TextButton("sell", style);
+        sellButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float clickX, float clickY) {
+                player.addMoney(tower.data.cost / 2);
+                tower.remove();
+                tower = null;
+                level = 0;
+                towerImg = new Image(towerDatas.get(index).upgrades.get(level));
+                createMenu();
+                super.clicked(event, clickX, clickY);
+
+            }
+        });
+        createMenu();
+
+
+    }
+
+    public void createMenu() {
+        clear();
+        if (tower == null) {
+            add(left);
+            add(towerImg);
+            add(right);
+            row();
+            add(priceLabel).center();
+            row();
+            add(payButton).size(40, 20).center();
+
+        } else {
+            add(towerImg);
+            row();
+            add(priceLabel).center();
+            row();
+            add(payButton);
+            add(sellButton);
+
+        }
     }
 
 

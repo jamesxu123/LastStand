@@ -1,5 +1,6 @@
 package com.mygdx.game.Entities;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.Directions;
@@ -21,6 +22,7 @@ public class Fighter extends Actor {
     //Stats stats
     public Fighter(FighterData data, int x, int y, Directions direction) {
         setPosition(x, y);
+
 
         this.data = data;
         health = data.health;
@@ -97,7 +99,8 @@ public class Fighter extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         boolean looping = state != States.DEATH;
-        batch.draw(data.animations.get(state, direction).getKeyFrame(aniTime, looping), getX(), getY());
+        Texture frame = data.animations.get(state, direction).getKeyFrame(aniTime, looping);
+        batch.draw(frame, getX(), getY(), frame.getWidth() * data.size, frame.getHeight() * data.size);
 
     }
 

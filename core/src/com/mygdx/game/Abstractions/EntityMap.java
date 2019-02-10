@@ -7,7 +7,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.mygdx.game.Entities.*;
+import com.mygdx.game.Entities.DmgProjectile;
+import com.mygdx.game.Entities.Fighter;
+import com.mygdx.game.Entities.Projectile;
+import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.Player;
 import com.mygdx.game.Utilities;
 
@@ -178,7 +181,6 @@ public class EntityMap {
             for (Fighter f : getInRadius(p.range)) {
                 if (p.getClass() == DmgProjectile.class) {
                     ((DmgProjectile) p).damage(f);
-                } else if (p.getClass() == MoneyProjectile.class) {
                 }
             }
         }

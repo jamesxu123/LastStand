@@ -5,7 +5,7 @@
       "aniPath": "sprites/TOWER/WIZARD",
       "projectile": "Wizard Bolt",
       "radius": 150,
-      "cost": 70,
+      "cost": 5,
       "coolDown": 0.5
     },
     {
@@ -23,19 +23,26 @@
       "name": "Knight",
       "aniPath": "sprites/FIGHTER/KNIGHT",
       "speed": 1,
-      "health": 25
+      "health": 25,
+      "aniSpeed": 0.5,
+      "size": 1
+
     },
     {
       "name": "Shaman",
       "aniPath": "sprites/FIGHTER/SHAMAN",
       "speed": 1.5,
-      "health": 10
+      "health": 10,
+      "aniSpeed": 0.3,
+      "size": 1
     },
     {
       "name": "Orc",
       "aniPath": "sprites/FIGHTER/ORC",
       "speed": 0.5,
-      "health": 35
+      "health": 35,
+      "aniSpeed": 0.6,
+      "size": 2
     }
   ],
   "projectiles": {

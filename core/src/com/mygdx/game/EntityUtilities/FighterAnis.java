@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class FighterAnis {
     private HashMap<States, HashMap<Directions, Animation<Texture>>> container;
 
-    public FighterAnis(String spritesPath, AssetManager manager) {
+    public FighterAnis(String spritesPath, float aniSpeed, AssetManager manager) {
         container = new HashMap<>();
         FileHandle[] stateFiles = Utilities.listFiles(new FileHandle(spritesPath));
         for (FileHandle f : stateFiles) {
@@ -33,7 +33,7 @@ public class FighterAnis {
                     frames[i] = manager.get(picList.get(i));
 
                 }
-                put(state, direction, new Animation<>(0.04f, frames));
+                put(state, direction, new Animation<>(aniSpeed, frames));
             }
         }
     }
