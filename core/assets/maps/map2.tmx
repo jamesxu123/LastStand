@@ -68,7 +68,7 @@
   <object id="8" x="576" y="127" width="64" height="67"/>
  </objectgroup>
  <objectgroup id="6" name="Path Nodes">
-  <object id="9" x="65" y="350" width="113" height="96">
+  <object id="9" x="35" y="350" width="143" height="66">
    <properties>
     <property name="Direction" value="RIGHT"/>
    </properties>
@@ -78,12 +78,12 @@
     <property name="Direction" value="DOWN"/>
    </properties>
   </object>
-  <object id="12" x="670" y="573" width="96" height="95">
+  <object id="12" x="672" y="545" width="94" height="123">
    <properties>
     <property name="Direction" value="UP"/>
    </properties>
   </object>
-  <object id="13" x="670" y="194" width="96" height="93">
+  <object id="13" x="640" y="194" width="126" height="93">
    <properties>
     <property name="Direction" value="LEFT"/>
    </properties>
@@ -98,7 +98,7 @@
     <property name="Direction" value="RIGHT"/>
    </properties>
   </object>
-  <object id="16" x="351" y="590" width="63" height="50">
+  <object id="16" x="319" y="605" width="125" height="63">
    <properties>
     <property name="Direction" value="RIGHT"/>
    </properties>

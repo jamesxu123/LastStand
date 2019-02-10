@@ -15,8 +15,6 @@ import com.mygdx.game.Player;
 import com.mygdx.game.Utilities;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import static com.mygdx.game.LastStand.screenH;
@@ -26,7 +24,6 @@ public class EntityMap {
     public static final int mapArrW = 32;
     public static final int mapArrH = 24;
     public ArrayList<ArrayList<ArrayList<Fighter>>> map;
-    private ExecutorService executorService = Executors.newFixedThreadPool(16);
     private ShapeRenderer shapeRenderer;
 
     public EntityMap(ShapeRenderer shapeRenderer) {
@@ -139,7 +136,7 @@ public class EntityMap {
 
                             case UP:
 
-                                if (Utilities.rand.nextInt((int) ((r.height / mapArrH) - row) * 25 + 1) <= 1) {
+                                if (Utilities.rand.nextInt((int) ((r.height / mapArrH) - row) * 10 + 1) <= 1) {
                                     f.setDirection(rectangleMapObject.getProperties().get("Direction").toString());
 
                                 }
@@ -161,11 +158,7 @@ public class EntityMap {
 
                                 }
                                 break;
-
-
                         }
-
-
                     }
                 }
             }
@@ -182,10 +175,12 @@ public class EntityMap {
                 if (p.getClass() == DmgProjectile.class) {
                     ((DmgProjectile) p).damage(f);
                 }
+                if (p.range.radius == 1) {
+                    break;
+                }
             }
         }
     }
-
 }
 
 

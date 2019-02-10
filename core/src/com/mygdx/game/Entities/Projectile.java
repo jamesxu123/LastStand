@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.EntityUtilities.ProjectileData;
-import com.mygdx.game.Player;
 import com.mygdx.game.Utilities;
 
 import java.awt.*;
@@ -18,6 +17,7 @@ public class Projectile extends Actor {
     public final Circle range = new Circle();
     public final ProjectileData data;
     private Fighter target;
+    private boolean done = false;
 
 
     public Projectile(ProjectileData data, Point start, Fighter target, Tower t) {
@@ -28,6 +28,7 @@ public class Projectile extends Actor {
         this.sprite = new Sprite(data.animations.getKeyFrame(0));
         this.range.radius = data.range;
         this.data = data;
+        this.tower = t;
         setRotation((float) Math.atan2(end.y - start.y, end.x - start.x));
         setPosition(start.x, start.y);
     }
@@ -38,8 +39,13 @@ public class Projectile extends Actor {
         this.sprite = new Sprite(data.animations.getKeyFrame(0));
         this.range.radius = data.range;
         this.data = data;
+        this.tower = t;
         setRotation((float) Math.atan2(end.y - start.y, end.x - start.x));
         setPosition(start.x, start.y);
+    }
+
+    public Tower getTower() {
+        return tower;
     }
 
     @Override
@@ -67,5 +73,17 @@ public class Projectile extends Actor {
 
     public float getAniTime() {
         return aniTime;
+    }
+
+    public void setAniTime(float aniTime) {
+        this.aniTime = aniTime;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 }

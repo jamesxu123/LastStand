@@ -27,10 +27,10 @@ public class LoadingScreen implements Screen {
         shapeRenderer.setProjectionMatrix(game.batch.getProjectionMatrix());
         shapeRenderer.setTransformMatrix(game.batch.getTransformMatrix());
         if (game.manager.update()) {
-            if (game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower.png") && game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower-2.png") && game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower-3.png") && game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower-4.png")) {
+            if (game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower-1.png") && game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower-2.png") && game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower-3.png") && game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower-4.png")) {
                 game.initialize();
             } else {
-                game.manager.load("sprites/TOWER/WIZARD/wizard-tower.png", Texture.class);
+                game.manager.load("sprites/TOWER/WIZARD/wizard-tower-1.png", Texture.class);
                 game.manager.load("sprites/TOWER/WIZARD/wizard-tower-2.png", Texture.class);
                 game.manager.load("sprites/TOWER/WIZARD/wizard-tower-3.png", Texture.class);
                 game.manager.load("sprites/TOWER/WIZARD/wizard-tower-4.png", Texture.class);

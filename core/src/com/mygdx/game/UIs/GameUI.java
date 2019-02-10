@@ -57,7 +57,7 @@ public class GameUI extends InputAdapter {
         name = new Label("", style);
         entityTable = new Table(style);
         entityTable.setDebug(true);
-        entityTable.setPosition(200, 0);
+        entityTable.setPosition(200, 100);
         entityTable.left().bottom().add(name).center();
         entityTable.add(health);
         //entityTable.add(info);

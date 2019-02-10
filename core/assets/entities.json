@@ -5,8 +5,8 @@
       "aniPath": "sprites/TOWER/WIZARD",
       "projectile": "Wizard Bolt",
       "radius": 150,
-      "cost": 5,
-      "coolDown": 0.5
+      "cost": 50,
+      "coolDown": 0.3
     },
     {
       "name": "Gold Tower",
@@ -16,6 +16,24 @@
       "coolDown": 3,
       "cost": 20,
       "damage": 25
+    },
+    {
+      "name": "Archer Tower",
+      "aniPath": "sprites/TOWER/ARCHER",
+      "projectile": "Arrow",
+      "radius": 300,
+      "coolDown": 1,
+      "cost": 60,
+      "damage": 25
+    },
+    {
+      "name": "Fire Tower",
+      "aniPath": "sprites/TOWER/FIRE",
+      "projectile": "Fire",
+      "radius": 150,
+      "coolDown": 4,
+      "cost": 60,
+      "damage": 30
     }
   ],
   "fighters": [
@@ -48,12 +66,12 @@
   "projectiles": {
     "Wizard Bolt": {
       "aniPath": "sprites/PROJECTILE/WIZARD",
-      "range": 20,
+      "range": 10,
       "damage": 5,
       "speed": 5,
-      "decay": 5,
+      "decay": 0,
       "type": "damage",
-      "homing": true
+      "homing": false
     },
     "Gold": {
       "aniPath": "sprites/PROJECTILE/GOLD",
@@ -62,6 +80,24 @@
       "speed": 10,
       "decay": 0.3,
       "type": "money",
+      "homing": false
+    },
+    "Arrow": {
+      "aniPath": "sprites/PROJECTILE/ARROW",
+      "range": 1,
+      "damage": 20,
+      "speed": 15,
+      "decay": 0,
+      "type": "damage",
+      "homing": true
+    },
+    "Fire": {
+      "aniPath": "sprites/PROJECTILE/FIRE",
+      "range": 35,
+      "damage": 40,
+      "speed": 5,
+      "decay": 2,
+      "type": "damage",
       "homing": false
     }
   }

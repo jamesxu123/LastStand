@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Tower extends Actor {
     public final TowerData data;
+    private int numProjectiles = 1;
     private float lastFired = 0;
     private int level = 0;
     private ArrayList<Fighter> inRadius;
@@ -23,9 +24,12 @@ public class Tower extends Actor {
 
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public int getNumProjectiles() {
+        return numProjectiles;
+    }
 
+    public int getLevel() {
+        return level;
     }
 
     @Override
@@ -59,6 +63,14 @@ public class Tower extends Actor {
     public Circle getRadius() {
         //need to get icon and offset the circle center
         return new Circle(getX() + 20, getY() + 32, data.radius);
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+        if (level % 2 == 1) {
+            numProjectiles += 1;
+        }
+
     }
 
     @Override

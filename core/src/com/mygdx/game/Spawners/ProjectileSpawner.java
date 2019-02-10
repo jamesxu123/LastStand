@@ -42,7 +42,13 @@ public class ProjectileSpawner extends Spawner {
                 //only sends out projectile when there is an enemy in the radius
                 if (!t.getInRadius().isEmpty()) {
                     Fighter fighter = t.getClosest();
-                    spawn(Utilities.getPoint(t), fighter, t);
+                    for (int i = 0; i < t.getNumProjectiles(); i++) {
+                        Point p = Utilities.getPoint(t);
+                        p.translate(Utilities.rand.nextInt(10), Utilities.rand.nextInt(10));
+                        spawn(p, fighter, t);
+
+                    }
+
                 }
             }
         }

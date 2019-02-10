@@ -54,33 +54,33 @@ public class Fighter extends Actor {
         setHeight(data.animations.get(state,direction).getKeyFrame(aniTime).getHeight());
         setBounds(getX(),getY(),getWidth(),getHeight());
         aniTime += delta;
+
+
         if (state == States.WALK) {
+            switch (direction) {
+                case RIGHT:
+                    moveBy(data.speed, 0);
+                    break;
+                case LEFT:
+                    moveBy(-data.speed, 0);
+                    break;
+                case UP:
+                    moveBy(0, data.speed);
+                    break;
 
-            super.act(delta);
-            if (state == States.WALK) {
-                switch (direction) {
-                    case RIGHT:
-                        moveBy(data.speed, 0);
-                        break;
-                    case LEFT:
-                        moveBy(-data.speed, 0);
-                        break;
-                    case UP:
-                        moveBy(0, data.speed);
-                        break;
+                case DOWN:
+                    moveBy(0, -data.speed);
+                    break;
 
-                    case DOWN:
-                        moveBy(0, -data.speed);
-                        break;
-
-                }
             }
+
         } else if (state == States.DEATH) {
             if (aniTime > 2) {
                 remove();
             }
 
         }
+        super.act(delta);
 
     }
 
@@ -103,8 +103,6 @@ public class Fighter extends Actor {
         batch.draw(frame, getX(), getY(), frame.getWidth() * data.size, frame.getHeight() * data.size);
 
     }
-
-
 }
 
 
