@@ -39,8 +39,22 @@ public class GameUI extends InputAdapter {
     private Player player;
 
 
-    public GameUI(Player player, Skin style, EntityGroup entityGroup, AssetManager manager) {
+    public GameUI(Player player, Skin style, EntityGroup entityGroup, AssetManager manager, PauseMenu pauseMenu) {
         this.player = player;
+        pauseMenu.setPosition(400, 300);
+        Texture menu = manager.get("buttons/menu.png");
+        ImageButton pauseButton = new ImageButton(new TextureRegionDrawable(menu));
+        pauseButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                stage.addActor(pauseMenu);
+
+            }
+        });
+        pauseButton.setPosition(screenW - 50, screenH - 50);
+
         gameTable = new Table();
         levelLabel = new Label("Level:", style);
         moneyLabel = new Label("Money:", style);
@@ -82,6 +96,7 @@ public class GameUI extends InputAdapter {
         stage.addActor(entityTable);
         stage.addActor(gameTable);
         stage.addActor(pane);
+        stage.addActor(pauseButton);
     }
 
     public Stage getStage() {

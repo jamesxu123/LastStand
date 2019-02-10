@@ -20,6 +20,7 @@ import com.mygdx.game.Spawners.FighterSpawner;
 import com.mygdx.game.Spawners.ProjectileSpawner;
 import com.mygdx.game.Spawners.TowerSpawner;
 import com.mygdx.game.UIs.GameUI;
+import com.mygdx.game.UIs.PauseMenu;
 import com.mygdx.game.UIs.TowerUI;
 
 import static com.mygdx.game.LastStand.screenH;
@@ -38,6 +39,9 @@ public class BattleScreen implements Screen {
     private EntityMap entityMap;
     private Array<RectangleMapObject> pathNodes;
     private GameUI gameUI;
+    public boolean pause = false;
+
+
 
 
 
@@ -49,6 +53,7 @@ public class BattleScreen implements Screen {
 
     @Override
     public void show() {
+        PauseMenu pauseMenu = new PauseMenu(game);
         entityMap = new EntityMap(game.shapeRenderer);
         //gets the objects embedded in the tiled map
         RectangleMapObject spawnPoint = game.getMap().getLayers().get("Start").getObjects().getByType(RectangleMapObject.class).get(0);
@@ -59,7 +64,7 @@ public class BattleScreen implements Screen {
         FighterSpawner fighterSpawner = new FighterSpawner((int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y,
                 spawnPoint.getProperties().get("Direction").toString(), game.fighterDatas, game.player);
         enemies = new EntityGroup(fighterSpawner);
-        gameUI = new GameUI(game.player, game.style, enemies, game.manager);
+        gameUI = new GameUI(game.player, game.style, enemies, game.manager, pauseMenu);
         fighterSpawner.setGameUI(gameUI);
 
         towers = new EntityGroup(new TowerSpawner(game.towerDatas));
@@ -93,6 +98,7 @@ public class BattleScreen implements Screen {
     }
 
     private void update(float delta) {
+
         entities.act(delta);
         //checks if the player still has hearts and if not gameover
 
@@ -118,13 +124,14 @@ public class BattleScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        update(delta);
+        if (!pause) {
+            update(delta);
 
+        }
         mapRenderer.render();
-
+        entities.draw();
 
         gameUI.draw();
-        entities.draw();
 
 
     }
@@ -147,10 +154,6 @@ public class BattleScreen implements Screen {
     }
 
 
-
-    enum Current {
-        PLAYING, Pause
-    }
 
     @Override
     public void resize(int width, int height) {
