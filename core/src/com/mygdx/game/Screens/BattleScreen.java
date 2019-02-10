@@ -61,7 +61,7 @@ public class BattleScreen implements Screen {
         FighterSpawner fighterSpawner = new FighterSpawner((int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y,
                 spawnPoint.getProperties().get("Direction").toString(), game.fighterDatas, player);
         enemies = new EntityGroup(fighterSpawner);
-        gameUI = new GameUI(player, game.style, enemies);
+        gameUI = new GameUI(player, game.style, enemies, game.manager);
         fighterSpawner.setGameUI(gameUI);
 
         towers = new EntityGroup(new TowerSpawner(game.towerDatas));
@@ -84,7 +84,7 @@ public class BattleScreen implements Screen {
 
         for (RectangleMapObject rectangleObject : collisionObjs.getByType(RectangleMapObject.class)) {
             Rectangle rectangle = rectangleObject.getRectangle();
-            gameUI.getTowerUIs().add(new TowerUI(rectangle, game.style, game.towerDatas, towers, game.shapeRenderer, player));
+            gameUI.getTowerUIs().add(new TowerUI(rectangle, game.style, game.towerDatas, towers, game.shapeRenderer, player, game.manager));
         }
 
         Gdx.input.setInputProcessor(inputs);

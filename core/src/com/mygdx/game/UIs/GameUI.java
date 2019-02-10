@@ -1,6 +1,7 @@
 package com.mygdx.game.UIs;
 
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -37,7 +38,7 @@ public class GameUI extends InputAdapter {
     private Player player;
 
 
-    public GameUI(Player player, Skin style, EntityGroup entityGroup) {
+    public GameUI(Player player, Skin style, EntityGroup entityGroup, AssetManager manager) {
         this.player = player;
         gameTable = new Table();
         levelLabel = new Label("Level:", style);
@@ -63,8 +64,8 @@ public class GameUI extends InputAdapter {
         //entityTable.add(info);
 
         pane = new Window("", style);
-        ImageButton playButton = new ImageButton(new TextureRegionDrawable(new Texture("skullButtonUp.png"))
-                , new TextureRegionDrawable(new Texture("skullButtonDown.png")));
+        ImageButton playButton = new ImageButton(new TextureRegionDrawable(new Texture("buttons/skullButtonUp.png"))
+                , new TextureRegionDrawable(new Texture("buttons/skullButtonDown.png")));
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

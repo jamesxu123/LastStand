@@ -9,12 +9,13 @@ public class DmgProjectile extends Projectile{
         super(data,start, target,t);
     }
     public void damage(Fighter fighter) {
+
         fighter.damage((int) (data.damage * (getTower().getLevel() + 1)));
-        setDone(true);
-        setAniTime(0);
-        if (data.decay == 0) {
-            remove();
+        if (!isDone()) {
+            setAniTime(0);
         }
+
+        setDone(true);
 
 
     }

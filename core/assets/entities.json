@@ -114,10 +114,10 @@
     },
     "Fire": {
       "aniPath": "sprites/PROJECTILE/FIRE",
-      "range": 35,
+      "range": 10,
       "damage": 40,
-      "speed": 5,
-      "decay": 2,
+      "speed": 10,
+      "decay": 3,
       "type": "damage",
       "homing": false
     }

@@ -1,6 +1,7 @@
 package com.mygdx.game.UIs;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -34,9 +35,7 @@ public class TowerUI extends Table {
     private TextButton sellButton;
 
 
-
-
-    public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towerDatas, EntityGroup towerGroup, ShapeRenderer shapeRenderer, Player player) {
+    public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towerDatas, EntityGroup towerGroup, ShapeRenderer shapeRenderer, Player player, AssetManager manager) {
         super(style);
         index = 0;
 
@@ -50,9 +49,10 @@ public class TowerUI extends Table {
         setDebug(true);
         setPosition(rect.x - 100 + rect.width / 2, rect.y - 75 + rect.height / 2);
         setSize(200, 150);
-
-        right = new ImageButton(new TextureRegionDrawable(new Texture("forward.png")));
-        left = new ImageButton(new TextureRegionDrawable(new Texture("backward.png")));
+        Texture backward = manager.get("buttons/backward.png");
+        Texture forward = manager.get("buttons/forward.png");
+        right = new ImageButton(new TextureRegionDrawable(forward));
+        left = new ImageButton(new TextureRegionDrawable(backward));
         left.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

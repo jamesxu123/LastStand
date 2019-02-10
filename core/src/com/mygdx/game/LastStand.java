@@ -80,6 +80,7 @@ public class LastStand extends Game {
         }
         loadAllFiles(new FileHandle("skins/"));
         loadAllFiles(new FileHandle("backgrounds/"));
+        loadAllFiles(new FileHandle("buttons/"));
 
 
         loadingScreen = new LoadingScreen(this);

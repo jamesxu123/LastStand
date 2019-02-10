@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.LastStand;
@@ -27,6 +28,14 @@ public class OptionScreen implements Screen {
         constantSpawnToggle.setPosition(100, 300);
         musicToggle.setSize(300, 400);
         musicToggle.setPosition(100, 400);
+        ImageButton backButton = new ImageButton(game.style, game.manager.get("buttons/back.png"));
+        backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(game.menuScreen);
+                super.clicked(event, x, y);
+            }
+        });
 
         constantSpawnToggle.addListener(new ClickListener() {
             @Override
