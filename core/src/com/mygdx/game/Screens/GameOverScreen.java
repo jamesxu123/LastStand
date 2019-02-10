@@ -49,6 +49,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        ui.draw();
 
 
     }
