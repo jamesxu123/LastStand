@@ -24,10 +24,12 @@ public class LoadingScreen implements Screen {
     @Override
     public void render(float delta) {
         ShapeRenderer shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(game.batch.getProjectionMatrix());
+        shapeRenderer.setProjectionMatrix(game.batch.getProjectionMatrix()); //Needed for shapeRenderer to work alongside SpriteBatch
         shapeRenderer.setTransformMatrix(game.batch.getTransformMatrix());
         if (game.manager.update()) {
+            //Loads file async, returns true when done
             if (game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower-1.png") && game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower-2.png") && game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower-3.png") && game.manager.isLoaded("sprites/TOWER/WIZARD/wizard-tower-4.png")) {
+                //Gdx seems to have weird issues with these files hmm.....
                 game.initialize();
             } else {
                 game.manager.load("sprites/TOWER/WIZARD/wizard-tower-1.png", Texture.class);
@@ -36,10 +38,10 @@ public class LoadingScreen implements Screen {
                 game.manager.load("sprites/TOWER/WIZARD/wizard-tower-4.png", Texture.class);
             }
         }
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.rect(100, 359, 824, 50);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled); //Nice progress bar
+        shapeRenderer.rect(100, 359, 824, 50); //Back of the bar
         shapeRenderer.setColor(0, 1, 0, 1);
-        shapeRenderer.rect(100, 359, 824 * game.manager.getProgress(), 50);
+        shapeRenderer.rect(100, 359, 824 * game.manager.getProgress(), 50); //Progress!
         shapeRenderer.end();
 //        loadingLabel.setText(Float.toString(game.manager.getProgress()));
 //        game.batch.begin();
