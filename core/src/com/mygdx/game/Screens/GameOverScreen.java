@@ -61,7 +61,7 @@ public class GameOverScreen implements Screen {
             Collections.reverse(scores); //Sort and reverse to get them in DSC order
             Label scoreLabel = new Label("Top Scores", game.style);
             scoreLabel.setPosition(550, 460);
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < (scores.size() <= 5 ? scores.size() : 5); i++) { //Only take the top 5 results
 //                topScores.add(scores.get(i));
                 TextField scoreField = new TextField((i + 1) + ". " + scores.get(i), game.style);
                 scoreField.setDisabled(true);
@@ -73,18 +73,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void render(float delta) {
-//        int counter = 0;
-//        for (int score : topScores) {
-//            TextField scoreField = new TextField((counter + 1) + ". " + score, game.style);
-//            scoreField.setDisabled(true);
-//            scoreField.setPosition(500, 500 - scoreField.getHeight() * counter - 20);
-//            counter++;
-//            ui.addActor(scoreField);
-//
-//        }
         ui.draw();
-
-
     }
 
     @Override
