@@ -7,7 +7,7 @@ public class Player {
     private int level;
 
     public Player() {
-        money = 100;
+        money = 350;
         lives = 1;
 
     }

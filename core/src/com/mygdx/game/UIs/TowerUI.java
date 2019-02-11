@@ -46,7 +46,6 @@ public class TowerUI extends Table {
         towerImg = new Image(towerDatas.get(index).upgrades.get(level));
         priceLabel = new Label(Integer.toString(towerDatas.get(index).cost), style);
         //Circle c=new Circle(rectangle.getCenter(new Vector2()),15);
-        setDebug(true);
         setPosition(rect.x - 100 + rect.width / 2, rect.y - 75 + rect.height / 2);
         setSize(200, 150);
         Texture backward = manager.get("buttons/backward.png");
@@ -61,7 +60,7 @@ public class TowerUI extends Table {
                 } else {
                     index = towerDatas.size() - 1;
                 }
-                priceLabel.setText(Integer.toString(towerDatas.get(index).cost));
+                priceLabel.setText(towerDatas.get(index).cost + "$");
                 towerImg.setDrawable(new TextureRegionDrawable(towerDatas.get(index).upgrades.get(level)));
                 super.clicked(event, x, y);
             }
@@ -70,7 +69,7 @@ public class TowerUI extends Table {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 index = (index + 1) % towerDatas.size();
-                priceLabel.setText(Integer.toString(towerDatas.get(index).cost));
+                priceLabel.setText(towerDatas.get(index).cost + "$");
                 towerImg.setDrawable(new TextureRegionDrawable(towerDatas.get(index).upgrades.get(level)));
                 super.clicked(event, x, y);
             }
@@ -86,7 +85,7 @@ public class TowerUI extends Table {
                         tower = (Tower) group.getSpawner().getGroup().getChildren().get(size - 1);
                         towerImg.setDrawable(new TextureRegionDrawable(tower.data.upgrades.get(level + 1)));
                         player.addMoney(-towerDatas.get(index).cost);
-                        priceLabel.setText(Integer.toString(tower.data.cost * (2 + level)));
+                        priceLabel.setText(tower.data.cost * (2 + level) + "$");
                         createMenu();
 
 
@@ -106,9 +105,11 @@ public class TowerUI extends Table {
 
                     } else {
 
+
                         payButton.remove();
                         towerImg.remove();
                         towerImg = null;
+                        padTop(100);
 
                     }
                 }
@@ -141,15 +142,16 @@ public class TowerUI extends Table {
             add(towerImg);
             add(right);
             row();
-            add(priceLabel).center();
             row();
-            add(payButton).size(40, 20).center();
+            add(priceLabel).padLeft(100);
+            row();
+            add(payButton).size(40, 20).padLeft(100);
 
 
         } else {
             add(towerImg);
             row();
-            add(priceLabel).center();
+            add(priceLabel).padLeft(30);
             row();
             add(payButton);
             add(sellButton);

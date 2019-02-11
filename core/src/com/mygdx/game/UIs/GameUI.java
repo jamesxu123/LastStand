@@ -117,7 +117,7 @@ public class GameUI extends InputAdapter {
 
     public void updateInfo() {
         if (fighter.getClass() == Fighter.class) {
-            health.setText(String.format("HP: %f", fighter.getHealth()));
+            health.setText(String.format("HP: %d", (int) fighter.getHealth()));
             name.setText(String.format("NAME:%s", fighter.data.name));
             if (!fighter.isAlive()) {
                 fighter = null;

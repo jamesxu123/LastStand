@@ -58,7 +58,7 @@ public class Projectile extends Actor {
     @Override
     public void act(float delta) {
         aniTime += delta;
-        if (!Utilities.inScreen(this) || Utilities.getDistance(start, new Point((int)getX(), (int)getY())) > this.tower.getRadius().radius) {
+        if (!Utilities.inScreen(this) || Utilities.getDistance(start, new Point((int) getX(), (int) getY())) > this.tower.getRadius().radius || (target != null && !target.isAlive())) {
             this.remove();
             return;
         }
