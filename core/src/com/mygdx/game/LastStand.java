@@ -107,12 +107,11 @@ public class LastStand extends Game {
         for (int i = 0; i < entities.get("fighters").size; i++) {
             fighterDatas.add(new FighterData(entities.get("fighters").get(i), manager));
         }
-
+        player = new Player();
         gameOverScreen = new GameOverScreen(this);
         menuScreen = new MenuScreen(this);
         battleScreen = new BattleScreen(this);
         optionScreen = new OptionScreen(this);
-        player = new Player();
         setScreen(menuScreen);
     }
 
