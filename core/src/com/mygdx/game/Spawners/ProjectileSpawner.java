@@ -47,6 +47,7 @@ public class ProjectileSpawner extends Spawner {
                 //only sends out projectile when there is an enemy in the radius
                 if (!t.getInRadius().isEmpty()) {
                     Fighter fighter = t.getClosest();
+                    //allows multiple projectiles when a tower reaches a certain level
                     for (int i = 0; i < t.getNumProjectiles(); i++) {
                         Point p = Utilities.getPoint(t);
                         p.translate(t.getOffsetX(), t.getOffsetY()); //Move the projectile to spawn location

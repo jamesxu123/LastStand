@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -28,8 +29,8 @@ public class OptionScreen implements Screen {
         Label title = new Label("Options", game.style);
         title.setFontScale(1.5f);
         title.setPosition(512 - title.getWidth() / 2, 768 - 100);
-        CheckBox musicToggle = new CheckBox("music", game.style); //Music on/off
-        CheckBox constantSpawnToggle = new CheckBox("Spawn Constantly (HARD)", game.style); //Gets rid of waves, super hard move
+        Button musicToggle = new Button(game.style, "music"); //Music on/off
+        CheckBox constantSpawnToggle = new CheckBox("Spawn Constantly (HARD)", game.style, "switch"); //Gets rid of waves, super hard move
         constantSpawnToggle.setSize(50, 50);
         constantSpawnToggle.setPosition(120, 200);
         musicToggle.setSize(50, 50);

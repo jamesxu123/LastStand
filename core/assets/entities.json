@@ -5,7 +5,7 @@
       "aniPath": "sprites/TOWER/WIZARD",
       "projectile": "Wizard Bolt",
       "radius": 150,
-      "cost": 300,
+      "cost": 350,
       "coolDown": 0.3
     },
     {
@@ -13,8 +13,8 @@
       "aniPath": "sprites/TOWER/GOLD",
       "projectile": "Gold",
       "radius": 0,
-      "coolDown": 3,
-      "cost": 100
+      "coolDown": 3.5,
+      "cost": 150
     },
     {
       "name": "Archer Tower",
@@ -22,7 +22,7 @@
       "projectile": "Arrow",
       "radius": 300,
       "coolDown": 0.1,
-      "cost": 700
+      "cost": 500
     },
     {
       "name": "Fire Tower",
@@ -30,7 +30,7 @@
       "projectile": "Fire",
       "radius": 150,
       "coolDown": 4,
-      "cost": 900
+      "cost": 600
     }
   ],
   "fighters": [
@@ -94,7 +94,7 @@
     "Gold": {
       "aniPath": "sprites/PROJECTILE/GOLD",
       "range": 0,
-      "damage": 60,
+      "damage": 10,
       "speed": 10,
       "decay": 0.3,
       "type": "money",

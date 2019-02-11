@@ -5,13 +5,19 @@ public class Player {
     private int money;
     private int lives;
     private int level;
-    private boolean godFinger;
-    private boolean wavePause;
+    private static boolean godFinger;
+
 
     public Player() {
+        //allows player to kill enemy with finger
+        godFinger = false;
         money = 350;
         lives = 1;
 
+    }
+
+    public static void setGodfinger(boolean godFng) {
+        godFinger = godFng;
     }
 
     public void addMoney(int add) {
@@ -19,30 +25,24 @@ public class Player {
 
     }
 
-    public boolean isGodFinger() {
+    public static boolean isGodFinger() {
         return godFinger;
     }
 
     public void setGodFinger(boolean godFinger) {
-        this.godFinger = godFinger;
-    }
-
-    public boolean isWavePause() {
-        return wavePause;
-    }
-
-    public void setWavePause(boolean wavePause) {
-        this.wavePause = wavePause;
+        Player.godFinger = godFinger;
     }
 
     public void setLevel(int level) {
         this.level = level;
     }
 
+    //loses life
     public void loseLife() {
         lives -= 1;
     }
 
+    //checks if player is still alive
     public boolean isAlive() {
         return lives > 0;
 

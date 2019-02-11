@@ -49,7 +49,7 @@ public class FighterSpawner extends Spawner {
     }
 
     private void setNextWave() {
-        numEnemies = (int) (0.75 * wave * wave * wave + wave + 10); //Polynomial to scale difficulty by levels
+        numEnemies = (int) (0.75 * wave * wave * wave + wave + 10); //Polly no meal to scale difficulty by levels
         spawnIntervalRange = ((25.f + wave) + 10) / numEnemies; //Scale spawn time gap for increased difficulty
     }
 
@@ -76,10 +76,16 @@ public class FighterSpawner extends Spawner {
                 } else {
                     spawn(spawnX, spawnY + deviation, nextSpawn, spawnDir);
                 }
-                Fighter latestFighter = (Fighter) getGroup().getChildren().get(getGroup().getChildren().size - 1); //??????
+                //adds a listener to the fighter so that you can click them
+                Fighter latestFighter = (Fighter) getGroup().getChildren().get(getGroup().getChildren().size - 1);
                 latestFighter.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
+                        //if the player has gods finger they are able to kill enemy just by touching it
+                        //this can be abused by pausing the game and killing every enemy on the screen lol
+                        if (Player.isGodFinger()) {
+                            latestFighter.damage(999999999);
+                        }
                         gameUI.changeInfo(latestFighter);
                         super.clicked(event, x, y);
                     }
@@ -90,7 +96,7 @@ public class FighterSpawner extends Spawner {
             }
             super.run(delta);
             if (numEnemies < 1) { //If all enemies for wave has been spawned, end wave
-                if (!constantSpawn) {
+                if (!constantSpawn) { //constant spawning of enemies
                     setSpawning(false);
                 }
 
