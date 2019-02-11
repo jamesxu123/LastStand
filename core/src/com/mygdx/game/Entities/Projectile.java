@@ -59,8 +59,15 @@ public class Projectile extends Actor {
     @Override
     public void act(float delta) {
         aniTime += delta;
-        if (!Utilities.inScreen(this) || Utilities.getDistance(start, new Point((int) getX(), (int) getY())) > this.tower.getRadius().radius || (target != null && !target.isAlive())) {
+        if (!Utilities.inScreen(this) || Utilities.getDistance(start, new Point((int) getX(), (int) getY())) > this.tower.getRadius().radius || done) {
+            /*
+            Delete if:
+                - Off screen
+                - Exceeded range
+                - Hit target already
+             */
             if (getClass() != MoneyProjectile.class) {
+                //Money follows different rules
                 this.remove();
                 return;
             }
@@ -69,6 +76,7 @@ public class Projectile extends Actor {
         range.setPosition(getX(), getY());
         sprite.setPosition(getX(), getY());
         if (data.homing && target != null) {
+            //Dynamically update angles for homing projectiles, so it always follows the target, but only if target still exists
             setRotation((float) Math.atan2(target.getY() - getY(), target.getX() - getX()));
         }
 
