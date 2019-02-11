@@ -141,24 +141,24 @@ public class EntityMap {
 
                             case UP:
 
-                                if (Utilities.rand.nextInt((int) ((r.height / mapArrH) - row) * 10 + 1) <= 1) {
+                                if (Utilities.rand.nextInt((int) ((r.height / mapArrH) - row) * 8 + 1) <= 1) {
                                     f.setDirection(rectangleMapObject.getProperties().get("Direction").toString());
 
                                 }
                                 break;
                             case DOWN:
-                                if (Utilities.rand.nextInt(row * 25 + 1) <= 1) {
+                                if (Utilities.rand.nextInt(row * 8 + 1) <= 1) {
                                     f.setDirection(rectangleMapObject.getProperties().get("Direction").toString());
                                 }
                                 break;
                             case RIGHT:
-                                if (Utilities.rand.nextInt((int) ((r.width / mapArrW) - col) * 25 + 1) <= 1) {
+                                if (Utilities.rand.nextInt((int) ((r.width / mapArrW) - col) * 8 + 1) <= 1) {
                                     f.setDirection(rectangleMapObject.getProperties().get("Direction").toString());
 
                                 }
                                 break;
                             case LEFT:
-                                if (Utilities.rand.nextInt(col * 25 + 1) <= 1) {
+                                if (Utilities.rand.nextInt(col * 8 + 1) <= 1) {
                                     f.setDirection(rectangleMapObject.getProperties().get("Direction").toString());
 
                                 }

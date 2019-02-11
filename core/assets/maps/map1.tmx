@@ -58,32 +58,32 @@
 </data>
  </layer>
  <objectgroup id="3" name="Path Nodes">
-  <object id="1" x="290" y="252" width="62" height="68">
+  <object id="1" x="290" y="252" width="62" height="32">
    <properties>
     <property name="Direction" value="RIGHT"/>
    </properties>
   </object>
-  <object id="2" x="640" y="256" width="62" height="64">
+  <object id="2" x="672" y="256" width="34" height="64">
    <properties>
     <property name="Direction" value="DOWN"/>
    </properties>
   </object>
-  <object id="3" x="640" y="508" width="62" height="66">
+  <object id="3" x="640" y="544" width="62" height="30">
    <properties>
     <property name="Direction" value="RIGHT"/>
    </properties>
   </object>
-  <object id="4" x="864" y="512" width="64" height="62">
+  <object id="4" x="898" y="512" width="30" height="62">
    <properties>
     <property name="Direction" value="UP"/>
    </properties>
   </object>
-  <object id="5" x="866" y="128" width="60" height="64">
+  <object id="5" x="866" y="128" width="60" height="30">
    <properties>
     <property name="Direction" value="LEFT"/>
    </properties>
   </object>
-  <object id="6" x="96" y="126" width="64" height="62">
+  <object id="6" x="96" y="126" width="64" height="30">
    <properties>
     <property name="Direction" value="DOWN"/>
    </properties>

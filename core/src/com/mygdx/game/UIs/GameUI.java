@@ -19,12 +19,12 @@ import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 
 //the actual gameui that is the same throughout
+//handles all input for the battlescreen
 public class GameUI extends InputAdapter {
     private Stage stage;
     private final Label livesLabel;
     private final Label moneyLabel;
     private final Label levelLabel;
-    private Label info;
     private Fighter fighter;
     private final Label name;
     private final Label health;
@@ -57,8 +57,10 @@ public class GameUI extends InputAdapter {
         moneyLabel = new Label("Money:", style);
         livesLabel = new Label("Lives:", style);
         fighterGroup = entityGroup;
-        gameTable.setDebug(true);
+
         towerUIs = new ArrayList<>();
+        health = new Label("", style);
+        name = new Label("", style);
         gameTable.add(levelLabel).width(100).center();
         gameTable.row();
         gameTable.add(moneyLabel).width(100).center();
@@ -66,13 +68,6 @@ public class GameUI extends InputAdapter {
         gameTable.add(livesLabel).width(100).center();
         gameTable.setPosition(75, screenH - 50);
 
-        health = new Label("", style);
-        name = new Label("", style);
-        Table entityTable = new Table(style);
-        entityTable.setDebug(true);
-        entityTable.setPosition(200, 100);
-        entityTable.left().bottom().add(name).center();
-        entityTable.add(health);
         //entityTable.add(info);
         Texture down = manager.get("buttons/skullButtonDown.png");
         Texture up = manager.get("buttons/skullButtonUp.png");
@@ -87,10 +82,15 @@ public class GameUI extends InputAdapter {
                 entityGroup.getSpawner().setSpawning(true);
             }
         });
+        pane.setScale(1.5f);
+        pane.setResizable(true);
         pane.add(playButton);
+        pane.row();
+        pane.add(health);
+        pane.row();
+        pane.add(name);
         pane.setPosition(screenW, 0);
         stage = new Stage();
-        stage.addActor(entityTable);
         stage.addActor(gameTable);
         stage.addActor(pane);
         stage.addActor(pauseButton);
@@ -112,10 +112,11 @@ public class GameUI extends InputAdapter {
         return towerUIs;
     }
 
+    //updates info when a fighter is clicked
     private void updateInfo() {
         if (fighter.getClass() == Fighter.class) {
             health.setText(String.format("HP: %d", (int) fighter.getHealth()));
-            name.setText(String.format("NAME:%s", fighter.data.name));
+            name.setText(String.format("NAME: %s", fighter.data.name));
             if (!fighter.isAlive()) {
                 fighter = null;
             }

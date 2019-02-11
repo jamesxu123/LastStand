@@ -9,6 +9,7 @@ import com.mygdx.game.Utilities;
 
 import java.awt.*;
 
+//class for projectile
 public class Projectile extends Actor {
     private final Point start;
     private final Point end; //Start and end points
@@ -102,5 +103,9 @@ public class Projectile extends Actor {
 
     void setDone(boolean done) {
         this.done = done;
+    }
+
+    public void move() {
+        setPosition((float) (getX() + data.speed * Math.cos(getRotation())), (float) (getY() + data.speed * Math.sin(getRotation())));
     }
 }

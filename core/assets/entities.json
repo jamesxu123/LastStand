@@ -29,7 +29,7 @@
       "aniPath": "sprites/TOWER/FIRE",
       "projectile": "Fire",
       "radius": 150,
-      "coolDown": 4,
+      "coolDown": 5,
       "cost": 700
     }
   ],
@@ -85,7 +85,7 @@
     "Wizard Bolt": {
       "aniPath": "sprites/PROJECTILE/WIZARD",
       "range": 5,
-      "damage": 4,
+      "damage": 5,
       "speed": 10,
       "decay": 0,
       "type": "damage",
@@ -103,7 +103,7 @@
     "Arrow": {
       "aniPath": "sprites/PROJECTILE/ARROW",
       "range": 1,
-      "damage": 1,
+      "damage": 3,
       "speed": 5,
       "decay": 0,
       "type": "damage",

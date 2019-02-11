@@ -5,12 +5,11 @@ public class Player {
     private int money;
     private int lives;
     private int level;
-    private static boolean godFinger;
+    private static boolean godFinger = false;
 
 
     public Player() {
         //allows player to kill enemy with finger
-        godFinger = false;
         money = 350;
         lives = 150;
 
@@ -18,6 +17,10 @@ public class Player {
 
     public static void setGodfinger(boolean godFng) {
         godFinger = godFng;
+    }
+
+    public static boolean isGodFinger() {
+        return godFinger;
     }
 
     public void addMoney(int add) {
@@ -34,9 +37,6 @@ public class Player {
         return money - cost >= 0;
     }
 
-    public static boolean isGodFinger() {
-        return godFinger;
-    }
 
     public void setGodFinger(boolean godFinger) {
         Player.godFinger = godFinger;

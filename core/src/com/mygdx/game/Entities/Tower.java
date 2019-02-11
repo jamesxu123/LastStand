@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Tower extends Actor {
     public final TowerData data;
+    //the number of projectiles per tower although not implemented
     private int numProjectiles = 1;
     private float lastFired = 0;
     private int level = 0;
@@ -79,11 +80,6 @@ public class Tower extends Actor {
 
     public void setLevel(int level) {
         this.level = level;
-        if (level == 3) {
-            System.out.println(true);
-            numProjectiles += 1;
-        }
-
     }
 
     @Override

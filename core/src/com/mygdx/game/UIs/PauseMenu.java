@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.LastStand;
 
+//pause menu which has two options;
+//resume or go to menu
 public class PauseMenu extends Table {
 
     private final LastStand game;
@@ -21,6 +23,7 @@ public class PauseMenu extends Table {
         TextButton menuButton = new TextButton("Menu", game.style);
         Texture resume = game.manager.get("buttons/playButton.png");
         ImageButton resumeButton = new ImageButton(new TextureRegionDrawable(resume));
+        //sends you to menu and recreates the game
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -32,9 +35,7 @@ public class PauseMenu extends Table {
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.battleScreen.pause = false;
                 remove();
-
                 super.clicked(event, x, y);
             }
         });
@@ -43,12 +44,12 @@ public class PauseMenu extends Table {
 
     }
 
+    //setParent is overrided so that when it is opened the screen updates can be paused
+    //I know very genius Nithin
     @Override
     protected void setParent(Group parent) {
-        if (parent != null) {
-            game.battleScreen.pause = true;
-
-        }
+        //if parent is null that means it is being removed
+        game.battleScreen.pause = parent != null;
 
         super.setParent(parent);
     }

@@ -21,6 +21,12 @@ import com.mygdx.game.Screens.*;
 
 import java.util.ArrayList;
 
+/*LastStand.java
+Nithin Muthukumar
+James Xu
+this is a tower defense game inspired by btd and kingdom rush. The objective is to stop enemies
+from completing the map and last as long as possible.
+*/
 public class LastStand extends Game {
     public static final int screenW = 1024;
     public static final int screenH = 768;
@@ -70,6 +76,8 @@ public class LastStand extends Game {
         shapeRenderer = new ShapeRenderer();
         //skin is needed for loadingScreen so it is loaded beforehand
         jsonReader = new JsonReader();
+        //add a loader so that the manager can load tiled maps
+        //the tiled maps however slow down the process a lot
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         manager.load("skins/shade/skin/uiskin.json", Skin.class);
         manager.finishLoading();
@@ -93,9 +101,9 @@ public class LastStand extends Game {
     //called when manager is done loading everything from loadingscreen
     public void initialize() {
         mapDatas = new ArrayList<>();
+        //get values from json file and put them into mapdata containers
         JsonValue maps = jsonReader.parse(new FileHandle("maps.json"));
         for (int i = 0; i < maps.size; i++) {
-            System.out.println(maps.get(i));
             mapDatas.add(new MapData(maps.get(i), manager));
         }
         JsonValue entities = jsonReader.parse(new FileHandle("entities.json"));
@@ -108,6 +116,8 @@ public class LastStand extends Game {
             fighterDatas.add(new FighterData(entities.get("fighters").get(i), manager));
         }
         player = new Player();
+        //screens for everything
+        //the lifecycle of this program is changed through extending game
         gameOverScreen = new GameOverScreen(this);
         menuScreen = new MenuScreen(this);
         battleScreen = new BattleScreen(this);

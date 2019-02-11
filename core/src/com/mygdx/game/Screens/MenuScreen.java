@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.LastStand;
 
+import static com.mygdx.game.LastStand.screenH;
+
 
 public class MenuScreen implements Screen {
     private final LastStand game;
@@ -17,11 +19,17 @@ public class MenuScreen implements Screen {
     private Label mapName;
     private final Stage ui;
 
+
     public MenuScreen(final LastStand game) {
         this.game = game;
         bkg = game.manager.get("backgrounds/menubkg.jpg");
 
         ui = new Stage();
+        //titles and and ui stuff
+        //very boring
+        Label titleLabel = new Label("Last Stand", game.style, "title-plain");
+        titleLabel.setPosition(400, screenH - 100);
+        titleLabel.setFontScale(1.4f);
         TextButton playButton = new TextButton("Play", game.style); //Starts game
         playButton.setSize(150, 100);
         playButton.setPosition(200, 250);
@@ -70,8 +78,8 @@ public class MenuScreen implements Screen {
         });
 
         mapName = new Label(game.mapDatas.get(game.mapIndex).name, game.style); //Name of current map
-        mapName.setPosition(400, 100);
-
+        mapName.setPosition(675, 120);
+        ui.addActor(titleLabel);
         ui.addActor(playButton);
         ui.addActor(optionButton);
         ui.addActor(mapName);
@@ -92,8 +100,6 @@ public class MenuScreen implements Screen {
     @Override
     public void render(float delta) {
         game.batch.begin();
-
-
         game.batch.draw(bkg, 0, 0);
         game.batch.draw(game.mapDatas.get(game.mapIndex).icon, 630, 200); //Display map image preview
         game.batch.end();

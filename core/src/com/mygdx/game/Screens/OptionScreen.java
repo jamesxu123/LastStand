@@ -14,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.LastStand;
 import com.mygdx.game.Spawners.FighterSpawner;
 
+import static com.mygdx.game.LastStand.screenH;
+import static com.mygdx.game.LastStand.screenW;
+
 //the optionScreen that allows you to change if spawn happens constantly and mute or turn on music
 public class OptionScreen implements Screen {
     private final LastStand game;
@@ -24,13 +27,16 @@ public class OptionScreen implements Screen {
     public OptionScreen(LastStand game) {
 
         this.game = game;
-        bkg = game.manager.get("backgrounds/selectionbkg.png");
+        bkg = game.manager.get("backgrounds/bkgoptions.jpg");
         ui = new Stage(); //Create stage to hold UI elements
-        Label title = new Label("Options", game.style);
-        title.setFontScale(1.5f);
-        title.setPosition(512 - title.getWidth() / 2, 768 - 100);
+        Label title = new Label("Options", game.style, "title");
+        //title.setFontScale(1.5f);
+        title.setPosition(screenW / 2 - title.getWidth() / 2, screenH - 100);
         Button musicToggle = new Button(game.style, "music"); //Music on/off
-        CheckBox constantSpawnToggle = new CheckBox("Spawn Constantly (HARD)", game.style, "switch"); //Gets rid of waves, super hard move
+        Label spawnLabel = new Label("Spawn Constantly (HARD)", game.style);
+        spawnLabel.setPosition(120, 150);
+        CheckBox constantSpawnToggle = new CheckBox("", game.style, "switch"); //Gets rid of waves, super hard move
+
         constantSpawnToggle.setSize(50, 50);
         constantSpawnToggle.setPosition(120, 200);
         musicToggle.setSize(50, 50);
@@ -76,7 +82,7 @@ public class OptionScreen implements Screen {
             }
         });
 
-
+        ui.addActor(spawnLabel);
         ui.addActor(constantSpawnToggle);
         ui.addActor(musicToggle);
         ui.addActor(title);

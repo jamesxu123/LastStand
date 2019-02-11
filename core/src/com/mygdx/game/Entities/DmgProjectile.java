@@ -22,7 +22,7 @@ public class DmgProjectile extends Projectile{
     @Override
     public void act(float delta){
         if (!isDone()) {
-            setPosition((float) (getX() + data.speed * Math.cos(getRotation())), (float) (getY() + data.speed * Math.sin(getRotation())));
+            move();
         } else {
             if (getAniTime() > data.decay) {
                 remove();

@@ -44,10 +44,11 @@ public class Fighter extends Actor {
 
 
     public void damage(int amount) {
-        //Damage itself
-        health -= amount;
+        //Damage is only allowed to go to 0 so that when health is displayed it does not show negative
+        health = Math.max(0, health - amount);
         if (!isAlive()) {
             state = States.DEATH;
+            //add money to the player for however much the enemy is worth
             player.addMoney(data.worth);
             aniTime = 0;
         }
