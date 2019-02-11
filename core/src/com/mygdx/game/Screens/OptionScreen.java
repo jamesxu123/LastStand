@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.LastStand;
 import com.mygdx.game.Spawners.FighterSpawner;
 
+//the optionScreen that allows you to change if spawn happens constantly and mute or turn on music
 public class OptionScreen implements Screen {
     private LastStand game;
     private Stage ui;
