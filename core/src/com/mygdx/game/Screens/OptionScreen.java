@@ -24,21 +24,22 @@ public class OptionScreen implements Screen {
 
         this.game = game;
         bkg = game.manager.get("backgrounds/selectionbkg.png");
-        ui = new Stage();
+        ui = new Stage(); //Create stage to hold UI elements
         Label title = new Label("Options", game.style);
         title.setFontScale(1.5f);
         title.setPosition(512 - title.getWidth() / 2, 768 - 100);
-        CheckBox musicToggle = new CheckBox("music", game.style);
-        CheckBox constantSpawnToggle = new CheckBox("Spawn Constantly", game.style);
+        CheckBox musicToggle = new CheckBox("music", game.style); //Music on/off
+        CheckBox constantSpawnToggle = new CheckBox("Spawn Constantly (HARD)", game.style); //Gets rid of waves, super hard move
         constantSpawnToggle.setSize(50, 50);
         constantSpawnToggle.setPosition(120, 200);
         musicToggle.setSize(50, 50);
         musicToggle.setPosition(120, 300);
-        Texture back = game.manager.get("buttons/back.png");
-        ImageButton backButton = new ImageButton(new TextureRegionDrawable(back));
+        Texture back = game.manager.get("buttons/back.png"); //Texture for back button
+        ImageButton backButton = new ImageButton(new TextureRegionDrawable(back)); //Back button
         backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                //Return user to menu
                 game.setScreen(game.menuScreen);
                 super.clicked(event, x, y);
             }
@@ -65,7 +66,7 @@ public class OptionScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (musicToggle.isChecked()) {
-                    game.music.setLooping(true);
+                    game.music.setLooping(true); //Keep music playing
                     game.music.play();
                 } else {
                     game.music.stop();

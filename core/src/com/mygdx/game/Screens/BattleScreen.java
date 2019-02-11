@@ -28,6 +28,7 @@ import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 
 public class BattleScreen implements Screen {
+    public boolean pause = false;
     private LastStand game;
     private Stage entities;
     private InputMultiplexer inputs;
@@ -40,16 +41,11 @@ public class BattleScreen implements Screen {
     private EntityMap entityMap;
     private Array<RectangleMapObject> pathNodes;
     private GameUI gameUI;
-    public boolean pause = false;
-
-
-
 
 
     public BattleScreen(LastStand game) {
         this.game = game;
     }
-
 
 
     @Override
@@ -64,12 +60,12 @@ public class BattleScreen implements Screen {
 
         FighterSpawner fighterSpawner = new FighterSpawner((int) spawnPoint.getRectangle().x, (int) spawnPoint.getRectangle().y,
                 spawnPoint.getProperties().get("Direction").toString(), game.fighterDatas, game.player);
-        enemies = new EntityGroup(fighterSpawner);
+        enemies = new EntityGroup(fighterSpawner); //All spawned enemies
         gameUI = new GameUI(game.player, game.style, enemies, game.manager, pauseMenu);
         fighterSpawner.setGameUI(gameUI);
 
-        towers = new EntityGroup(new TowerSpawner(game.towerDatas));
-        projectiles = new EntityGroup(new ProjectileSpawner(towers, game.player));
+        towers = new EntityGroup(new TowerSpawner(game.towerDatas)); //All the tower entities
+        projectiles = new EntityGroup(new ProjectileSpawner(towers, game.player)); //All fired projectiles, including coins
 
         camera = new OrthographicCamera(screenW, screenH);
         //camera is only needed to center the map on the screen
@@ -80,13 +76,14 @@ public class BattleScreen implements Screen {
         collisionObjs = game.getMap().getLayers().get("Tower Placement").getObjects();
         //input multiplexer holds a bunch of input taking things and passes input to them
         inputs = new InputMultiplexer();
-        entities = new Stage();
+        entities = new Stage(); //Stores all entities in the entire game
 
         inputs.addProcessor(gameUI);
         inputs.addProcessor(gameUI.getStage());
         inputs.addProcessor(entities);
 
         for (RectangleMapObject rectangleObject : collisionObjs.getByType(RectangleMapObject.class)) {
+            //Clickable points to create tower by displaying Tower UI
             Rectangle rectangle = rectangleObject.getRectangle();
             gameUI.getTowerUIs().add(new TowerUI(rectangle, game.style, game.towerDatas, towers, game.shapeRenderer, game.player, game.manager));
         }
@@ -113,11 +110,13 @@ public class BattleScreen implements Screen {
 
         entityMap.constructMap(enemies.getChildren(), game.player);
         entityMap.switchDirection(pathNodes);
-        entityMap.collide(delta,projectiles);
+        entityMap.collide(delta, projectiles);
         gameUI.update();
+
         for (Actor a : towers.getChildren()) {
             Tower t = (Tower) a;
             t.setInRadius(entityMap.getInRadius(t));
+            //Give the tower a list of in-range targets
         }
         entityMap.resetMap();
 
@@ -154,7 +153,6 @@ public class BattleScreen implements Screen {
         game.shapeRenderer.end();
 
     }
-
 
 
     @Override
