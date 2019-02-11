@@ -61,6 +61,7 @@ public class ProjectileSpawner extends Spawner {
         super.run(delta);
     }
 
+    //spawns a projectile with a start end and tower
     private void spawn(Point start, Fighter target, Tower t) {
         if (t.data.projectileData.type == DmgProjectile.class) { //Make sure type is correct
             getGroup().addActor(new DmgProjectile(t.data.projectileData, start, target, t)); //Add it to group as an Actor

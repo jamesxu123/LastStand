@@ -56,8 +56,7 @@ public class Fighter extends Actor {
 
     @Override
     public void act(float delta) {
-//        System.out.println(data.name);
-//        System.out.println(data.animations.get(state, direction));
+
 
         //Set size based on sprite size
         setWidth(data.animations.get(state, direction).getKeyFrame(aniTime).getWidth());

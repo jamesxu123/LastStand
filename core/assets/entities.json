@@ -30,7 +30,7 @@
       "projectile": "Fire",
       "radius": 150,
       "coolDown": 4,
-      "cost": 600
+      "cost": 700
     }
   ],
   "fighters": [
@@ -41,7 +41,7 @@
       "health": 40,
       "aniSpeed": 0.1,
       "size": 1,
-      "worth": 10
+      "worth": 15
 
     },
     {
@@ -69,7 +69,7 @@
       "health": 35,
       "aniSpeed": 0.2,
       "size": 2,
-      "worth": 5
+      "worth": 6
     },
     {
       "name": "Elf",
@@ -78,14 +78,14 @@
       "health": 5,
       "aniSpeed": 0.07,
       "size": 1,
-      "worth": 12
+      "worth": 10
     }
   ],
   "projectiles": {
     "Wizard Bolt": {
       "aniPath": "sprites/PROJECTILE/WIZARD",
       "range": 5,
-      "damage": 5,
+      "damage": 4,
       "speed": 10,
       "decay": 0,
       "type": "damage",
@@ -103,7 +103,7 @@
     "Arrow": {
       "aniPath": "sprites/PROJECTILE/ARROW",
       "range": 1,
-      "damage": 3,
+      "damage": 1,
       "speed": 5,
       "decay": 0,
       "type": "damage",
@@ -111,10 +111,10 @@
     },
     "Fire": {
       "aniPath": "sprites/PROJECTILE/FIRE",
-      "range": 10,
+      "range": 20,
       "damage": 40,
       "speed": 10,
-      "decay": 3,
+      "decay": 3.5,
       "type": "damage",
       "homing": false
     }

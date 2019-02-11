@@ -12,7 +12,7 @@ public class Player {
         //allows player to kill enemy with finger
         godFinger = false;
         money = 350;
-        lives = 1;
+        lives = 150;
 
     }
 
@@ -23,6 +23,15 @@ public class Player {
     public void addMoney(int add) {
         money += add;
 
+    }
+
+    public void removeMoney(int remove) {
+        money -= remove;
+    }
+
+    //checks if player has enough money
+    public boolean hasEnough(int cost) {
+        return money - cost >= 0;
     }
 
     public static boolean isGodFinger() {
