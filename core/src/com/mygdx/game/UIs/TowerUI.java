@@ -33,11 +33,13 @@ public class TowerUI extends Table {
     private ImageButton right;
     private TextButton payButton;
     private TextButton sellButton;
+    private Label padLabel;
 
 
     public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towerDatas, EntityGroup towerGroup, ShapeRenderer shapeRenderer, Player player, AssetManager manager) {
         super(style);
         index = 0;
+        padLabel = new Label("", style);
 
         this.rect = rect;
         this.shapeRenderer = shapeRenderer;
@@ -113,6 +115,7 @@ public class TowerUI extends Table {
 
                     }
                 }
+
                 super.clicked(event, clickX, clickY);
             }
         });
@@ -143,19 +146,26 @@ public class TowerUI extends Table {
             add(right);
             row();
             row();
-            add(priceLabel).padLeft(100);
+            add(padLabel);
+            add(priceLabel);
             row();
-            add(payButton).size(40, 20).padLeft(100);
+            add(padLabel);
+            add(payButton);
 
 
-        } else {
+        } else if (tower.data.upgrades.size() > 1) {
+            add(padLabel);
             add(towerImg);
             row();
-            add(priceLabel).padLeft(30);
+            add(padLabel);
+            add(priceLabel);
             row();
             add(payButton);
             add(sellButton);
 
+        } else {
+            padTop(100);
+            add(sellButton);
         }
     }
 

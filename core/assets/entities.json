@@ -14,7 +14,7 @@
       "projectile": "Gold",
       "radius": 0,
       "coolDown": 3,
-      "cost": 1000
+      "cost": 100
     },
     {
       "name": "Archer Tower",
