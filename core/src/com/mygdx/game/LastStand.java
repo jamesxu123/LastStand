@@ -70,9 +70,9 @@ public class LastStand extends Game {
         //skin is needed for loadingScreen so it is loaded beforehand
         jsonReader = new JsonReader();
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-        manager.load("skins/orange/skin/uiskin.json", Skin.class);
+        manager.load("skins/shade/skin/uiskin.json", Skin.class);
         manager.finishLoading();
-        style = manager.get("skins/orange/skin/uiskin.json");
+        style = manager.get("skins/shade/skin/uiskin.json");
         loadAllFiles(new FileHandle("sprites/"));
         for (FileHandle f : Utilities.listFiles(new FileHandle("maps/"))) {
             if (f.extension().equals("tmx")) {
@@ -92,7 +92,6 @@ public class LastStand extends Game {
     //called when manager is done loading everything from loadingscreen
     public void initialize() {
         mapDatas = new ArrayList<>();
-
         JsonValue maps = jsonReader.parse(new FileHandle("maps.json"));
         for (int i = 0; i < maps.size; i++) {
             System.out.println(maps.get(i));
