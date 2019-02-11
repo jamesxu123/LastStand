@@ -19,7 +19,7 @@ public class Scores {
                 FileHandle fileHandle = new FileHandle("highscores.txt");
                 fileHandle.writeString(game.player.getLevel() + "\n", true);
             } catch (Exception e) {
-                System.out.println(e);
+                e.printStackTrace();
             }
         });
     }
