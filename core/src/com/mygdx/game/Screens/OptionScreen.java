@@ -34,7 +34,7 @@ public class OptionScreen implements Screen {
         title.setPosition(screenW / 2 - title.getWidth() / 2, screenH - 100);
         Button musicToggle = new Button(game.style, "music"); //Music on/off
         Label spawnLabel = new Label("Spawn Constantly (HARD)", game.style);
-        spawnLabel.setPosition(120, 150);
+        spawnLabel.setPosition(550, 280);
         CheckBox constantSpawnToggle = new CheckBox("", game.style, "switch"); //Gets rid of waves, super hard move
 
 
