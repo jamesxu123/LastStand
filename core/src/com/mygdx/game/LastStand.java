@@ -43,6 +43,7 @@ public class LastStand extends Game {
 
     //recursively gets all files to load and puts it in the asynchronous loaders queue
     public void loadAllFiles(FileHandle file) {
+        //loads music
         music = Gdx.audio.newMusic(Gdx.files.internal("music/music.mp3"));
         for (FileHandle f : file.list()) {
             if (f.isDirectory()) {

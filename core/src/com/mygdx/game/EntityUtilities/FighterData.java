@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.utils.JsonValue;
 
 public class FighterData {
-    //entity will also have other attributes such as name, icon, and description
+
     public final FighterAnis animations;
     public final float speed;
     public final float health;
@@ -16,6 +16,7 @@ public class FighterData {
 
     //stats path should be file- will replace later
     public FighterData(JsonValue attributes, AssetManager manager) {
+        //gets 
         animations = new FighterAnis(attributes.getString("aniPath"), attributes.getFloat("aniSpeed"), manager);
         size = attributes.getInt("size");
 
