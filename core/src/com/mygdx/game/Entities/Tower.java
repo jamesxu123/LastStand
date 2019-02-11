@@ -13,8 +13,8 @@ public class Tower extends Actor {
     private int numProjectiles = 1;
     private float lastFired = 0;
     private int level = 0;
-    private final int offsetX;
-    private final int offsetY;
+    private int offsetX;
+    private int offsetY;
     private ArrayList<Fighter> inRadius;
 
 

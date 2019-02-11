@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.mygdx.game.Spawners.Spawner;
 
 public class EntityGroup extends Group {
-    private final Spawner spawner;
+    private Spawner spawner;
 
     public EntityGroup(Spawner spawner) {
         this.spawner = spawner;

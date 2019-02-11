@@ -6,7 +6,7 @@ import com.mygdx.game.EntityUtilities.TowerData;
 import java.util.ArrayList;
 
 public class TowerSpawner extends Spawner {
-    private final ArrayList<TowerData> towerDatas;
+    private ArrayList<TowerData> towerDatas;
 
     public TowerSpawner(ArrayList<TowerData> towerDatas) {
         this.towerDatas = towerDatas;

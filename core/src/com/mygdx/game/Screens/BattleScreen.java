@@ -29,7 +29,7 @@ import static com.mygdx.game.LastStand.screenW;
 
 public class BattleScreen implements Screen {
     public boolean pause = false;
-    private final LastStand game;
+    private LastStand game;
     private Stage entities;
     private InputMultiplexer inputs;
     private OrthographicCamera camera;
@@ -101,7 +101,7 @@ public class BattleScreen implements Screen {
         //checks if the player still has hearts and if not gameover
 
         if (!game.player.isAlive()) {
-            Scores.writeScore(game);
+            Scores.writeScore(game.player.getLevel(), game);
             game.setScreen(game.gameOverScreen);
             return;
         }
@@ -110,7 +110,7 @@ public class BattleScreen implements Screen {
 
         entityMap.constructMap(enemies.getChildren(), game.player);
         entityMap.switchDirection(pathNodes);
-        entityMap.collide(projectiles);
+        entityMap.collide(delta, projectiles);
         gameUI.update();
 
         for (Actor a : towers.getChildren()) {

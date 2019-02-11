@@ -20,20 +20,20 @@ import java.util.ArrayList;
 
 //ui that is placed when a player touches a tower placing spot
 public class TowerUI extends Table {
-    private final Rectangle rect;
+    private Rectangle rect;
     private int index = 0;
     private int level = 0;
-    private final EntityGroup group;
+    private EntityGroup group;
     private Tower tower;
-    private final Label priceLabel;
-    private final ShapeRenderer shapeRenderer;
+    private Label priceLabel;
+    private ShapeRenderer shapeRenderer;
     private Image towerImg;
-    private final ArrayList<TowerData> towerDatas;
-    private final ImageButton left;
-    private final ImageButton right;
-    private final TextButton payButton;
-    private final TextButton sellButton;
-    private final Label padLabel;
+    private ArrayList<TowerData> towerDatas;
+    private ImageButton left;
+    private ImageButton right;
+    private TextButton payButton;
+    private TextButton sellButton;
+    private Label padLabel;
 
 
     public TowerUI(Rectangle rect, Skin style, ArrayList<TowerData> towerDatas, EntityGroup towerGroup, ShapeRenderer shapeRenderer, Player player, AssetManager manager) {
@@ -138,7 +138,7 @@ public class TowerUI extends Table {
 
     }
 
-    private void createMenu() {
+    public void createMenu() {
         clear();
         if (tower == null) {
             add(left);

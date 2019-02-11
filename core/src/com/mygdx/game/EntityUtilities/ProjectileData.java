@@ -18,7 +18,7 @@ public class ProjectileData {
     public final float decay;
     public final Class type;
     public final boolean homing;
-    public final Animation<Texture> animations;
+    public Animation<Texture> animations;
 
     public ProjectileData(JsonValue attributes, AssetManager manager) {
         FileHandle[] fileList = Utilities.listFiles(new FileHandle(attributes.getString("aniPath")));

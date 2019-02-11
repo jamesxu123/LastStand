@@ -15,9 +15,9 @@ import com.mygdx.game.Spawners.FighterSpawner;
 
 //the optionScreen that allows you to change if spawn happens constantly and mute or turn on music
 public class OptionScreen implements Screen {
-    private final LastStand game;
-    private final Stage ui;
-    private final Texture bkg;
+    private LastStand game;
+    private Stage ui;
+    private Texture bkg;
 
 
     public OptionScreen(LastStand game) {

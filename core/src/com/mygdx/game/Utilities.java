@@ -13,9 +13,9 @@ import static com.mygdx.game.LastStand.screenW;
 
 //Utility class for functions that are used throughout the files
 public class Utilities {
-    public static final Random rand = new Random();
+    public static Random rand = new Random();
 
-    private static boolean inScreen(float x, float y) {
+    public static boolean inScreen(float x, float y) {
         //Check if an object is inside the screen
         if ((0 <= x) || (x < screenW)) {
             return (0 <= y) || (y < screenH);

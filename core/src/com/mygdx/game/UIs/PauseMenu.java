@@ -12,7 +12,7 @@ import com.mygdx.game.LastStand;
 
 public class PauseMenu extends Table {
 
-    private final LastStand game;
+    LastStand game;
 
     public PauseMenu(LastStand game) {
         this.game = game;

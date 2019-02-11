@@ -20,7 +20,7 @@ Class that spawns projectiles for a tower
 
 public class ProjectileSpawner extends Spawner {
 
-    private final EntityGroup towers;
+    private EntityGroup towers;
     private final Player player;
 
 

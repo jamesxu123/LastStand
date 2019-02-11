@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -12,10 +13,10 @@ import com.mygdx.game.LastStand;
 
 
 public class MenuScreen implements Screen {
-    private final LastStand game;
-    private final Texture bkg;
+    private LastStand game;
+    private Texture bkg;
     private Label mapName;
-    private final Stage ui;
+    private Stage ui;
 
     public MenuScreen(final LastStand game) {
         //font demo

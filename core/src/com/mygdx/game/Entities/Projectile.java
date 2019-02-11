@@ -10,18 +10,17 @@ import com.mygdx.game.Utilities;
 import java.awt.*;
 
 public class Projectile extends Actor {
-    private final Point start;
-    private final Point end; //Start and end points
-    final Sprite sprite;
-    private final Tower tower; //Tower that fired projectile
+    public final Point start, end; //Start and end points
+    public final Sprite sprite;
+    private Tower tower; //Tower that fired projectile
     private float aniTime = 0; //Time since creation
     public final Circle range = new Circle(); //Damage radius
-    final ProjectileData data;
+    public final ProjectileData data;
     private Fighter target;
     private boolean done = false; //Whether or not mission has been completed
 
 
-    Projectile(ProjectileData data, Point start, Fighter target, Tower t) {
+    public Projectile(ProjectileData data, Point start, Fighter target, Tower t) {
 
         this.start = start;
         this.end = Utilities.getPoint(target);
@@ -34,7 +33,7 @@ public class Projectile extends Actor {
         setPosition(start.x, start.y);
     }
 
-    Projectile(ProjectileData data, Point start, Point end, Tower t) {
+    public Projectile(ProjectileData data, Point start, Point end, Tower t) {
         //Alternative projectile used by MoneyTower as there is no target fighter
         this.start = start;
         this.end = end;
@@ -46,7 +45,7 @@ public class Projectile extends Actor {
         setPosition(start.x, start.y);
     }
 
-    Tower getTower() {
+    public Tower getTower() {
         return tower;
     }
 
