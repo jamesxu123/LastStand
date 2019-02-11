@@ -156,6 +156,7 @@ public class TowerUI extends Table {
         } else if (tower.data.upgrades.size() > 1) {
             add(padLabel);
             add(towerImg);
+            add(padLabel);
             row();
             add(padLabel);
             add(priceLabel);

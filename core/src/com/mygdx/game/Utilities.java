@@ -30,6 +30,7 @@ public class Utilities {
     public static FileHandle[] listFiles(FileHandle f) {
         //List all files in a directory that arent .DS_Store
         //mac problem
+        //also sorts it that pictures always come out the proper order
         FileHandle[] fileHandles = f.list(n -> !new FileHandle(n).extension().equals("DS_Store"));
         Arrays.sort(fileHandles, Comparator.comparing(FileHandle::name));
         return fileHandles;
