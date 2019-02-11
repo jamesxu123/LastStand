@@ -13,7 +13,7 @@ public class Projectile extends Actor {
     private final Point start;
     private final Point end; //Start and end points
     final Sprite sprite;
-    private Tower tower; //Tower that fired projectile
+    private final Tower tower; //Tower that fired projectile
     private float aniTime = 0; //Time since creation
     public final Circle range = new Circle(); //Damage radius
     final ProjectileData data;

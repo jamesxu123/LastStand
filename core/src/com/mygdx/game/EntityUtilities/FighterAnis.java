@@ -14,7 +14,7 @@ import java.util.HashMap;
 //class to hold the animations of the fighters which takes a direction and a state as keys
 public class FighterAnis {
     //holds the animations
-    private HashMap<States, HashMap<Directions, Animation<Texture>>> container;
+    private final HashMap<States, HashMap<Directions, Animation<Texture>>> container;
 
     public FighterAnis(String spritesPath, float aniSpeed, AssetManager manager) {
         container = new HashMap<>();

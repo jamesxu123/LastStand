@@ -21,19 +21,19 @@ import static com.mygdx.game.LastStand.screenW;
 //the actual gameui that is the same throughout
 public class GameUI extends InputAdapter {
     private Stage stage;
-    private Label livesLabel;
-    private Label moneyLabel;
-    private Label levelLabel;
+    private final Label livesLabel;
+    private final Label moneyLabel;
+    private final Label levelLabel;
     private Label info;
     private Fighter fighter;
-    private Label name;
-    private Label health;
+    private final Label name;
+    private final Label health;
     private TowerUI openTowerUI;
-    private ArrayList<TowerUI> towerUIs;
-    private EntityGroup fighterGroup;
+    private final ArrayList<TowerUI> towerUIs;
+    private final EntityGroup fighterGroup;
 
 
-    private Player player;
+    private final Player player;
 
 
     public GameUI(Player player, Skin style, EntityGroup entityGroup, AssetManager manager, PauseMenu pauseMenu) {

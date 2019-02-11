@@ -29,7 +29,7 @@ import static com.mygdx.game.LastStand.screenW;
 
 public class BattleScreen implements Screen {
     public boolean pause = false;
-    private LastStand game;
+    private final LastStand game;
     private Stage entities;
     private OrthogonalTiledMapRenderer mapRenderer;
     private EntityGroup enemies;

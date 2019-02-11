@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.LastStand;
 
 public class LoadingScreen implements Screen {
-    private LastStand game;
+    private final LastStand game;
 
     public LoadingScreen(LastStand game) {
         Label loadingLabel = new Label("", game.style);

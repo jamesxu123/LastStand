@@ -13,13 +13,13 @@ import java.util.ArrayList;
 
 public class FighterSpawner extends Spawner {
     private final Player player;
-    private int spawnX;
-    private int spawnY;
-    private Directions spawnDir;
+    private final int spawnX;
+    private final int spawnY;
+    private final Directions spawnDir;
     private Float spawnInterval;
     private float spawnIntervalRange;
     private int numEnemies;
-    private ArrayList<FighterData> fighterDatas;
+    private final ArrayList<FighterData> fighterDatas;
     private GameUI gameUI;
     private int wave = 0;
     private static boolean constantSpawn = false;

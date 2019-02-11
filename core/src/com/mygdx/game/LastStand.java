@@ -31,7 +31,7 @@ public class LastStand extends Game {
     public OptionScreen optionScreen;
     public GameOverScreen gameOverScreen;
     private LoadingScreen loadingScreen;
-    public AssetManager manager = new AssetManager();
+    public final AssetManager manager = new AssetManager();
     public ShapeRenderer shapeRenderer;
     public ArrayList<FighterData> fighterDatas;
     public ArrayList<TowerData> towerDatas;

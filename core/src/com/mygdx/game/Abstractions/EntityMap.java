@@ -26,8 +26,8 @@ Class that handles collision for all entities
 public class EntityMap {
     private static final int mapArrW = 32;
     private static final int mapArrH = 24;
-    private ArrayList<ArrayList<ArrayList<Fighter>>> map;
-    private ShapeRenderer shapeRenderer;
+    private final ArrayList<ArrayList<ArrayList<Fighter>>> map;
+    private final ShapeRenderer shapeRenderer;
 
     public EntityMap(ShapeRenderer shapeRenderer) {
         this.shapeRenderer = shapeRenderer;

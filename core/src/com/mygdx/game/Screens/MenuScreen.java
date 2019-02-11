@@ -13,10 +13,10 @@ import com.mygdx.game.LastStand;
 
 
 public class MenuScreen implements Screen {
-    private LastStand game;
-    private Texture bkg;
+    private final LastStand game;
+    private final Texture bkg;
     private Label mapName;
-    private Stage ui;
+    private final Stage ui;
 
     public MenuScreen(final LastStand game) {
         //font demo

@@ -17,8 +17,8 @@ import java.util.Collections;
 
 
 public class GameOverScreen implements Screen {
-    private LastStand game;
-    private Stage ui;
+    private final LastStand game;
+    private final Stage ui;
 
     public GameOverScreen(LastStand game) {
         ui = new Stage();
