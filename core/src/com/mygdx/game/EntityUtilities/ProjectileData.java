@@ -9,7 +9,7 @@ import com.mygdx.game.Entities.DmgProjectile;
 import com.mygdx.game.Entities.MoneyProjectile;
 import com.mygdx.game.Utilities;
 
-
+//container for all projectile stats and animations
 public class ProjectileData {
     //????
     public final float range;
@@ -20,7 +20,9 @@ public class ProjectileData {
     public final boolean homing;
     public Animation<Texture> animations;
 
+    //gets all attributes and adds them to variables
     public ProjectileData(JsonValue attributes, AssetManager manager) {
+        //creates a primitive array of the frames and putting it in the Animations
         FileHandle[] fileList = Utilities.listFiles(new FileHandle(attributes.getString("aniPath")));
         Texture[] animationFrames = new Texture[fileList.length];
         for (int i = 0; i < fileList.length; i++) {
@@ -32,6 +34,7 @@ public class ProjectileData {
         speed = attributes.getInt("speed");
         decay=attributes.getFloat("decay");
         homing = attributes.getBoolean("homing");
+        //determines the type of the projectile which will determine the meaning of damage
         switch(attributes.getString("type")){
             case "money": type= MoneyProjectile.class;
             break;

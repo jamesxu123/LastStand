@@ -3,6 +3,7 @@ package com.mygdx.game.EntityUtilities;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.utils.JsonValue;
 
+//container for all fighter stats and animations
 public class FighterData {
 
     public final FighterAnis animations;
@@ -13,10 +14,8 @@ public class FighterData {
     public final int worth;
 
 
-
-    //stats path should be file- will replace later
     public FighterData(JsonValue attributes, AssetManager manager) {
-        //gets 
+        //gets all values for the fighter from the JsonValue and loads them
         animations = new FighterAnis(attributes.getString("aniPath"), attributes.getFloat("aniSpeed"), manager);
         size = attributes.getInt("size");
 
