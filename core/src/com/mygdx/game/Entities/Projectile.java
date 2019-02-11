@@ -52,6 +52,8 @@ public class Projectile extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        //gets the frame and draws it
+        //sprite is used for rotation
         sprite.setTexture(data.animations.getKeyFrame(aniTime, true));
         sprite.draw(batch);
         super.draw(batch, parentAlpha);
@@ -60,7 +62,8 @@ public class Projectile extends Actor {
     @Override
     public void act(float delta) {
         aniTime += delta;
-        if (!Utilities.inScreen(this) || Utilities.getDistance(start, new Point((int) getX(), (int) getY())) > this.tower.getRadius().radius || (done && data.decay == 0)) {
+        //taking advantage of the fact that the compiler stops as soon as it reaches a false statement
+        if (!Utilities.inScreen(this) || Utilities.getDistance(start, new Point((int) getX(), (int) getY())) > this.tower.getRadius().radius || (done && data.decay == 0) || (data.homing && !target.isAlive())) {
             /*
             Delete if:
                 - Off screen

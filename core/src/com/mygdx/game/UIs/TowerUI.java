@@ -91,8 +91,10 @@ public class TowerUI extends Table {
                 if (tower == null) {
 
                     if (player.hasEnough(towerDatas.get(index).cost)) {//checks if the player has enough money
+                        //spawns tower
                         group.getSpawner().spawn((int) rect.x, (int) rect.y, towerDatas.indexOf(towerDatas.get(index)));
                         int size = group.getSpawner().getGroup().getChildren().size;
+                        //the latest spawned tower is the tower that was spawned by yours truly and it is set as the tower
                         tower = (Tower) group.getSpawner().getGroup().getChildren().get(size - 1);
                         towerImg.setDrawable(new TextureRegionDrawable(tower.data.upgrades.get(level + 1)));
                         player.removeMoney(towerDatas.get(index).cost);
@@ -176,7 +178,7 @@ public class TowerUI extends Table {
             add(sellButton);
 
         } else {
-            padTop(100);
+            padTop(getHeight() / 2);
             add(sellButton);
         }
     }
