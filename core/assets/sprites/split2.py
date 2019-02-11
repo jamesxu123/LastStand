@@ -97,7 +97,6 @@ def showMove(pics):
     height = max([p.get_height() for p in pics])
     rects = []
     anchors = []
-    yy = height
     frame = 0
     screen.fill(bgCol)
     for i in range(len(pics)):
@@ -139,7 +138,6 @@ def showMove(pics):
     #screen.blit(cop,(0,0))
 
 def getMove(area):
-    cnt=0
     pics = []
     
     top = findPixelLine(area[1],area)
@@ -156,7 +154,7 @@ def getMove(area):
         display.flip()
     if len(pics)==0:return
     anchors=showMove(pics)
-    if anchors == []:
+    if not anchors:
         return
     maxax = max([a[0] for a in anchors])
     maxay = max([a[1] for a in anchors])
@@ -173,7 +171,7 @@ def getMove(area):
             tmp = Surface((pic.get_width()+extrax,pic.get_height()+extray),SRCALPHA)
             tmp.fill((0,0,0,0))
             pic = pic.convert()
-            pic.set_colorkey((bgCol))
+            pic.set_colorkey(bgCol)
             tmp.blit(pic,(extrax,extray))
             image.save(tmp,name+"/"+name+str(i)+".png")
             

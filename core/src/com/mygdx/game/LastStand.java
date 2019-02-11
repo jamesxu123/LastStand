@@ -30,19 +30,19 @@ public class LastStand extends Game {
     public BattleScreen battleScreen;
     public OptionScreen optionScreen;
     public GameOverScreen gameOverScreen;
-    public LoadingScreen loadingScreen;
-    public AssetManager manager = new AssetManager();
+    private LoadingScreen loadingScreen;
+    public final AssetManager manager = new AssetManager();
     public ShapeRenderer shapeRenderer;
     public ArrayList<FighterData> fighterDatas;
     public ArrayList<TowerData> towerDatas;
     public ArrayList<MapData> mapDatas;
     public int mapIndex = 0;
-    public JsonReader jsonReader;
+    private JsonReader jsonReader;
     public Player player;
     public Music music;
 
     //recursively gets all files to load and puts it in the asynchronous loaders queue
-    public void loadAllFiles(FileHandle file) {
+    private void loadAllFiles(FileHandle file) {
         //loads music
         music = Gdx.audio.newMusic(Gdx.files.internal("music/music.mp3"));
         for (FileHandle f : file.list()) {

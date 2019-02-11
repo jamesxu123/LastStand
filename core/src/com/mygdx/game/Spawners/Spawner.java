@@ -30,15 +30,15 @@ public abstract class Spawner {
         return -1;
     }
 
-    public float getTotalTime() {
+    float getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(float totalTime) {
+    void setTotalTime(float totalTime) {
         this.totalTime = totalTime;
     }
 
-    public boolean getSpawning() {
+    boolean getSpawning() {
         return spawning;
     }
 

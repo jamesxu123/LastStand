@@ -21,22 +21,22 @@ import static com.mygdx.game.LastStand.screenW;
 //the actual gameui that is the same throughout
 public class GameUI extends InputAdapter {
     private Stage stage;
-    private Label livesLabel;
-    private Label moneyLabel;
-    private Label levelLabel;
-    private Table entityTable;
+    private final Label livesLabel;
+    private final Label moneyLabel;
+    private final Label levelLabel;
+    private final Table entityTable;
     private Label info;
     private Fighter fighter;
-    private Label name;
-    private Label health;
-    private Table gameTable;
-    private Window pane;
+    private final Label name;
+    private final Label health;
+    private final Table gameTable;
+    private final Window pane;
     private TowerUI openTowerUI;
-    private ArrayList<TowerUI> towerUIs;
-    private EntityGroup fighterGroup;
+    private final ArrayList<TowerUI> towerUIs;
+    private final EntityGroup fighterGroup;
 
 
-    private Player player;
+    private final Player player;
 
 
     public GameUI(Player player, Skin style, EntityGroup entityGroup, AssetManager manager, PauseMenu pauseMenu) {
@@ -115,7 +115,7 @@ public class GameUI extends InputAdapter {
         return towerUIs;
     }
 
-    public void updateInfo() {
+    private void updateInfo() {
         if (fighter.getClass() == Fighter.class) {
             health.setText(String.format("HP: %d", (int) fighter.getHealth()));
             name.setText(String.format("NAME:%s", fighter.data.name));

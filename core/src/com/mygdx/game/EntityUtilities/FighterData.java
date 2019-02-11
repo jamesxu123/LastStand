@@ -17,7 +17,7 @@ public class FighterData {
     //stats path should be file- will replace later
     public FighterData(JsonValue attributes, AssetManager manager) {
         //gets 
-        animations = new FighterAnis(attributes.getString("aniPath"), attributes.getFloat("aniSpeed"), manager);
+        animations = new FighterAnis();
         size = attributes.getInt("size");
 
         name = attributes.getString("name");

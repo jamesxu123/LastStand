@@ -12,13 +12,12 @@ import com.mygdx.game.LastStand;
 import com.mygdx.game.Scores;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 
 public class GameOverScreen implements Screen {
-    private LastStand game;
-    private Stage ui;
+    private final LastStand game;
+    private final Stage ui;
     private ArrayList<Integer> topScores = new ArrayList<>();
 
     public GameOverScreen(LastStand game) {

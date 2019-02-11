@@ -60,8 +60,8 @@ public class Fighter extends Actor {
 //        System.out.println(data.animations.get(state, direction));
 
         //Set size based on sprite size
-        setWidth(data.animations.get(state, direction).getKeyFrame(aniTime).getWidth());
-        setHeight(data.animations.get(state,direction).getKeyFrame(aniTime).getHeight());
+        setWidth(data.animations.get().getKeyFrame(aniTime).getWidth());
+        setHeight(data.animations.get().getKeyFrame(aniTime).getHeight());
         setBounds(getX(),getY(),getWidth(),getHeight());
 
         aniTime += delta; //Keep track of time since spawn
@@ -112,7 +112,7 @@ public class Fighter extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         //Draw with different sprites for animation
         boolean looping = state != States.DEATH;
-        Texture frame = data.animations.get(state, direction).getKeyFrame(aniTime, looping);
+        Texture frame = data.animations.get().getKeyFrame(aniTime, looping);
         batch.draw(frame, getX(), getY(), frame.getWidth() * data.size, frame.getHeight() * data.size);
         //^^^^ draw with proper size as indicated by JSON
 

@@ -2,7 +2,6 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.files.FileHandle;
 
-import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
@@ -12,7 +11,7 @@ Handles asynchronous reading and writing of scores from a text file
  */
 
 public class Scores {
-    public static void writeScore(int score, LastStand game) {
+    public static void writeScore(LastStand game) {
         //Appends a score to the end of a text file
         CompletableFuture.runAsync(() -> {
             try {

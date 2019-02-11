@@ -13,13 +13,13 @@ import java.util.ArrayList;
 
 public class FighterSpawner extends Spawner {
     private final Player player;
-    private int spawnX;
-    private int spawnY;
-    private Directions spawnDir;
+    private final int spawnX;
+    private final int spawnY;
+    private final Directions spawnDir;
     private Float spawnInterval;
     private float spawnIntervalRange;
     private int numEnemies;
-    private ArrayList<FighterData> fighterDatas;
+    private final ArrayList<FighterData> fighterDatas;
     private GameUI gameUI;
     private int wave = 0;
     private static boolean constantSpawn = false;
@@ -48,7 +48,7 @@ public class FighterSpawner extends Spawner {
         return wave;
     }
 
-    public void setNextWave() {
+    private void setNextWave() {
         numEnemies = (int) (0.75 * wave * wave * wave + wave + 10); //Polynomial to scale difficulty by levels
         spawnIntervalRange = ((25.f + wave) + 10) / numEnemies; //Scale spawn time gap for increased difficulty
     }
@@ -100,7 +100,7 @@ public class FighterSpawner extends Spawner {
         }
 
     }
-    public void spawn(int x, int y, int index, Directions directions) {
+    private void spawn(int x, int y, int index, Directions directions) {
         //Add spawned fighter to the current group
         getGroup().addActor(new Fighter(fighterDatas.get(index), x, y, directions, player));
     }

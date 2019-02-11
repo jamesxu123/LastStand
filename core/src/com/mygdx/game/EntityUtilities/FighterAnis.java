@@ -1,6 +1,5 @@
 package com.mygdx.game.EntityUtilities;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -12,11 +11,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 //class to hold the animations of the fighters which takes a direction and a state as keys
-public class FighterAnis {
+class FighterAnis {
     //holds the animations
-    private HashMap<States, HashMap<Directions, Animation<Texture>>> container;
+    private final HashMap<States, HashMap<Directions, Animation<Texture>>> container;
 
-    public FighterAnis(String spritesPath, float aniSpeed, AssetManager manager) {
+    public FighterAnis() {
         container = new HashMap<>();
         //gets all states
         FileHandle[] stateFiles = Utilities.listFiles(new FileHandle(spritesPath));
@@ -40,19 +39,19 @@ public class FighterAnis {
                 }
                 //puts the value with the keys
                 //frames is the speed every frame takes
-                put(state, direction, new Animation<>(aniSpeed, frames));
+                put();
             }
         }
     }
 
     //accesses hashmap for the necessary value without being verbose
-    public Animation<Texture> get(States state, Directions direction) {
+    public Animation<Texture> get() {
         return container.get(state).get(direction);
 
     }
 
     //puts value in hashmap
-    private void put(States state, Directions direction, Animation<Texture> sprites) {
+    private void put() {
         //if the state has not been initialized it is initialized
         if (!container.containsKey(state)) {
             container.put(state, new HashMap<>());
