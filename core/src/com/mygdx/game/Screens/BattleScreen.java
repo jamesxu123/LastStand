@@ -137,8 +137,9 @@ public class BattleScreen implements Screen {
 
     }
 
+    //Not needed for production
     public void debug() {
-        //Not needed for production
+
         entityMap.debug();
         game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         for (TowerUI t : gameUI.getTowerUIs()) {
