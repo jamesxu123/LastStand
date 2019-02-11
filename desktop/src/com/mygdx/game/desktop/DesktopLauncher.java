@@ -8,7 +8,7 @@ import com.mygdx.game.LastStand;
 import static com.mygdx.game.LastStand.screenH;
 import static com.mygdx.game.LastStand.screenW;
 
-public class DesktopLauncher {
+class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setWindowedMode(screenW, screenH);

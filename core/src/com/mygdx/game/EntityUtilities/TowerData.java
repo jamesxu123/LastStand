@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 //container for towerstats and animations
 public class TowerData {
-    public final String name;
+    private final String name;
     public final ArrayList<Texture> upgrades;
     public final ProjectileData projectileData;
     public final int radius;

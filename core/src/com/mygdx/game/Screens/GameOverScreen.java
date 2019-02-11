@@ -19,7 +19,6 @@ import java.util.Collections;
 public class GameOverScreen implements Screen {
     private LastStand game;
     private Stage ui;
-    private ArrayList<Integer> topScores = new ArrayList<>();
 
     public GameOverScreen(LastStand game) {
         ui = new Stage();
@@ -57,7 +56,7 @@ public class GameOverScreen implements Screen {
         title.setPosition(512 - title.getWidth() / 2, 768 - 100);
         ui.addActor(title);
         Gdx.input.setInputProcessor(ui);
-        topScores = new ArrayList<>(); //Refresh for each time the screen is loaded
+        ArrayList<Integer> topScores = new ArrayList<>(); //Refresh for each time the screen is loaded
         Scores.readScores().thenAccept(scores -> { //Async get the scores and wait for completion
             Collections.sort(scores);
             Collections.reverse(scores); //Sort and reverse to get them in DSC order

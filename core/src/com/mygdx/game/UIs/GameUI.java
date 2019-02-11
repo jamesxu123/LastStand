@@ -24,13 +24,10 @@ public class GameUI extends InputAdapter {
     private Label livesLabel;
     private Label moneyLabel;
     private Label levelLabel;
-    private Table entityTable;
     private Label info;
     private Fighter fighter;
     private Label name;
     private Label health;
-    private Table gameTable;
-    private Window pane;
     private TowerUI openTowerUI;
     private ArrayList<TowerUI> towerUIs;
     private EntityGroup fighterGroup;
@@ -55,7 +52,7 @@ public class GameUI extends InputAdapter {
         });
         pauseButton.setPosition(screenW - 50, screenH - 50);
 
-        gameTable = new Table();
+        Table gameTable = new Table();
         levelLabel = new Label("Level:", style);
         moneyLabel = new Label("Money:", style);
         livesLabel = new Label("Lives:", style);
@@ -71,7 +68,7 @@ public class GameUI extends InputAdapter {
 
         health = new Label("", style);
         name = new Label("", style);
-        entityTable = new Table(style);
+        Table entityTable = new Table(style);
         entityTable.setDebug(true);
         entityTable.setPosition(200, 100);
         entityTable.left().bottom().add(name).center();
@@ -79,7 +76,7 @@ public class GameUI extends InputAdapter {
         //entityTable.add(info);
         Texture down = manager.get("buttons/skullButtonDown.png");
         Texture up = manager.get("buttons/skullButtonUp.png");
-        pane = new Window("", style);
+        Window pane = new Window("", style);
         ImageButton playButton = new ImageButton(new TextureRegionDrawable(up)
                 , new TextureRegionDrawable(down));
         playButton.addListener(new ClickListener() {
@@ -115,7 +112,7 @@ public class GameUI extends InputAdapter {
         return towerUIs;
     }
 
-    public void updateInfo() {
+    private void updateInfo() {
         if (fighter.getClass() == Fighter.class) {
             health.setText(String.format("HP: %d", (int) fighter.getHealth()));
             name.setText(String.format("NAME:%s", fighter.data.name));

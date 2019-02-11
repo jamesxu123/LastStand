@@ -31,10 +31,7 @@ public class BattleScreen implements Screen {
     public boolean pause = false;
     private LastStand game;
     private Stage entities;
-    private InputMultiplexer inputs;
-    private OrthographicCamera camera;
     private OrthogonalTiledMapRenderer mapRenderer;
-    private MapObjects collisionObjs;
     private EntityGroup enemies;
     private EntityGroup projectiles;
     private EntityGroup towers;
@@ -67,15 +64,15 @@ public class BattleScreen implements Screen {
         towers = new EntityGroup(new TowerSpawner(game.towerDatas)); //All the tower entities
         projectiles = new EntityGroup(new ProjectileSpawner(towers, game.player)); //All fired projectiles, including coins
 
-        camera = new OrthographicCamera(screenW, screenH);
+        OrthographicCamera camera = new OrthographicCamera(screenW, screenH);
         //camera is only needed to center the map on the screen
         mapRenderer = new OrthogonalTiledMapRenderer(game.getMap(), 1, game.batch);
         camera.setToOrtho(false);
         mapRenderer.setView(camera);
 
-        collisionObjs = game.getMap().getLayers().get("Tower Placement").getObjects();
+        MapObjects collisionObjs = game.getMap().getLayers().get("Tower Placement").getObjects();
         //input multiplexer holds a bunch of input taking things and passes input to them
-        inputs = new InputMultiplexer();
+        InputMultiplexer inputs = new InputMultiplexer();
         entities = new Stage(); //Stores all entities in the entire game
 
         inputs.addProcessor(gameUI);

@@ -15,7 +15,7 @@ import static com.mygdx.game.LastStand.screenW;
 public class Utilities {
     public static Random rand = new Random();
 
-    public static boolean inScreen(float x, float y) {
+    private static boolean inScreen(float x, float y) {
         //Check if an object is inside the screen
         if ((0 <= x) || (x < screenW)) {
             return (0 <= y) || (y < screenH);

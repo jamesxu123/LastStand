@@ -138,7 +138,7 @@ public class TowerUI extends Table {
 
     }
 
-    public void createMenu() {
+    private void createMenu() {
         clear();
         if (tower == null) {
             add(left);
