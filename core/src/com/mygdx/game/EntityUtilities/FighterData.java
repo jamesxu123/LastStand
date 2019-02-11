@@ -10,7 +10,7 @@ public class FighterData {
     public final float speed;
     public final float health;
     public final String name;
-    public final int size;
+    public final float size;
     public final int worth;
 
 
@@ -18,7 +18,7 @@ public class FighterData {
         //gets all values for the fighter from the JsonValue and loads them
         animations = new FighterAnis(attributes.getString("aniPath"), attributes.getFloat("aniSpeed"), manager);
         //size for larger and smaller enemies
-        size = attributes.getInt("size");
+        size = attributes.getFloat("size");
 
         name = attributes.getString("name");
 

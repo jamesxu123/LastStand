@@ -60,7 +60,7 @@ public class Fighter extends Actor {
         //Set size based on sprite size
         setWidth(data.animations.get(state, direction).getKeyFrame(aniTime).getWidth());
         setHeight(data.animations.get(state,direction).getKeyFrame(aniTime).getHeight());
-        setBounds(getX(),getY(),getWidth(),getHeight());
+        setBounds(getX(), getY(), getWidth() * data.size, getHeight() * data.size);
 
         aniTime += delta; //Keep track of time since spawn
 

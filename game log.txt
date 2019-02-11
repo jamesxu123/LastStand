@@ -101,3 +101,26 @@ look at collide
 making sure there is no stupid code
 
 replace all magic numbers
+
+json file done
+change the way collide is checked in entity map
+take projectiles and loop through and check if there are dudes in the circle. then proceed to check if in radius thing of projectile. then attack so that splash can be done with larger radius. a radius of 1 would naturally mean that only one enemy can be hurt at once thing
+
+add the ability to touch a character or tower- after it has been placed i.e do we need levelling
+
+name of single target tower
+the tours need a homing boolean
+
+levelling system where each level has a different projectile and different sprites
+move all of the open tower ui to game ui
+
+
+pause menu
+money gain when enemy dies
+option screen
+game over screen with little high score ting
+also choosing style 
+music
+split the rest of the enemies
+
+DONE
