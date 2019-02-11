@@ -9,7 +9,7 @@ import com.mygdx.game.Player;
 import java.awt.*;
 
 public class MoneyProjectile extends Projectile {
-    public final Player player;
+    private final Player player;
 
     public MoneyProjectile(ProjectileData data, Point start, Point end, Tower t, Player player) {
         super(data, start, end, t);

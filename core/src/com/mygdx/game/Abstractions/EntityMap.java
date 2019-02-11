@@ -24,9 +24,9 @@ Class that handles collision for all entities
  */
 
 public class EntityMap {
-    public static final int mapArrW = 32;
-    public static final int mapArrH = 24;
-    public ArrayList<ArrayList<ArrayList<Fighter>>> map;
+    private static final int mapArrW = 32;
+    private static final int mapArrH = 24;
+    private ArrayList<ArrayList<ArrayList<Fighter>>> map;
     private ShapeRenderer shapeRenderer;
 
     public EntityMap(ShapeRenderer shapeRenderer) {
@@ -45,13 +45,13 @@ public class EntityMap {
         return getCellsInArea(t.getRadius()).stream().filter(Fighter::isAlive).collect(Collectors.toCollection(ArrayList::new));
     }
 
-    public ArrayList<Fighter> getInRadius(Circle c) {
+    private ArrayList<Fighter> getInRadius(Circle c) {
         //Method that gets all enemies within the range of a radius that are alive
         return getCellsInArea(c).stream().filter(Fighter::isAlive).collect(Collectors.toCollection(ArrayList::new));
     }
 
 
-    public ArrayList<Fighter> getCellsInArea(Circle c) {
+    private ArrayList<Fighter> getCellsInArea(Circle c) {
         ArrayList<Fighter> cells = new ArrayList<>();
         for (int i = -convertMapY(c.radius); i <= convertMapY(c.radius); i++) { //Loop between the y boundaries
             for (int j = -convertMapX(c.radius); j <= convertMapX(c.radius); j++) { //Loop between the x boundaries
@@ -101,19 +101,19 @@ public class EntityMap {
 
     }
 
-    public boolean mapContains(float x, float y) {
+    private boolean mapContains(float x, float y) {
         //Check if a coordinate is on the map
         return 0 <= convertMapX(x) && convertMapX(x) < mapArrW && 0 <= convertMapY(y) && convertMapY(y) < mapArrH;
     }
 
 
-    public int convertMapX(float x) {
+    private int convertMapX(float x) {
         //Convert x coordinate to 2D array index
         return Math.round(x / (screenW / mapArrW));
 
     }
 
-    public int convertMapY(float y) {
+    private int convertMapY(float y) {
         //Convert y coordinate to 2D array index
         return Math.round(y / (screenH / mapArrH));
     }

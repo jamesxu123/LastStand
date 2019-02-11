@@ -9,7 +9,7 @@ import com.mygdx.game.Utilities;
 import java.util.ArrayList;
 
 public class TowerData {
-    public final String name;
+    private final String name;
     public final ArrayList<Texture> upgrades;
     public final ProjectileData projectileData;
     public final int radius;

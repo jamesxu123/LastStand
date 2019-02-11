@@ -8,10 +8,9 @@ import com.mygdx.game.LastStand;
 
 public class LoadingScreen implements Screen {
     private LastStand game;
-    private Label loadingLabel;
 
     public LoadingScreen(LastStand game) {
-        loadingLabel = new Label("", game.style);
+        Label loadingLabel = new Label("", game.style);
         loadingLabel.setPosition(400, 400);
         this.game = game;
     }
