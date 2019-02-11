@@ -35,12 +35,12 @@ public class ProjectileSpawner extends Spawner {
 
         for (Actor a : towers.getChildren()) {
             Tower t = (Tower) a;
-            t.setLastFired(t.getLastFired() + delta);
-            if (t.getLastFired() > t.data.coolDown) {
-                t.setLastFired(0);
+            t.setLastFired(t.getLastFired() + delta); //Keep track of time since last fire
+            if (t.getLastFired() > t.data.coolDown) { //If cooled down, fire
+                t.setLastFired(0); //Reset cool down variable
                 //money will only be generated if the fighter spawner is currently spawning
                 if (t.data.projectileData.type == MoneyProjectile.class && getSpawning()) {
-
+                    //If it's a coin projectile, send it to a random position on screen
                     spawn(Utilities.getPoint(t), new Point(Utilities.rand.nextInt(screenW), Utilities.rand.nextInt(screenH)), t);
                 }
                 //only sends out projectile when there is an enemy in the radius
@@ -48,7 +48,7 @@ public class ProjectileSpawner extends Spawner {
                     Fighter fighter = t.getClosest();
                     for (int i = 0; i < t.getNumProjectiles(); i++) {
                         Point p = Utilities.getPoint(t);
-                        p.translate(t.getOffsetX(), t.getOffsetY());
+                        p.translate(t.getOffsetX(), t.getOffsetY()); //Move the projectile to spawn location
                         spawn(p, fighter, t);
 
                     }
@@ -60,14 +60,14 @@ public class ProjectileSpawner extends Spawner {
     }
 
     private void spawn(Point start, Fighter target, Tower t) {
-        if (t.data.projectileData.type == DmgProjectile.class) {
-            getGroup().addActor(new DmgProjectile(t.data.projectileData, start, target, t));
+        if (t.data.projectileData.type == DmgProjectile.class) { //Make sure type is correct
+            getGroup().addActor(new DmgProjectile(t.data.projectileData, start, target, t)); //Add it to group as an Actor
         }
     }
 
     private void spawn(Point start, Point end, Tower t) {
-         if (t.data.projectileData.type == MoneyProjectile.class) {
-            getGroup().addActor(new MoneyProjectile(t.data.projectileData, start, end, t, player));
+         if (t.data.projectileData.type == MoneyProjectile.class) { //Make sure type is correct
+            getGroup().addActor(new MoneyProjectile(t.data.projectileData, start, end, t, player)); //Add it to group as an Actor
         }
     }
 }

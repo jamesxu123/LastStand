@@ -49,8 +49,8 @@ public class FighterSpawner extends Spawner {
     }
 
     public void setNextWave() {
-        numEnemies = (int) (0.75 * wave * wave * wave + wave + 10);
-        spawnIntervalRange = ((25.f + wave) + 10) / numEnemies;
+        numEnemies = (int) (0.75 * wave * wave * wave + wave + 10); //Polynomial to scale difficulty by levels
+        spawnIntervalRange = ((25.f + wave) + 10) / numEnemies; //Scale spawn time gap for increased difficulty
     }
 
 
@@ -60,39 +60,36 @@ public class FighterSpawner extends Spawner {
         if (getSpawning()) {
 
             if (spawnInterval == null) {
-                spawnInterval = Utilities.rand.nextFloat() * spawnIntervalRange;
+                spawnInterval = Utilities.rand.nextFloat() * spawnIntervalRange; //Add randomness
 
             }
 
 
-            if (getTotalTime() > spawnInterval) {
-                int nextSpawn = Utilities.rand.nextInt(fighterDatas.size());
-                int r = Utilities.rand.nextInt(20);
+            if (getTotalTime() > spawnInterval) { //Only spawn if spawnInterval has passed
+                int nextSpawn = Utilities.rand.nextInt(fighterDatas.size()); //Randomize which Fighter to spawn
+                int r = Utilities.rand.nextInt(20); //+- location to avoid all Fighters spawning on top of each other
 
-                int deviation = (Utilities.rand.nextBoolean()) ? r : -r;
+                int deviation = (Utilities.rand.nextBoolean()) ? r : -r; //Chance to deviate in other direction
                 if (spawnDir == Directions.UP || spawnDir == Directions.DOWN) {
                     spawn(spawnX + deviation, spawnY, nextSpawn, spawnDir);
 
                 } else {
                     spawn(spawnX, spawnY + deviation, nextSpawn, spawnDir);
                 }
-
-                Fighter latestFighter = (Fighter) getGroup().getChildren().get(getGroup().getChildren().size - 1);
+                Fighter latestFighter = (Fighter) getGroup().getChildren().get(getGroup().getChildren().size - 1); //??????
                 latestFighter.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         gameUI.changeInfo(latestFighter);
-
-
                         super.clicked(event, x, y);
                     }
                 });
                 spawnInterval = null;
-                numEnemies -= 1;
+                numEnemies -= 1; //Record that one enemy has been spawned
                 setTotalTime(0);
             }
             super.run(delta);
-            if (numEnemies < 1) {
+            if (numEnemies < 1) { //If all enemies for wave has been spawned, end wave
                 if (!constantSpawn) {
                     setSpawning(false);
                 }
@@ -104,6 +101,7 @@ public class FighterSpawner extends Spawner {
 
     }
     public void spawn(int x, int y, int index, Directions directions) {
+        //Add spawned fighter to the current group
         getGroup().addActor(new Fighter(fighterDatas.get(index), x, y, directions, player));
     }
 }

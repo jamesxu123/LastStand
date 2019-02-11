@@ -24,9 +24,10 @@ public class GameOverScreen implements Screen {
     public GameOverScreen(LastStand game) {
         ui = new Stage();
         this.game = game;
-        TextButton menu = new TextButton("Back To Menu", game.style);
-        TextButton quit = new TextButton("Exit", game.style);
+        TextButton menu = new TextButton("Back To Menu", game.style); //Back to main menu
+        TextButton quit = new TextButton("Exit", game.style); //Exit game
         menu.addListener(new ClickListener() {
+            //When clicked, restart the game and send user back to menu
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.initialize();
@@ -34,6 +35,7 @@ public class GameOverScreen implements Screen {
             }
         });
         quit.addListener(new ClickListener() {
+            //When clicked, exit game
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.exit();
@@ -64,7 +66,7 @@ public class GameOverScreen implements Screen {
             for (int i = 0; i < (scores.size() <= 5 ? scores.size() : 5); i++) { //Only take the top 5 results
 //                topScores.add(scores.get(i));
                 TextField scoreField = new TextField((i + 1) + ". " + scores.get(i), game.style);
-                scoreField.setDisabled(true);
+                scoreField.setDisabled(true); //Disable input on textfield
                 scoreField.setPosition(550, 500 - scoreField.getHeight() * i);
                 ui.addActor(scoreField);
             }

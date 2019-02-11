@@ -7,7 +7,9 @@ import com.mygdx.game.Directions;
 import com.mygdx.game.EntityUtilities.FighterData;
 import com.mygdx.game.Player;
 import com.mygdx.game.States;
-
+/*
+Generic Fighter class that loads data from a JSON file
+ */
 
 public class Fighter extends Actor {
 
@@ -22,7 +24,7 @@ public class Fighter extends Actor {
 
     //Stats stats
     public Fighter(FighterData data, int x, int y, Directions direction, Player player) {
-        setPosition(x, y);
+        setPosition(x, y); //Starting position
         this.player = player;
 
 
@@ -36,12 +38,13 @@ public class Fighter extends Actor {
 
 
     public void setDirection(String d) {
-        direction = Directions.valueOf(d);
+        direction = Directions.valueOf(d); //Convert from String to Directions enum
 
     }
 
 
     public void damage(int amount) {
+        //Damage itself
         health -= amount;
         if (!isAlive()) {
             state = States.DEATH;
@@ -53,15 +56,19 @@ public class Fighter extends Actor {
 
     @Override
     public void act(float delta) {
-        System.out.println(data.name);
-        System.out.println(data.animations.get(state, direction));
+//        System.out.println(data.name);
+//        System.out.println(data.animations.get(state, direction));
+
+        //Set size based on sprite size
         setWidth(data.animations.get(state, direction).getKeyFrame(aniTime).getWidth());
         setHeight(data.animations.get(state,direction).getKeyFrame(aniTime).getHeight());
         setBounds(getX(),getY(),getWidth(),getHeight());
-        aniTime += delta;
+
+        aniTime += delta; //Keep track of time since spawn
 
 
         if (state == States.WALK) {
+            //Move the sprite in the respective directions
             switch (direction) {
                 case RIGHT:
                     moveBy(data.speed, 0);
@@ -78,9 +85,8 @@ public class Fighter extends Actor {
                     break;
 
             }
-
         } else if (state == States.DEATH) {
-            if (aniTime > 2) {
+            if (aniTime > 2) { //Show dead sprite as a corpse
                 remove();
 
             }
@@ -104,9 +110,11 @@ public class Fighter extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        //Draw with different sprites for animation
         boolean looping = state != States.DEATH;
         Texture frame = data.animations.get(state, direction).getKeyFrame(aniTime, looping);
         batch.draw(frame, getX(), getY(), frame.getWidth() * data.size, frame.getHeight() * data.size);
+        //^^^^ draw with proper size as indicated by JSON
 
     }
 }

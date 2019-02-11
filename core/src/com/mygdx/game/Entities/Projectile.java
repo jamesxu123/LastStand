@@ -10,22 +10,22 @@ import com.mygdx.game.Utilities;
 import java.awt.*;
 
 public class Projectile extends Actor {
-    public final Point start, end;
+    public final Point start, end; //Start and end points
     public final Sprite sprite;
-    private Tower tower;
-    private float aniTime = 0;
-    public final Circle range = new Circle();
+    private Tower tower; //Tower that fired projectile
+    private float aniTime = 0; //Time since creation
+    public final Circle range = new Circle(); //Damage radius
     public final ProjectileData data;
     private Fighter target;
-    private boolean done = false;
+    private boolean done = false; //Whether or not mission has been completed
 
 
     public Projectile(ProjectileData data, Point start, Fighter target, Tower t) {
 
         this.start = start;
-        this.end = new Point((int)target.getX(), (int)target.getY());
+        this.end = Utilities.getPoint(target);
         this.target = target;
-        this.sprite = new Sprite(data.animations.getKeyFrame(0));
+        this.sprite = new Sprite(data.animations.getKeyFrame(0)); //Only one sprite is used
         this.range.radius = data.range;
         this.data = data;
         this.tower = t;
@@ -34,6 +34,7 @@ public class Projectile extends Actor {
     }
 
     public Projectile(ProjectileData data, Point start, Point end, Tower t) {
+        //Alternative projectile used by MoneyTower as there is no target fighter
         this.start = start;
         this.end = end;
         this.sprite = new Sprite(data.animations.getKeyFrame(0));
@@ -58,33 +59,34 @@ public class Projectile extends Actor {
     @Override
     public void act(float delta) {
         aniTime += delta;
-        if (!Utilities.inScreen(this) || Utilities.getDistance(start, new Point((int) getX(), (int) getY())) > this.tower.getRadius().radius || (target != null && !target.isAlive())) {
+        if (!Utilities.inScreen(this) || Utilities.getDistance(start, Utilities.getPoint(this)) > this.tower.getRadius().radius || done) {
+            //Delete the projectile if it's out of the screen, exceeded its range, or if the target is killed
             this.remove();
             return;
         }
-        range.setPosition(getX(), getY());
-        sprite.setPosition(getX(), getY());
-        if (data.homing && target != null) {
+        range.setPosition(getX(), getY()); //Update range Circle position
+        sprite.setPosition(getX(), getY()); //Update sprite position
+        if (data.homing && target != null) { //If homing projectile, dynamically update angle to home in
             setRotation((float) Math.atan2(target.getY() - getY(), target.getX() - getX()));
         }
 
-        sprite.setRotation((float) Math.toDegrees(getRotation()));
+        sprite.setRotation((float) Math.toDegrees(getRotation())); //Update sprite rotation
         super.act(delta);
     }
 
-    public float getAniTime() {
+    float getAniTime() {
         return aniTime;
     }
 
-    public void setAniTime(float aniTime) {
+    void setAniTime(float aniTime) {
         this.aniTime = aniTime;
     }
 
-    public boolean isDone() {
+    boolean isDone() {
         return done;
     }
 
-    public void setDone(boolean done) {
+    void setDone(boolean done) {
         this.done = done;
     }
 }

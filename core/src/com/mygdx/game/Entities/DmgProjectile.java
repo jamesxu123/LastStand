@@ -10,7 +10,7 @@ public class DmgProjectile extends Projectile{
     }
     public void damage(Fighter fighter) {
 
-        fighter.damage((int) (data.damage * (getTower().getLevel() + 1)));
+        fighter.damage((int) (data.damage * (getTower().getLevel() + 1))); //Damage scales linearly with tower level
         if (!isDone()) {
             setAniTime(0);
         }
