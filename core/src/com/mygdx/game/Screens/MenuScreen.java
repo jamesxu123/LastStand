@@ -56,28 +56,29 @@ public class MenuScreen implements Screen {
                 if (game.mapIndex > 0) {
                     game.mapIndex -= 1;
                 } else {
-                    game.mapIndex = game.maps.size() - 1;
+                    game.mapIndex = game.mapDatas.size() - 1;
                 }
                 System.out.println(game.mapIndex);
-                mapName.setText(game.maps.get(game.mapIndex).toString());
+                mapName.setText(game.mapDatas.get(game.mapIndex).toString());
                 super.clicked(event, x, y);
             }
         });
         rightButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.mapIndex = (game.mapIndex + 1) % game.maps.size();
-                mapName.setText(game.maps.get(game.mapIndex).toString());
+                game.mapIndex = (game.mapIndex + 1) % game.mapDatas.size();
+                mapName.setText(game.mapDatas.get(game.mapIndex).toString());
                 super.clicked(event, x, y);
             }
         });
 
-        mapName = new Label(game.maps.get(game.mapIndex).toString(), game.style);
+        mapName = new Label(game.mapDatas.get(game.mapIndex).name, game.style);
         mapName.setPosition(400, 100);
 
         ui.addActor(playButton);
         ui.addActor(optionButton);
         ui.addActor(mapName);
+
         ui.addActor(leftButton);
         ui.addActor(rightButton);
 
@@ -97,6 +98,7 @@ public class MenuScreen implements Screen {
 
 
         game.batch.draw(bkg, 0, 0);
+        game.batch.draw(game.mapDatas.get(game.mapIndex).icon, 400, 400);
         game.batch.end();
         ui.draw();
 

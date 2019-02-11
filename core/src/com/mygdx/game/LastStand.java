@@ -35,7 +35,7 @@ public class LastStand extends Game {
     public ShapeRenderer shapeRenderer;
     public ArrayList<FighterData> fighterDatas;
     public ArrayList<TowerData> towerDatas;
-    public ArrayList<TiledMap> maps;
+    public ArrayList<MapData> mapDatas;
     public int mapIndex = 0;
     public JsonReader jsonReader;
     public Player player;
@@ -82,6 +82,7 @@ public class LastStand extends Game {
         loadAllFiles(new FileHandle("skins/"));
         loadAllFiles(new FileHandle("backgrounds/"));
         loadAllFiles(new FileHandle("buttons/"));
+        loadAllFiles(new FileHandle("mapIcons/"));
 
 
         loadingScreen = new LoadingScreen(this);
@@ -90,26 +91,21 @@ public class LastStand extends Game {
 
     //called when manager is done loading everything from loadingscreen
     public void initialize() {
-        maps = new ArrayList<>();
-        JsonValue objects = jsonReader.parse(new FileHandle("entities.json"));
-        for (FileHandle fileHandle : Utilities.listFiles(new FileHandle("maps/"))) {
-            if (manager.contains(fileHandle.path(), TiledMap.class)) {
-                System.out.println(fileHandle.path());
-                maps.add(manager.get(fileHandle.path()));
+        mapDatas = new ArrayList<>();
 
-
-            }
-
-
+        JsonValue maps = jsonReader.parse(new FileHandle("maps.json"));
+        for (int i = 0; i < maps.size; i++) {
+            System.out.println(maps.get(i));
+            mapDatas.add(new MapData(maps.get(i), manager));
         }
-
+        JsonValue entities = jsonReader.parse(new FileHandle("entities.json"));
         towerDatas = new ArrayList<>();
         fighterDatas = new ArrayList<>();
-        for (int i = 0; i < objects.get("towers").size; i++) {
-            towerDatas.add(new TowerData(objects.get("towers").get(i), objects.get("projectiles").get(objects.get("towers").get(i).getString("projectile")), manager));
+        for (int i = 0; i < entities.get("towers").size; i++) {
+            towerDatas.add(new TowerData(entities.get("towers").get(i), entities.get("projectiles").get(entities.get("towers").get(i).getString("projectile")), manager));
         }
-        for (int i = 0; i < objects.get("fighters").size; i++) {
-            fighterDatas.add(new FighterData(objects.get("fighters").get(i), manager));
+        for (int i = 0; i < entities.get("fighters").size; i++) {
+            fighterDatas.add(new FighterData(entities.get("fighters").get(i), manager));
         }
 
         gameOverScreen = new GameOverScreen(this);
@@ -121,7 +117,7 @@ public class LastStand extends Game {
     }
 
     public TiledMap getMap() {
-        return maps.get(mapIndex);
+        return mapDatas.get(mapIndex).map;
     }
 
 

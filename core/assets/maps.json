@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Pollution Place",
+    "icon": "mapIcons/map1.png",
+    "map": "maps/map1.tmx"
+  },
+  {
+    "name": "Rocky Garden",
+    "icon": "mapIcons/map2.png",
+    "map": "maps/map2.tmx"
+  },
+  {
+    "name": "Bully Beach",
+    "icon": "mapIcons/map3.png",
+    "map": "maps/map3.tmx"
+  }
+]
+
+
+
