@@ -18,10 +18,11 @@ import java.util.Collections;
 
 public class GameOverScreen implements Screen {
     private LastStand game;
-    private Stage ui = new Stage();
+    private Stage ui;
     private ArrayList<Integer> topScores = new ArrayList<>();
 
     public GameOverScreen(LastStand game) {
+        ui = new Stage();
         this.game = game;
         TextButton menu = new TextButton("Back To Menu", game.style);
         TextButton quit = new TextButton("Exit", game.style);
@@ -49,35 +50,30 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
-        Label title = new Label(String.format("Noob u lost haha wave %d", game.player.getLevel()), game.style);
+        Label title = new Label(String.format("Dead on wave %d!", game.player.getLevel()), game.style); //This needs to be updated each time with correct turn number
         title.setFontScale(1.5f);
         title.setPosition(512 - title.getWidth() / 2, 768 - 100);
         ui.addActor(title);
         Gdx.input.setInputProcessor(ui);
-        Scores.readScores().thenAccept(scores -> {
+        topScores = new ArrayList<>(); //Refresh for each time the screen is loaded
+        Scores.readScores().thenAccept(scores -> { //Async get the scores and wait for completion
             Collections.sort(scores);
-            Collections.reverse(scores);
-            System.out.println(Arrays.toString(scores.toArray()));
-            for (int i = 0; i < 5; i++) {
-                topScores.add(scores.get(i));
+            Collections.reverse(scores); //Sort and reverse to get them in DSC order
+            Label scoreLabel = new Label("Top Scores", game.style);
+            scoreLabel.setPosition(550, 460);
+            for (int i = 0; i < (scores.size() <= 5 ? scores.size() : 5); i++) { //Only take the top 5 results
+//                topScores.add(scores.get(i));
+                TextField scoreField = new TextField((i + 1) + ". " + scores.get(i), game.style);
+                scoreField.setDisabled(true);
+                scoreField.setPosition(550, 500 - scoreField.getHeight() * i);
+                ui.addActor(scoreField);
             }
         });
     }
 
     @Override
     public void render(float delta) {
-        int counter = 0;
-        for (int score : topScores) {
-            TextField scoreField = new TextField((counter+1) + ". " + score, game.style);
-            scoreField.setDisabled(true);
-            scoreField.setPosition(500, 500 - scoreField.getHeight() * counter - 20);
-            counter++;
-            ui.addActor(scoreField);
-
-        }
         ui.draw();
-
-
     }
 
     @Override
