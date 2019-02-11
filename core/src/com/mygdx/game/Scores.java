@@ -19,7 +19,7 @@ public class Scores {
         });
     }
 
-    public static CompletableFuture<ArrayList<Integer>> getScores() {
+    public static CompletableFuture<ArrayList<Integer>> readScores() {
         return CompletableFuture.supplyAsync(() -> {
             FileHandle fileHandle = new FileHandle("highscores.txt");
             Scanner scanner = new Scanner(fileHandle.reader());

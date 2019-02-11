@@ -8,7 +8,7 @@ public class Player {
 
     public Player() {
         money = 100;
-        lives = 100;
+        lives = 1;
 
     }
 

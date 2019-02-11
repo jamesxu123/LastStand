@@ -16,6 +16,7 @@ import com.mygdx.game.Abstractions.EntityGroup;
 import com.mygdx.game.Abstractions.EntityMap;
 import com.mygdx.game.Entities.Tower;
 import com.mygdx.game.LastStand;
+import com.mygdx.game.Scores;
 import com.mygdx.game.Spawners.FighterSpawner;
 import com.mygdx.game.Spawners.ProjectileSpawner;
 import com.mygdx.game.Spawners.TowerSpawner;
@@ -103,6 +104,7 @@ public class BattleScreen implements Screen {
         //checks if the player still has hearts and if not gameover
 
         if (!game.player.isAlive()) {
+            Scores.writeScore(game.player.getLevel(), game);
             game.setScreen(game.gameOverScreen);
             return;
         }
