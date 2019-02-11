@@ -29,9 +29,9 @@ public class OptionScreen implements Screen {
         title.setPosition(512 - title.getWidth() / 2, 768 - 100);
         CheckBox musicToggle = new CheckBox("music", game.style);
         CheckBox constantSpawnToggle = new CheckBox("Spawn Constantly", game.style);
-        constantSpawnToggle.setSize(120, 100);
+        constantSpawnToggle.setSize(50, 50);
         constantSpawnToggle.setPosition(120, 200);
-        musicToggle.setSize(300, 400);
+        musicToggle.setSize(50, 50);
         musicToggle.setPosition(120, 300);
         Texture back = game.manager.get("buttons/back.png");
         ImageButton backButton = new ImageButton(new TextureRegionDrawable(back));
