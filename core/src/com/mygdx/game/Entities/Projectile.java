@@ -105,6 +105,7 @@ public class Projectile extends Actor {
         this.done = done;
     }
 
+    //move is done with rotation and math
     public void move() {
         setPosition((float) (getX() + data.speed * Math.cos(getRotation())), (float) (getY() + data.speed * Math.sin(getRotation())));
     }

@@ -83,7 +83,6 @@ public class FighterSpawner extends Spawner {
                     public void clicked(InputEvent event, float x, float y) {
                         //if the player has gods finger they are able to kill enemy just by touching it
                         //this can be abused by pausing the game and killing every enemy on the screen lol
-                        System.out.println(Player.isGodFinger());
                         if (Player.isGodFinger()) {
 
                             latestFighter.damage(999999999);

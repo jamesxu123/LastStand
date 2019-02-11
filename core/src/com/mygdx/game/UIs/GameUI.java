@@ -53,9 +53,9 @@ public class GameUI extends InputAdapter {
         pauseButton.setPosition(screenW - 50, screenH - 50);
 
         Table gameTable = new Table();
-        levelLabel = new Label("Level:", style);
-        moneyLabel = new Label("Money:", style);
-        livesLabel = new Label("Lives:", style);
+        levelLabel = new Label("Level:", style, "subtitle");
+        moneyLabel = new Label("Money:", style, "subtitle");
+        livesLabel = new Label("Lives:", style, "subtitle");
         fighterGroup = entityGroup;
 
         towerUIs = new ArrayList<>();
@@ -82,14 +82,14 @@ public class GameUI extends InputAdapter {
                 entityGroup.getSpawner().setSpawning(true);
             }
         });
-        pane.setScale(1.5f);
+        pane.setScale(1.2f);
         pane.setResizable(true);
         pane.add(playButton);
         pane.row();
         pane.add(health);
         pane.row();
         pane.add(name);
-        pane.setPosition(screenW, 0);
+        pane.setPosition(screenW - 200, 0);
         stage = new Stage();
         stage.addActor(gameTable);
         stage.addActor(pane);

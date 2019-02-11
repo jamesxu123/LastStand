@@ -41,8 +41,6 @@ public class Fighter extends Actor {
         direction = Directions.valueOf(d); //Convert from String to Directions enum
 
     }
-
-
     public void damage(int amount) {
         //Damage is only allowed to go to 0 so that when health is displayed it does not show negative
         health = Math.max(0, health - amount);

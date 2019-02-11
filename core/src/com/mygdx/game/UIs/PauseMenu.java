@@ -40,6 +40,7 @@ public class PauseMenu extends Table {
             }
         });
         add(resumeButton);
+        row();
         add(menuButton);
 
     }

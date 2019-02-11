@@ -9,6 +9,7 @@ public abstract class Spawner {
     private static boolean spawning=false;
     private float totalTime;
 
+    //a kind of method signature for spawning
     public void spawn(int x, int y, int index) {
     }
 
@@ -26,6 +27,7 @@ public abstract class Spawner {
         }
     }
 
+    //a method signature that is meant to be overriden so that casting is not necessary
     public int getWave() {
         return -1;
     }

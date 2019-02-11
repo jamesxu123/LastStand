@@ -37,10 +37,10 @@ public class OptionScreen implements Screen {
         spawnLabel.setPosition(120, 150);
         CheckBox constantSpawnToggle = new CheckBox("", game.style, "switch"); //Gets rid of waves, super hard move
 
-        constantSpawnToggle.setSize(50, 50);
-        constantSpawnToggle.setPosition(120, 200);
+
+        constantSpawnToggle.setPosition(500, 280);
         musicToggle.setSize(50, 50);
-        musicToggle.setPosition(120, 300);
+        musicToggle.setPosition(500, 350);
         Texture back = game.manager.get("buttons/back.png"); //Texture for back button
         ImageButton backButton = new ImageButton(new TextureRegionDrawable(back)); //Back button
         backButton.addListener(new ClickListener() {
@@ -51,7 +51,7 @@ public class OptionScreen implements Screen {
                 super.clicked(event, x, y);
             }
         });
-        backButton.setPosition(120, 400);
+        backButton.setPosition(120, screenH - 100);
 
         constantSpawnToggle.addListener(new ClickListener() {
             @Override

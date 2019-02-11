@@ -40,7 +40,6 @@ public class ProjectileSpawner extends Spawner {
                 t.setLastFired(0); //Reset cool down variable
                 //money will only be generated if the fighter spawner is currently spawning
                 if (t.data.projectileData.type == MoneyProjectile.class && getSpawning()) {
-                    System.out.println(true);
 
                     spawn(Utilities.getPoint(t), new Point(Utilities.rand.nextInt(screenW), Utilities.rand.nextInt(screenH)), t);
                 }
