@@ -68,7 +68,7 @@ public class GameOverScreen implements Screen {
     public void render(float delta) {
         int counter = 0;
         for (int score : topScores) {
-            TextField scoreField = new TextField(counter + ". " + score, game.style);
+            TextField scoreField = new TextField((counter+1) + ". " + score, game.style);
             scoreField.setDisabled(true);
             scoreField.setPosition(500, 500 - scoreField.getHeight() * counter - 20);
             counter++;
