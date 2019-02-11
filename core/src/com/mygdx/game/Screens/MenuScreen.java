@@ -26,7 +26,7 @@ public class MenuScreen implements Screen {
         ui = new Stage();
         TextButton playButton = new TextButton("Play", game.style);
         playButton.setSize(150, 100);
-        playButton.setPosition(300, 300);
+        playButton.setPosition(200, 250);
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -43,11 +43,11 @@ public class MenuScreen implements Screen {
                 game.setScreen(game.optionScreen);
             }
         });
-        ImageButton leftButton = new ImageButton(game.style);
-        leftButton.setPosition(800, 350);
+        TextButton leftButton = new TextButton("Prev", game.style);
+        leftButton.setPosition(800, 100);
         leftButton.setSize(50, 50);
-        ImageButton rightButton = new ImageButton(game.style);
-        rightButton.setPosition(600, 350);
+        TextButton rightButton = new TextButton("Next", game.style);
+        rightButton.setPosition(600, 100);
         rightButton.setSize(50, 50);
 
         leftButton.addListener(new ClickListener() {
@@ -97,7 +97,7 @@ public class MenuScreen implements Screen {
 
 
         game.batch.draw(bkg, 0, 0);
-        game.batch.draw(game.mapDatas.get(game.mapIndex).icon, 400, 400);
+        game.batch.draw(game.mapDatas.get(game.mapIndex).icon, 630, 200);
         game.batch.end();
         ui.draw();
 

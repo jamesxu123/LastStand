@@ -7,8 +7,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 
+/*
+Handles asynchronous reading and writing of scores from a text file
+ */
+
 public class Scores {
     public static void writeScore(int score, LastStand game) {
+        //Appends a score to the end of a text file
         CompletableFuture.runAsync(() -> {
             try {
                 FileHandle fileHandle = new FileHandle("highscores.txt");
@@ -20,6 +25,7 @@ public class Scores {
     }
 
     public static CompletableFuture<ArrayList<Integer>> readScores() {
+        //Returns a Future containing the numbers from the text file
         return CompletableFuture.supplyAsync(() -> {
             FileHandle fileHandle = new FileHandle("highscores.txt");
             Scanner scanner = new Scanner(fileHandle.reader());
