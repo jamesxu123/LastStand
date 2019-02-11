@@ -58,8 +58,7 @@ public class MenuScreen implements Screen {
                 } else {
                     game.mapIndex = game.mapDatas.size() - 1;
                 }
-                System.out.println(game.mapIndex);
-                mapName.setText(game.mapDatas.get(game.mapIndex).toString());
+                mapName.setText(game.mapDatas.get(game.mapIndex).name);
                 super.clicked(event, x, y);
             }
         });
@@ -67,7 +66,7 @@ public class MenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.mapIndex = (game.mapIndex + 1) % game.mapDatas.size();
-                mapName.setText(game.mapDatas.get(game.mapIndex).toString());
+                mapName.setText(game.mapDatas.get(game.mapIndex).name);
                 super.clicked(event, x, y);
             }
         });

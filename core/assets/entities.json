@@ -77,7 +77,7 @@
     {
       "name": "Elf",
       "aniPath": "sprites/FIGHTER/ELF",
-      "speed": 3.5,
+      "speed": 3,
       "health": 5,
       "aniSpeed": 0.07,
       "size": 1,

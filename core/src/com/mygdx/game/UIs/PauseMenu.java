@@ -21,20 +21,10 @@ public class PauseMenu extends Table {
         TextButton menuButton = new TextButton("Menu", game.style);
         Texture resume = game.manager.get("buttons/playButton.png");
         ImageButton resumeButton = new ImageButton(new TextureRegionDrawable(resume));
-        TextButton newGameButton = new TextButton("new Game", game.style);
-        newGameButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                game.initialize();
-                game.setScreen(game.menuScreen);
-            }
-        });
-
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.battleScreen.pause = false;
+                game.initialize();
                 game.setScreen(game.menuScreen);
                 super.clicked(event, x, y);
             }
@@ -48,7 +38,6 @@ public class PauseMenu extends Table {
                 super.clicked(event, x, y);
             }
         });
-        add(newGameButton);
         add(resumeButton);
         add(menuButton);
 
